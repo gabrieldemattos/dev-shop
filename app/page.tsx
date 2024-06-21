@@ -3,10 +3,13 @@ import CategoryList from "./_components/category-list";
 import ProductList from "./_components/product-list";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Header from "./_components/header";
 
 export default function Home() {
   return (
     <div className="space-y-8">
+      <Header />
+
       <div className="px-5">
         <Image
           src="/banner-01.png"
