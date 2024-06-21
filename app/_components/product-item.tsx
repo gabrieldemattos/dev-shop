@@ -3,6 +3,7 @@ import { Heart, Star } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
+import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
 
 interface ProductItemProps {
   product: Prisma.ProductGetPayload<{
@@ -22,14 +23,13 @@ const ProductItem = ({ product }: ProductItemProps) => {
       href={`/product/${product.category.slug}/${product.slug}`}
       className="flex min-h-[150px] w-[150px] flex-col"
     >
-      <div className="bg-linear-secondary relative rounded-lg p-2">
+      <div className="bg-linear-secondary relative aspect-square min-h-[150px] w-[150px] rounded-lg p-2">
         <Image
           src={product.imageUrls[0]}
           alt={product.name}
-          width={0}
-          height={0}
+          fill
           sizes="100%"
-          className="h-full w-full object-contain transition-all hover:scale-110"
+          className="object-contain transition-all hover:scale-110"
           quality={100}
         />
 
@@ -53,12 +53,12 @@ const ProductItem = ({ product }: ProductItemProps) => {
       <p className="truncate">{product.name}</p>
 
       <div className="flex items-center gap-2">
-        <p className="text-lg font-bold text-red-600">
-          R$ {Number(product.basePrice)}
+        <p className="text-base font-bold text-red-600">
+          {formatCurrency(calculateProductTotalPrice(product))}
         </p>
 
-        <p className="text-sm text-gray-400 line-through">
-          R$ {Number(product.discountPercentage)}
+        <p className="truncate text-xs text-gray-400 line-through">
+          {formatCurrency(Number(product.basePrice))}
         </p>
       </div>
     </Link>

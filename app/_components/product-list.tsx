@@ -16,6 +16,7 @@ const ProductList = async () => {
         },
       },
     },
+    take: 10,
   });
 
   return (
