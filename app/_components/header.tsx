@@ -16,7 +16,7 @@ const Header = () => {
       <div className="flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <Sheet>
-            <SheetTrigger>
+            <SheetTrigger asChild>
               <Button
                 size="icon"
                 variant="outline"
