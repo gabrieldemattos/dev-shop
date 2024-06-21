@@ -35,7 +35,7 @@ export default function Home() {
         <CategoryList />
       </div>
 
-      <div className="space-y-1 pb-10 pl-5">
+      <div className="space-y-1 pl-5">
         <h2 className="text-xl font-bold">Ofertas</h2>
 
         <ProductList />

@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="pb-10">
         <div className="mb-8">
           <Header />
         </div>
