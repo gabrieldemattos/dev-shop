@@ -6,8 +6,6 @@ import ProductList from "./_components/product-list";
 export default function Home() {
   return (
     <div className="space-y-8">
-      <Header />
-
       <div className="px-5">
         <Image
           src="/banner-01.png"
