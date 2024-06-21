@@ -19,26 +19,27 @@ interface ProductItemProps {
 
 const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <Link
-      href={`/product/${product.category.slug}/${product.slug}`}
-      className="flex min-h-[150px] w-[150px] flex-col"
-    >
+    <div className="flex min-h-[150px] w-[150px] flex-col">
       <div className="bg-linear-secondary relative aspect-square min-h-[150px] w-[150px] rounded-lg p-2">
-        <Image
-          src={product.imageUrls[0]}
-          alt={product.name}
-          fill
-          sizes="100%"
-          className="object-contain transition-all hover:scale-110"
-          quality={100}
-        />
+        <Link href={`/product/${product.category.slug}/${product.slug}`}>
+          <Image
+            src={product.imageUrls[0]}
+            alt={product.name}
+            fill
+            sizes="100%"
+            className="object-contain transition-all hover:scale-110"
+            quality={100}
+          />
 
-        <Badge className="bg-linear-primary absolute left-0 top-5 rounded-l-none border-none py-1 pl-1 pr-3 text-base font-bold text-background shadow-md">
-          -{product.discountPercentage}%
-        </Badge>
+          {product.discountPercentage > 0 && (
+            <Badge className="bg-linear-primary absolute left-0 top-5 rounded-l-none border-none py-1 pl-1 pr-3 text-base font-bold text-background shadow-md">
+              -{product.discountPercentage}%
+            </Badge>
+          )}
+        </Link>
 
-        <div className="absolute -bottom-5 right-1 flex items-center justify-center rounded-full bg-white p-2 shadow-lg">
-          <Heart className="hover:fill-primary hover:stroke-primary" />
+        <div className="absolute -bottom-5 right-1 z-50 flex items-center justify-center rounded-full bg-white p-2 shadow-lg">
+          <Heart className="cursor-pointer hover:fill-primary hover:stroke-primary" />
         </div>
       </div>
 
@@ -61,7 +62,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
           {formatCurrency(Number(product.basePrice))}
         </p>
       </div>
-    </Link>
+    </div>
   );
 };
 
