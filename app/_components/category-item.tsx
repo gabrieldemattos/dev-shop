@@ -10,7 +10,7 @@ const CategoryItem = ({ category }: CategoryItemProps) => {
   return (
     <Link
       href={`/category/${category.slug}`}
-      className="flex flex-col justify-around space-y-2 rounded-lg bg-white px-2 py-3 transition-all hover:bg-primary-foreground hover:text-accent-foreground"
+      className="flex flex-col justify-around space-y-2 rounded-lg bg-background px-2 py-3 transition-all hover:bg-primary-foreground hover:text-accent-foreground"
     >
       <Image
         src={category.imageUrl}

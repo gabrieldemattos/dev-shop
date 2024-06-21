@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Header from "./_components/header";
 import CategoryList from "./_components/category-list";
+import ProductList from "./_components/product-list";
 
 export default function Home() {
   return (
-    <div className="h-screen space-y-8 bg-muted">
+    <div className="space-y-8">
       <Header />
 
       <div className="px-5">
@@ -23,6 +24,12 @@ export default function Home() {
         <h2 className="text-xl font-bold">Categorias</h2>
 
         <CategoryList />
+      </div>
+
+      <div className="space-y-1 pb-10 pl-5">
+        <h2 className="text-xl font-bold">Ofertas</h2>
+
+        <ProductList />
       </div>
     </div>
   );

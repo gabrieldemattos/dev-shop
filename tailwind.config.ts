@@ -19,8 +19,10 @@ const config = {
     },
     extend: {
       backgroundImage: {
-        linear:
+        "linear-primary":
           "linear-gradient(90deg, rgba(245,175,25,1) 0%, rgba(243,110,21,1) 100%)",
+        "linear-secondary":
+          "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(252,248,248,1) 100%)",
       },
       colors: {
         linear: "var(--linear)",

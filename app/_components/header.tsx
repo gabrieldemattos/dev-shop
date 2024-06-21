@@ -12,7 +12,7 @@ import Search from "./search";
 
 const Header = () => {
   return (
-    <div className="bg-linear px-8 py-3">
+    <div className="bg-linear-primary px-8 py-3">
       <div className="flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <Sheet>
