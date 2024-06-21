@@ -22,7 +22,9 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
 
   if (!category) return notFound();
 
-  console.log(category.name);
+  const orderedProducts = category.products.sort((a, b) => {
+    return b.discountPercentage - a.discountPercentage;
+  });
 
   return (
     <div className="mx-auto flex flex-col justify-center gap-5 px-5">
@@ -32,7 +34,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
       </Badge>
 
       <div className="mx-auto grid grid-cols-2 gap-8">
-        {category.products.map((product) => (
+        {orderedProducts.map((product) => (
           <ProductItem key={product.id} product={{ ...product, category }} />
         ))}
       </div>
