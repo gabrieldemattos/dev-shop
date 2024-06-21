@@ -1,7 +1,7 @@
 import { db } from "../_lib/prisma";
 import CategoryCard from "./_components/category-card";
 
-const Categories = async () => {
+const CategoriesPage = async () => {
   const categories = await db.category.findMany({});
 
   return (
@@ -13,4 +13,4 @@ const Categories = async () => {
   );
 };
 
-export default Categories;
+export default CategoriesPage;
