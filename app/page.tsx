@@ -1,7 +1,8 @@
 import Image from "next/image";
-import Header from "./_components/header";
 import CategoryList from "./_components/category-list";
 import ProductList from "./_components/product-list";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -19,7 +20,17 @@ export default function Home() {
       </div>
 
       <div className="space-y-1 px-5">
-        <h2 className="text-xl font-bold">Categorias</h2>
+        <div className="flex w-full items-center justify-between">
+          <h2 className="text-xl font-bold">Categorias</h2>
+
+          <Link
+            href="/categories"
+            className="flex items-center gap-1 font-semibold text-muted-foreground"
+          >
+            <span>Ver mais</span>
+            <ChevronRight />
+          </Link>
+        </div>
 
         <CategoryList />
       </div>
