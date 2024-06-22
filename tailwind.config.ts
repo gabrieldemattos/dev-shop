@@ -25,7 +25,6 @@ const config = {
           "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(252,248,248,1) 100%)",
       },
       colors: {
-        linear: "var(--linear)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
