@@ -1,9 +1,6 @@
 import { db } from "@/app/_lib/prisma";
-import { ChevronRight, Star, ThumbsUp } from "lucide-react";
 import { notFound } from "next/navigation";
 import ProductImage from "./_components/product-images";
-import Link from "next/link";
-import { Button } from "@/app/_components/ui/button";
 import ProductItem from "@/app/_components/product-item";
 import ProductDetails from "./_components/product-details";
 import ProductStatus from "./_components/product-status";

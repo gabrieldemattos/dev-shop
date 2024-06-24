@@ -1,4 +1,4 @@
-import { Prisma, Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Heart, Star } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
@@ -20,7 +20,7 @@ interface ProductItemProps {
 const ProductItem = ({ product }: ProductItemProps) => {
   return (
     <div className="flex min-h-[150px] w-[150px] flex-col">
-      <div className="bg-linear-secondary relative aspect-square min-h-[150px] w-[150px] rounded-lg p-2">
+      <div className="relative aspect-square min-h-[150px] w-[150px] rounded-lg bg-linear-secondary p-2">
         <Link href={`/product/${product.category.slug}/${product.slug}`}>
           <Image
             src={product.imageUrls[0]}
@@ -32,7 +32,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
           />
 
           {product.discountPercentage > 0 && (
-            <Badge className="bg-linear-primary absolute left-0 top-5 rounded-l-none border-none py-1 pl-1 pr-3 text-base font-bold text-background shadow-md">
+            <Badge className="absolute left-0 top-5 rounded-l-none border-none bg-linear-primary py-1 pl-1 pr-3 text-base font-bold text-background shadow-md">
               -{product.discountPercentage}%
             </Badge>
           )}
