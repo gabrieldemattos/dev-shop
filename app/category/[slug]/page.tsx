@@ -36,7 +36,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
       <div className="mx-auto flex flex-col justify-center gap-5 px-5">
         <Badge variant="outline" className="space-x-2 border-none p-2 text-lg">
           {CATEGORY_ICON[category.name as keyof typeof CATEGORY_ICON]}
-          <span className="font-semibold uppercase">{category.name}</span>
+          <span className="text-xl font-bold uppercase">{category.name}</span>
         </Badge>
 
         <div className="mx-auto grid grid-cols-2 gap-8">
