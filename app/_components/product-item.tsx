@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
+import { cn } from "../_lib/utils";
 
 interface ProductItemProps {
   product: Prisma.ProductGetPayload<{
@@ -15,12 +16,18 @@ interface ProductItemProps {
       };
     };
   }>;
+  className?: string;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
+const ProductItem = ({ product, className }: ProductItemProps) => {
   return (
-    <div className="flex min-h-[150px] w-[150px] flex-col">
-      <div className="relative aspect-square min-h-[150px] w-[150px] rounded-lg bg-linear-secondary p-2">
+    <div className={cn("flex min-h-[150px] w-[150px] flex-col", className)}>
+      <div
+        className={cn(
+          "relative aspect-square min-h-[150px] w-[150px] rounded-lg bg-linear-secondary p-2",
+          className,
+        )}
+      >
         <Link href={`/product/${product.category.slug}/${product.slug}`}>
           <Image
             src={product.imageUrls[0]}

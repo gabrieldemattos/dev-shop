@@ -39,9 +39,13 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
           <span className="text-xl font-bold uppercase">{category.name}</span>
         </Badge>
 
-        <div className="mx-auto grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-6">
           {orderedProducts.map((product) => (
-            <ProductItem key={product.id} product={{ ...product, category }} />
+            <ProductItem
+              key={product.id}
+              product={{ ...product, category }}
+              className="min-w-full"
+            />
           ))}
         </div>
       </div>
