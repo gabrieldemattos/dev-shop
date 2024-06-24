@@ -9,6 +9,7 @@ import {
 } from "./ui/sheet";
 import { Button } from "./ui/button";
 import Search from "./search";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -36,9 +37,11 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
-          <p className="text-2xl font-bold text-red-700 text-opacity-70">
-            DEV<span className="text-white">Shop</span>
-          </p>
+          <Link href="/">
+            <p className="text-2xl font-bold text-red-700 text-opacity-70">
+              DEV<span className="text-white">Shop</span>
+            </p>
+          </Link>
 
           <Button
             size="icon"

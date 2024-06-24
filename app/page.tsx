@@ -11,15 +11,17 @@ export default function Home() {
       <Header />
 
       <div className="px-5">
-        <Image
-          src="/banner-01.png"
-          alt="seu novo computador está aqui, desconto de 30%"
-          width={0}
-          height={0}
-          sizes="100vw"
-          quality={100}
-          className="h-auto w-full rounded-xl"
-        />
+        <Link href="/category/computers-and-laptops">
+          <Image
+            src="/banner-01.png"
+            alt="seu novo computador está aqui, desconto de 30%"
+            width={0}
+            height={0}
+            sizes="100vw"
+            quality={100}
+            className="h-auto w-full rounded-xl"
+          />
+        </Link>
       </div>
 
       <div className="space-y-1 px-5">
