@@ -27,12 +27,14 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           )}
         </div>
 
-        <p className="truncate text-base text-gray-400">
-          De:{" "}
-          <span className="line-through">
-            {formatCurrency(Number(product.basePrice))}
-          </span>
-        </p>
+        {product.discountPercentage > 0 && (
+          <p className="truncate text-base text-gray-400">
+            De:{" "}
+            <span className="line-through">
+              {formatCurrency(Number(product.basePrice))}
+            </span>
+          </p>
+        )}
       </div>
     </div>
   );
