@@ -1,4 +1,4 @@
-import { MenuIcon, ShoppingCartIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -10,6 +10,7 @@ import {
 import { Button } from "./ui/button";
 import Search from "./search";
 import Link from "next/link";
+import Cart from "./cart";
 
 const Header = () => {
   return (
@@ -43,13 +44,7 @@ const Header = () => {
             </p>
           </Link>
 
-          <Button
-            size="icon"
-            variant="outline"
-            className="border-none bg-transparent text-white hover:bg-transparent"
-          >
-            <ShoppingCartIcon />
-          </Button>
+          <Cart />
         </div>
 
         <Search />
