@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
+import { useCartContext } from "@/app/_hooks/useCartContext";
 import { Product } from "@prisma/client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
@@ -10,6 +11,8 @@ interface AddProductToCartProps {
 }
 
 const AddProductToCart = ({ product }: AddProductToCartProps) => {
+  const { addProductToCart, products } = useCartContext();
+
   const [quantity, setQuantity] = useState<number>(1);
 
   const handleIncreaseQuantityClick = () => setQuantity((prev) => prev + 1);
@@ -17,7 +20,10 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
   const handleDecreaseQuantityClick = () =>
     setQuantity((prev) => (prev === 1 ? prev : prev - 1));
 
-  const handleAddToCartClick = () => console.log({ ...product, quantity });
+  console.log(products);
+
+  const handleAddToCartClick = () =>
+    addProductToCart({ product: { ...product, quantity } });
 
   return (
     <div>
