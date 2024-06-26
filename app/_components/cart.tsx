@@ -6,6 +6,8 @@ import { useCartContext } from "../_hooks/useCartContext";
 import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { formatCurrency } from "../_helpers/price";
+import { ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
   const {
@@ -14,6 +16,8 @@ const Cart = () => {
     totalPriceWithDiscounts,
     totalPriceWithoutDiscounts,
   } = useCartContext();
+
+  const router = useRouter();
 
   return (
     <>
@@ -54,9 +58,29 @@ const Cart = () => {
             <Button className="mt-6 w-full">Finalizar pedido</Button>
           </>
         ) : (
-          <h2 className="mt-6 text-nowrap text-left font-medium">
-            Seu carrinho de compras da DEVShop está vazio.
-          </h2>
+          <div className="mt-20 flex flex-col items-center">
+            <div className="flex items-center justify-center rounded-full bg-gray-200 p-5">
+              <ShoppingCart size={29} className="fill-red-500 stroke-red-500" />
+            </div>
+
+            <p className="mt-6 text-nowrap text-2xl font-medium">
+              Seu carrinho está vazio
+            </p>
+
+            <div className="py-3">
+              <p className="text-center text-sm">
+                São milhares de produtos para você escolher
+              </p>
+
+              <p className="text-center text-sm">
+                Escolha seus produtos e adicione em seu carrinho
+              </p>
+            </div>
+
+            <Button className="mt-2 uppercase" onClick={() => router.push("/")}>
+              Comece a comprar agora
+            </Button>
+          </div>
         )}
       </div>
     </>
