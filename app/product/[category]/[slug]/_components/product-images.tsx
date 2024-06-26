@@ -25,7 +25,7 @@ const ProductImage = ({ imageUrls, productName }: ProductImagesProps) => {
       <div className="flex h-full w-full flex-col space-y-4">
         <div className="relative w-full bg-linear-secondary">
           <div
-            className="flex h-[380px] w-full items-center justify-center border shadow-md"
+            className="flex h-[380px] w-full cursor-pointer items-center justify-center border shadow-md"
             onClick={() => setIsImageZoomed(true)}
           >
             <Image

@@ -7,6 +7,7 @@ import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "lucide-react";
 import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
 import { useCartContext } from "../_hooks/useCartContext";
 import { ICartProduct } from "../_interfaces/CartProduct";
+import Link from "next/link";
 
 interface CartItemProps {
   product: ICartProduct;
@@ -37,7 +38,10 @@ const CartItem = ({ product }: CartItemProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <div className="relative h-24 w-24">
+        <Link
+          className="relative h-24 w-24"
+          href={`/product/${product.categorySlug}/${product.slug}`}
+        >
           <Image
             src={product.imageUrls[0]}
             alt={product.name}
@@ -45,7 +49,7 @@ const CartItem = ({ product }: CartItemProps) => {
             sizes="100%"
             className="rounded-lg bg-background object-contain"
           />
-        </div>
+        </Link>
 
         <div className="w-[180px] space-y-1">
           <h3 className="truncate text-sm">{product.name}</h3>
