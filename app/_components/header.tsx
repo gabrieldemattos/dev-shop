@@ -52,37 +52,34 @@ const Header = () => {
             </p>
           </Link>
 
-          <div
-            className="relative cursor-pointer"
-            onClick={() => setIsCartOpen(true)}
-          >
-            <Button
-              size="icon"
-              variant="outline"
-              className="border-none bg-transparent text-white hover:bg-transparent"
-            >
-              <ShoppingCartIcon />
-            </Button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                size="icon"
+                variant="outline"
+                className="border-none bg-transparent text-white hover:bg-transparent"
+              >
+                {totalProducts > 0 && (
+                  <span className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-foreground p-1 text-xs font-bold text-background">
+                    {totalProducts}
+                  </span>
+                )}
+                <ShoppingCartIcon />
+              </Button>
+            </SheetTrigger>
 
-            {totalProducts > 0 && (
-              <span className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-foreground p-1 text-xs font-bold text-background">
-                {totalProducts}
-              </span>
-            )}
-          </div>
+            <SheetContent className="w-[80vw] bg-[#f3f3f3]" side="right">
+              <SheetHeader>
+                <SheetTitle className="text-left">Meu Carrinho</SheetTitle>
+              </SheetHeader>
+
+              <Cart />
+            </SheetContent>
+          </Sheet>
         </div>
 
         <Search />
       </div>
-
-      <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-        <SheetContent className="w-[80vw] bg-[#f3f3f3]" side="right">
-          <SheetHeader>
-            <SheetTitle className="text-left">Meu Carrinho</SheetTitle>
-          </SheetHeader>
-          <Cart />
-        </SheetContent>
-      </Sheet>
     </div>
   );
 };
