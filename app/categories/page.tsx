@@ -3,7 +3,7 @@ import { db } from "../_lib/prisma";
 import CategoryCard from "./_components/category-card";
 
 const CategoriesPage = async () => {
-  const categories = await db.category.findMany({});
+  const categories = await db.category.findMany({ orderBy: { name: "asc" } });
 
   return (
     <>
