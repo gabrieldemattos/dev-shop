@@ -21,15 +21,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<ICartProduct[]>([]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setProducts(JSON.parse(localStorage.getItem("cart") || "[]"));
+    const cartData = localStorage.getItem("cart");
+    if (cartData) {
+      const parsedCartData: ICartProduct[] = JSON.parse(cartData);
+      parsedCartData.forEach((item) => {
+        setProducts((prev) => [...prev, { ...item }]);
+      });
     }
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && products.length > 0) {
-      localStorage.setItem("cart", JSON.stringify(products));
-    }
+    localStorage.setItem("cart", JSON.stringify(products));
   }, [products]);
 
   const addProductToCart: ICartContextType["addProductToCart"] = ({
