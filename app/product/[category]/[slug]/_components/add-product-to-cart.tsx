@@ -28,8 +28,6 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
   const handleDecreaseQuantityClick = () =>
     setQuantity((prev) => (prev === 1 ? prev : prev - 1));
 
-  console.log(products);
-
   const handleAddToCartClick = () =>
     addProductToCart({
       product: { ...product, quantity, categorySlug: product.category.slug },

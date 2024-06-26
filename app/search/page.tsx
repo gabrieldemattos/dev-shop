@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Product } from "@prisma/client";
 import { searchProducts } from "./_actions/search";
 import ProductItem from "../_components/product-item";
-import { Frown, Loader2 } from "lucide-react";
+import { Frown } from "lucide-react";
 import Loader from "../_components/loader";
 
 const SearchPage = () => {
@@ -34,8 +34,6 @@ const SearchPage = () => {
 
     fetchProducts();
   }, [searchFor]);
-
-  console.log(products);
 
   if (!searchFor) return notFound();
 

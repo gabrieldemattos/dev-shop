@@ -14,20 +14,8 @@ interface CartItemProps {
 }
 
 const CartItem = ({ product }: CartItemProps) => {
-  const {
-    incrementQuantity,
-    decrementQuantity,
-    deleteProductFromCart,
-    totalPriceWithDiscounts,
-    totalPriceWithoutDiscounts,
-    totalDiscounts,
-  } = useCartContext();
-
-  console.log({
-    desconto: formatCurrency(totalPriceWithDiscounts),
-    semDesconto: formatCurrency(totalPriceWithoutDiscounts),
-    totalDesconto: formatCurrency(totalDiscounts),
-  });
+  const { incrementQuantity, decrementQuantity, deleteProductFromCart } =
+    useCartContext();
 
   const handleIncrementQuantityClick = () => incrementQuantity(product.id);
 
