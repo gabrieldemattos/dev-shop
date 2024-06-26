@@ -2,12 +2,20 @@
 
 import { Button } from "@/app/_components/ui/button";
 import { useCartContext } from "@/app/_hooks/useCartContext";
-import { Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 interface AddProductToCartProps {
-  product: Product;
+  product: Prisma.ProductGetPayload<{
+    include: {
+      category: {
+        select: {
+          slug: true;
+        };
+      };
+    };
+  }>;
 }
 
 const AddProductToCart = ({ product }: AddProductToCartProps) => {
@@ -23,7 +31,9 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
   console.log(products);
 
   const handleAddToCartClick = () =>
-    addProductToCart({ product: { ...product, quantity } });
+    addProductToCart({
+      product: { ...product, quantity, categorySlug: product.category.slug },
+    });
 
   return (
     <div>
@@ -55,7 +65,7 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
           className="w-full font-semibold uppercase shadow-md"
           onClick={handleAddToCartClick}
         >
-          Adicionar à sacola
+          Adicionar ao carrinho
         </Button>
       </div>
     </div>
