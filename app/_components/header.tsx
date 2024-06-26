@@ -1,4 +1,6 @@
-import { MenuIcon } from "lucide-react";
+"use client";
+
+import { MenuIcon, ShoppingCartIcon } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -11,8 +13,14 @@ import { Button } from "./ui/button";
 import Search from "./search";
 import Link from "next/link";
 import Cart from "./cart";
+import { useCartContext } from "../_hooks/useCartContext";
+import { useState } from "react";
 
 const Header = () => {
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+
+  const { totalProducts } = useCartContext();
+
   return (
     <div className="bg-linear-primary px-8 py-3">
       <div className="flex flex-col space-y-3">
@@ -44,11 +52,37 @@ const Header = () => {
             </p>
           </Link>
 
-          <Cart />
+          <div
+            className="relative cursor-pointer"
+            onClick={() => setIsCartOpen(true)}
+          >
+            <Button
+              size="icon"
+              variant="outline"
+              className="border-none bg-transparent text-white hover:bg-transparent"
+            >
+              <ShoppingCartIcon />
+            </Button>
+
+            {totalProducts > 0 && (
+              <span className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-foreground p-1 text-xs font-bold text-background">
+                {totalProducts}
+              </span>
+            )}
+          </div>
         </div>
 
         <Search />
       </div>
+
+      <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+        <SheetContent className="w-[80vw] bg-[#f3f3f3]" side="right">
+          <SheetHeader>
+            <SheetTitle className="text-left">Meu Carrinho</SheetTitle>
+          </SheetHeader>
+          <Cart />
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

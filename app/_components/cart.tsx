@@ -1,54 +1,65 @@
 "use client";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
 import { Button } from "./ui/button";
-import { ShoppingCartIcon } from "lucide-react";
 import CartItem from "./cart-items";
 import { useCartContext } from "../_hooks/useCartContext";
+import { Card, CardContent } from "./ui/card";
+import { Separator } from "./ui/separator";
+import { formatCurrency } from "../_helpers/price";
 
 const Cart = () => {
-  const { products, totalProducts } = useCartContext();
+  const {
+    products,
+    totalDiscounts,
+    totalPriceWithDiscounts,
+    totalPriceWithoutDiscounts,
+  } = useCartContext();
 
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <div className="relative">
-          <Button
-            size="icon"
-            variant="outline"
-            className="border-none bg-transparent text-white hover:bg-transparent"
-          >
-            <ShoppingCartIcon />
-          </Button>
+    <>
+      <div className="flex h-full flex-col py-5">
+        {products.length > 0 ? (
+          <>
+            <div className="h-full flex-auto space-y-4 overflow-auto">
+              {products.map((product) => (
+                <CartItem key={product.id} product={product} />
+              ))}
+            </div>
 
-          {totalProducts > 0 && (
-            <span className="absolute bottom-0 right-0 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-foreground font-bold text-background">
-              {totalProducts}
-            </span>
-          )}
-        </div>
-      </SheetTrigger>
+            <div className="mt-6">
+              <Card>
+                <CardContent className="space-y-2 p-5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span>{formatCurrency(totalPriceWithoutDiscounts)}</span>
+                  </div>
 
-      <SheetContent side="right" className="w-[80vw] bg-[#f3f3f3]">
-        <SheetHeader className="text-left">
-          <SheetTitle>Meu Carrinho</SheetTitle>
-        </SheetHeader>
+                  <Separator />
 
-        {products.length > 0 && (
-          <div className="space-y-4 py-5">
-            {products.map((product) => (
-              <CartItem key={product.id} product={product} />
-            ))}
-          </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">Descontos</span>
+                    <span>- {formatCurrency(totalDiscounts)}</span>
+                  </div>
+
+                  <Separator className="h-[0.5px]" />
+
+                  <div className="flex items-center justify-between text-xs font-semibold">
+                    <span>Total</span>
+                    <span>{formatCurrency(totalPriceWithDiscounts)}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Button className="mt-6 w-full">Finalizar pedido</Button>
+          </>
+        ) : (
+          <h2 className="mt-6 text-nowrap text-left font-medium">
+            Seu carrinho de compras da DEVShop está vazio.
+          </h2>
         )}
-      </SheetContent>
-    </Sheet>
+      </div>
+    </>
   );
 };
 
