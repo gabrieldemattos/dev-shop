@@ -19,6 +19,13 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     where: {
       slug: params.slug,
     },
+    include: {
+      category: {
+        select: {
+          slug: true,
+        },
+      },
+    },
   });
 
   const relatedProducts = await db.product.findMany({
@@ -35,6 +42,10 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     },
     take: 10,
   });
+
+  const relatedProductsFiltered = relatedProducts.filter(
+    (relatedProduct) => relatedProduct.slug !== params.slug,
+  );
 
   if (!product) return notFound();
 
@@ -64,7 +75,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         <h2>Produtos Relacionados</h2>
 
         <div className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {relatedProducts.map((product) => (
+          {relatedProductsFiltered.map((product) => (
             <ProductItem key={product.id} product={product} />
           ))}
         </div>

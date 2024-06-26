@@ -1,5 +1,9 @@
 import { Product } from "@prisma/client";
 
-export interface ICartProduct extends Product {
+interface CartWithQuantity extends Product {
   quantity: number;
+}
+
+export interface ICartProduct extends CartWithQuantity {
+  categorySlug: string;
 }
