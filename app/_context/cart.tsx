@@ -15,6 +15,7 @@ export const CartContext = createContext<ICartContextType>({
   incrementQuantity: () => {},
   decrementQuantity: () => {},
   deleteProductFromCart: () => {},
+  clearCart: () => {},
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
@@ -91,6 +92,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     0,
   );
 
+  const clearCart = () => setProducts([]);
+
   const totalPriceWithDiscounts = products.reduce(
     (acc, product) =>
       acc + product.quantity * calculateProductTotalPrice(product),
@@ -116,6 +119,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         incrementQuantity,
         decrementQuantity,
         deleteProductFromCart,
+        clearCart,
       }}
     >
       {children}

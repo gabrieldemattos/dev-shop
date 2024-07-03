@@ -10,4 +10,5 @@ export interface ICartContextType {
   incrementQuantity: (productId: string) => void;
   decrementQuantity: (productId: string) => void;
   deleteProductFromCart: (productId: string) => void;
+  clearCart: () => void;
 }
