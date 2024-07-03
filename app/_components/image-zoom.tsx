@@ -38,7 +38,7 @@ const ImageZoom = ({
         height={0}
         width={0}
         sizes="100vw"
-        className="h-auto max-h-[90%] w-full max-w-full bg-background object-contain md:w-auto"
+        className="h-auto max-h-[90%] w-full min-w-[50%] max-w-full bg-background object-contain md:w-auto"
       />
     </div>
   );

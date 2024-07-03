@@ -12,7 +12,7 @@ interface ProductImagesProps {
   productName: string;
 }
 
-const ProductImage = ({ imageUrls, productName }: ProductImagesProps) => {
+const ProductImages = ({ imageUrls, productName }: ProductImagesProps) => {
   const [activeImageUrl, setActiveImageUrl] = useState<string>(imageUrls[0]);
   const [isImageZoomed, setIsImageZoomed] = useState<boolean>(false);
 
@@ -25,7 +25,7 @@ const ProductImage = ({ imageUrls, productName }: ProductImagesProps) => {
       <div className="flex h-full w-full flex-col space-y-4">
         <div className="relative w-full bg-linear-secondary">
           <div
-            className="flex h-[380px] w-full cursor-pointer items-center justify-center border shadow-md"
+            className="flex h-[380px] w-full cursor-pointer items-center justify-center shadow-md"
             onClick={() => setIsImageZoomed(true)}
           >
             <Image
@@ -34,7 +34,7 @@ const ProductImage = ({ imageUrls, productName }: ProductImagesProps) => {
               height={0}
               width={0}
               sizes="100vw"
-              className="h-auto max-h-[70%] w-auto max-w-[80%] object-contain"
+              className="h-auto max-h-[70%] w-full max-w-[80%] object-contain"
             />
           </div>
 
@@ -79,4 +79,4 @@ const ProductImage = ({ imageUrls, productName }: ProductImagesProps) => {
   );
 };
 
-export default ProductImage;
+export default ProductImages;

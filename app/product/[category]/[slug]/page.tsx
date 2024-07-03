@@ -1,6 +1,6 @@
 import { db } from "@/app/_lib/prisma";
 import { notFound } from "next/navigation";
-import ProductImage from "./_components/product-images";
+import ProductImages from "./_components/product-images";
 import ProductItem from "@/app/_components/product-item";
 import ProductDetails from "./_components/product-details";
 import ProductStatus from "./_components/product-status";
@@ -51,7 +51,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <ProductImage imageUrls={product.imageUrls} productName={product.name} />
+      <ProductImages imageUrls={product.imageUrls} productName={product.name} />
 
       <div className="flex flex-col space-y-4 px-5">
         <ProductStatus />
