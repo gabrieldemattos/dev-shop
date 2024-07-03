@@ -68,8 +68,6 @@ const Header = () => {
     fetchCategories();
   }, []);
 
-  console.log(totalProducts);
-
   return (
     <div className="bg-linear-primary px-8 py-3">
       <div className="flex flex-col space-y-3">
