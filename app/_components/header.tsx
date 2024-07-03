@@ -45,6 +45,7 @@ import { getCategories } from "../_actions/get-categories";
 const Header = () => {
   const [confirmedSignOut, setConfirmedSignOut] = useState<boolean>(false);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
 
   const { data } = useSession();
 
@@ -247,7 +248,7 @@ const Header = () => {
               </SheetContent>
             </Sheet>
 
-            <Sheet>
+            <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
               <SheetTrigger asChild>
                 <Button
                   size="icon"
@@ -268,7 +269,7 @@ const Header = () => {
                   <SheetTitle className="text-left">Meu Carrinho</SheetTitle>
                 </SheetHeader>
 
-                <Cart />
+                <Cart setIsOpen={setIsCartOpen} />
               </SheetContent>
             </Sheet>
           </div>
