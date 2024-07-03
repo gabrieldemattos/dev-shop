@@ -252,7 +252,7 @@ const Header = () => {
                 <Button
                   size="icon"
                   variant="outline"
-                  className="border-none bg-transparent text-white hover:bg-transparent"
+                  className="relative border-none bg-transparent text-white hover:bg-transparent"
                 >
                   {totalProducts > 0 && (
                     <span className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-foreground p-1 text-xs font-bold text-background">
