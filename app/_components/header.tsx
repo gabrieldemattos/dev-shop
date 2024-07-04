@@ -198,7 +198,7 @@ const Header = () => {
 
                       <MenuButton
                         className="font-normal"
-                        href="/"
+                        href="/my-orders"
                         icon={<ScrollText size={16} />}
                         label="Meus Pedidos"
                       />
