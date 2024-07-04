@@ -12,6 +12,17 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { createOrder } from "../_actions/order";
 import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 interface CartProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -154,17 +165,36 @@ const Cart = ({ setIsOpen }: CartProps) => {
               )}
             </Button>
 
-            <Button
-              className="mt-6 w-full gap-1 uppercase"
-              disabled={isSubmitLoading}
-              variant="destructive"
-              onClick={handleClearCartClick}
-            >
-              {isSubmitLoading && (
-                <Loader2 className="ml-2 animate-spin" size={20} />
-              )}
-              Limpar carrinho
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  className="mt-6 w-full gap-1 uppercase"
+                  disabled={isSubmitLoading}
+                  variant="destructive"
+                >
+                  {isSubmitLoading && (
+                    <Loader2 className="ml-2 animate-spin" size={20} />
+                  )}
+                  Limpar carrinho
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Deseja realmente limpar o carrinho?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Todos os itens adicionados serão removidos permanentemente.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleClearCartClick}>
+                    Limpar
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </>
         ) : (
           <div className="mt-20 flex flex-col items-center">
