@@ -93,9 +93,9 @@ enum ProductStatus {
 model OrderProduct {
   id                 String  @id @default(uuid())
   productId          String
-  product            Product @relation(fields: [productId], references: [id])
+  product            Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   orderId            String
-  order              Order   @relation(fields: [orderId], references: [id])
+  order              Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   basePrice          Decimal @db.Decimal(8, 2)
   discountPercentage Int     @default(0)
   quantity           Int
@@ -112,7 +112,7 @@ enum OrderStatus {
 model Order {
   id            String         @id @default(uuid())
   userId        String
-  user          User           @relation(fields: [userId], references: [id])
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   products      OrderProduct[]
   totalPrice    Decimal        @db.Decimal(10, 2)
   subtotalPrice Decimal        @db.Decimal(10, 2)
