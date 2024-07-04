@@ -82,6 +82,20 @@ const Cart = ({ setIsOpen }: CartProps) => {
     }
   };
 
+  const handleClearCartClick = () => {
+    setIsSubmitLoading(true);
+    clearCart();
+
+    if (products.length === 0) {
+      setIsSubmitLoading(false);
+
+      toast("Carrinho limpo com sucesso!", {
+        position: "bottom-center",
+        duration: 3000,
+      });
+    }
+  };
+
   return (
     <>
       <div className="flex h-full flex-col py-5">
@@ -108,7 +122,14 @@ const Cart = ({ setIsOpen }: CartProps) => {
                     <span>- {formatCurrency(totalDiscounts)}</span>
                   </div>
 
-                  <Separator className="h-[0.5px]" />
+                  <Separator />
+
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">Entrega</span>
+                    <span className="uppercase">Grátis</span>
+                  </div>
+
+                  <Separator />
 
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span>Total</span>
@@ -132,6 +153,18 @@ const Cart = ({ setIsOpen }: CartProps) => {
                 "Finalizar pedido"
               )}
             </Button>
+
+            <Button
+              className="mt-6 w-full gap-1 uppercase"
+              disabled={isSubmitLoading}
+              variant="destructive"
+              onClick={handleClearCartClick}
+            >
+              {isSubmitLoading && (
+                <Loader2 className="ml-2 animate-spin" size={20} />
+              )}
+              Limpar carrinho
+            </Button>
           </>
         ) : (
           <div className="mt-20 flex flex-col items-center">
@@ -153,7 +186,13 @@ const Cart = ({ setIsOpen }: CartProps) => {
               </p>
             </div>
 
-            <Button className="mt-2 uppercase" onClick={() => router.push("/")}>
+            <Button
+              className="mt-2 uppercase"
+              onClick={() => {
+                router.push("/");
+                setIsOpen(false);
+              }}
+            >
               Comece a comprar agora
             </Button>
           </div>
