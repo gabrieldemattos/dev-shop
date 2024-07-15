@@ -46,6 +46,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   orders        Order[]
+  address       Address[]
 
   @@map("users")
 }
@@ -58,6 +59,64 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verificationtokens")
 }
+
+
+enum State {
+  AC
+  AL
+  AP
+  AM
+  BA
+  CE
+  DF
+  ES
+  GO
+  MA
+  MT
+  MS
+  MG
+  PA
+  PB
+  PR
+  PE
+  PI
+  RJ
+  RN
+  RS
+  RO
+  RR
+  SC
+  SP
+  SE
+  TO
+}
+
+enum Country {
+  BRA
+}
+
+model Address {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  label        String   @db.VarChar(50)
+  street       String
+  number       String   @db.VarChar(10)
+  neighborhood String
+  city         String
+  state        State
+  country      Country
+  postalCode   String
+  telephone    String   @db.VarChar(20)
+  reference    String?  @db.VarChar(140)
+  complement   String?  @db.VarChar(30)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
 
 model Category {
   id        String    @id @default(uuid())
