@@ -60,7 +60,6 @@ model VerificationToken {
   @@map("verificationtokens")
 }
 
-
 enum State {
   AC
   AL
@@ -96,27 +95,27 @@ enum Country {
 }
 
 model Address {
-  id           String   @id @default(cuid())
-  firstName    String
-  lastName     String
-  userId       String
-  user         User     @relation(fields: [userId], references: [id])
-  label        String   @db.VarChar(50)
-  street       String
-  number       String   @db.VarChar(10)
-  neighborhood String
-  city         String
-  state        State
-  country      Country
-  postalCode   String
-  telephone    String   @db.VarChar(20)
-  reference    String?  @db.VarChar(140)
-  complement   String?  @db.VarChar(30)
-  active       Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String   @id @default(cuid())
+  firstName       String
+  lastName        String
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  label           String   @db.VarChar(50)
+  street          String
+  number          String   @db.VarChar(10)
+  neighborhood    String
+  city            String
+  state           State
+  country         Country
+  postalCode      String
+  telephoneDDD    String   @db.VarChar(2)
+  telephoneNumber String   @db.VarChar(9)
+  reference       String?  @db.VarChar(140)
+  complement      String?  @db.VarChar(30)
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
-
 
 model Category {
   id        String    @id @default(uuid())

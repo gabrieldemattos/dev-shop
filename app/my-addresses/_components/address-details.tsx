@@ -1,11 +1,14 @@
 import { Address } from "@prisma/client";
 import AddressParagraph from "./address-paragraph";
+import { formatPhoneNumber } from "@/app/_helpers/format-phone-number";
 
 interface AddressDetailsProps {
   address: Address;
 }
 
 const AddressDetails = ({ address }: AddressDetailsProps) => {
+  const telephoneNumber = `${address.telephoneDDD}${address.telephoneNumber}`;
+
   return (
     <div className="flex w-10/12 flex-col gap-1 px-5">
       <p className="text-lg font-semibold uppercase">{address.label}</p>
@@ -33,7 +36,7 @@ const AddressDetails = ({ address }: AddressDetailsProps) => {
 
       <AddressParagraph
         label="Telefone para contato:"
-        content={address.telephone}
+        content={formatPhoneNumber(telephoneNumber)}
       />
     </div>
   );
