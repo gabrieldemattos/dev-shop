@@ -191,9 +191,9 @@ const Header = () => {
                     <>
                       <MenuButton
                         className="font-normal"
-                        href="/"
+                        href="/my-addresses"
                         icon={<MapPin size={16} />}
-                        label="Meus Endereços"
+                        label="Endereços Cadastrados"
                       />
 
                       <MenuButton
