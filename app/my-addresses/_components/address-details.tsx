@@ -7,8 +7,6 @@ interface AddressDetailsProps {
 }
 
 const AddressDetails = ({ address }: AddressDetailsProps) => {
-  const telephoneNumber = `${address.telephoneDDD}${address.telephoneNumber}`;
-
   return (
     <div className="flex w-10/12 flex-col gap-1 px-5">
       <p className="text-lg font-semibold uppercase">{address.label}</p>
@@ -36,7 +34,10 @@ const AddressDetails = ({ address }: AddressDetailsProps) => {
 
       <AddressParagraph
         label="Telefone para contato:"
-        content={formatPhoneNumber(telephoneNumber)}
+        content={formatPhoneNumber(
+          address.telephoneDDD,
+          address.telephoneNumber,
+        )}
       />
     </div>
   );
