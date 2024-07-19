@@ -7,6 +7,7 @@ import { authOptions } from "../_lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { db } from "../_lib/prisma";
+import AddressOptions from "./_components/address-options";
 
 const MyAddressesPage = async () => {
   const session = await getServerSession(authOptions);
@@ -69,6 +70,8 @@ const MyAddressesPage = async () => {
                         <CheckIcon size={10} className="text-white" />
                       </div>
                     )}
+
+                    <AddressOptions address={address} />
                   </div>
                 </div>
               </div>
