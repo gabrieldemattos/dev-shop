@@ -16,6 +16,8 @@ import { orderStatus } from "../_constants/order-status";
 import Link from "next/link";
 import { Button } from "../_components/ui/button";
 import { redirect } from "next/navigation";
+import { formatPhoneNumber } from "../_helpers/format-phone-number";
+import { paymentIconsTranslations } from "../_constants/payment-icons-translations";
 
 const MyOrderPage = async () => {
   const session = await getServerSession(authOptions);
@@ -76,7 +78,12 @@ const MyOrderPage = async () => {
 
                       <div className="flex flex-col text-sm font-bold">
                         <h3 className="uppercase">Pagamento</h3>
-                        <span className="capitalize text-primary">Pix</span>
+                        <span className="capitalize text-primary">
+                          {
+                            paymentIconsTranslations[order.paymentMethod]
+                              .translate
+                          }
+                        </span>
                       </div>
 
                       <Separator />
@@ -89,43 +96,54 @@ const MyOrderPage = async () => {
                         <div className="w-[350px] space-y-2">
                           <p className="truncate text-ellipsis">
                             Quem receberá:{" "}
-                            <span className="font-semibold italic">
-                              Fulano de tal
+                            <span className="font-semibold capitalize italic">
+                              {order.addressFirstName} {order.addressLastName}
                             </span>
                           </p>
 
                           <p>
                             Endereço:{" "}
                             <span className="font-semibold capitalize italic">
-                              Rua tal, 123
+                              {order.addressStreet}, {order.addressNumber}
                             </span>
                           </p>
 
                           <p>
                             Bairro:{" "}
                             <span className="font-semibold capitalize italic">
-                              Jardim tal - Cidade tal - sp
+                              {order.addressNeighborhood} - {order.addressCity}{" "}
+                              -{" "}
+                              <span className="uppercase">
+                                {order.addressState}
+                              </span>
                             </span>
                           </p>
 
-                          <p>
-                            Complemento:{" "}
-                            <span className="font-semibold capitalize italic">
-                              Apto tal - Bloco tal
-                            </span>
-                          </p>
+                          {order.addressComplement && (
+                            <p>
+                              Complemento:{" "}
+                              <span className="font-semibold capitalize italic">
+                                {order.addressComplement}
+                              </span>
+                            </p>
+                          )}
 
-                          <p>
-                            Referência:{" "}
-                            <span className="font-semibold capitalize italic">
-                              Próximo ao supermercado tal
-                            </span>
-                          </p>
+                          {order.addressComplement && (
+                            <p>
+                              Referência:{" "}
+                              <span className="font-semibold capitalize italic">
+                                {order.addressReference}
+                              </span>
+                            </p>
+                          )}
 
                           <p>
                             Telefone para contato:{" "}
                             <span className="font-semibold capitalize italic">
-                              (11) 99999-9999
+                              {formatPhoneNumber(
+                                order.addressTelephoneDDD,
+                                order.addressTelephoneNumber,
+                              )}
                             </span>
                           </p>
                         </div>
