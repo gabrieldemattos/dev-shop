@@ -167,16 +167,37 @@ enum OrderStatus {
   CANCELLED
 }
 
+enum PaymentMethod {
+  PIX
+  DEBIT_CARD
+  CREDIT_CARD
+}
+
 model Order {
-  id            String         @id @default(uuid())
-  userId        String
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  products      OrderProduct[]
-  totalPrice    Decimal        @db.Decimal(10, 2)
-  subtotalPrice Decimal        @db.Decimal(10, 2)
-  deliveryFee   Decimal        @db.Decimal(10, 2)
-  discountValue Decimal        @db.Decimal(10, 2)
-  status        OrderStatus
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @default(now()) @updatedAt
+  id                     String         @id @default(uuid())
+  userId                 String
+  user                   User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products               OrderProduct[]
+  totalPrice             Decimal        @db.Decimal(10, 2)
+  subtotalPrice          Decimal        @db.Decimal(10, 2)
+  deliveryFee            Decimal        @db.Decimal(10, 2)
+  discountValue          Decimal        @db.Decimal(10, 2)
+  status                 OrderStatus
+  paymentMethod          PaymentMethod
+  addressFirstName       String
+  addressLastName        String
+  addressLabel           String
+  addressStreet          String
+  addressNumber          String
+  addressNeighborhood    String
+  addressCity            String
+  addressState           State
+  addressCountry         Country
+  addressPostalCode      String
+  addressTelephoneDDD    String         @db.VarChar(2)
+  addressTelephoneNumber String         @db.VarChar(9)
+  addressReference       String?
+  addressComplement      String?
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @default(now()) @updatedAt
 }
