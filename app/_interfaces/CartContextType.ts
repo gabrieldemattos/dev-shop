@@ -1,3 +1,4 @@
+import { PaymentMethod } from "@prisma/client";
 import { ICartProduct } from "./CartProduct";
 
 export interface ICartContextType {
@@ -6,6 +7,8 @@ export interface ICartContextType {
   totalPriceWithDiscounts: number;
   totalPriceWithoutDiscounts: number;
   totalDiscounts: number;
+  paymentMethod: string | null;
+  setPaymentMethod: (paymentMethod: PaymentMethod) => void;
   addProductToCart: ({ product }: { product: ICartProduct }) => void;
   incrementQuantity: (productId: string) => void;
   decrementQuantity: (productId: string) => void;

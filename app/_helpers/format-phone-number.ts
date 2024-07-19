@@ -1,7 +1,12 @@
-export const formatPhoneNumber = (phoneNumber: string) => {
-  phoneNumber = phoneNumber.replace(/\D/g, "");
+export const formatPhoneNumber = (ddd: string, telephone: string) => {
+  let fullPhoneNumber = ddd + telephone;
 
-  phoneNumber = phoneNumber.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+  fullPhoneNumber = fullPhoneNumber.replace(/\D/g, "");
 
-  return phoneNumber;
+  fullPhoneNumber = fullPhoneNumber.replace(
+    /(\d{2})(\d{5})(\d{4})/,
+    "($1) $2-$3",
+  );
+
+  return fullPhoneNumber;
 };
