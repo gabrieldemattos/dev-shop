@@ -4,6 +4,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import { ICartProduct } from "../_interfaces/CartProduct";
 import { ICartContextType } from "../_interfaces/CartContextType";
 import { calculateProductTotalPrice } from "../_helpers/price";
+import { PaymentMethod } from "@prisma/client";
 
 export const CartContext = createContext<ICartContextType>({
   products: [],
@@ -11,6 +12,8 @@ export const CartContext = createContext<ICartContextType>({
   totalPriceWithDiscounts: 0,
   totalPriceWithoutDiscounts: 0,
   totalDiscounts: 0,
+  paymentMethod: null,
+  setPaymentMethod: () => {},
   addProductToCart: () => {},
   incrementQuantity: () => {},
   decrementQuantity: () => {},
@@ -20,6 +23,9 @@ export const CartContext = createContext<ICartContextType>({
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<ICartProduct[]>([]);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(
+    null,
+  );
 
   useEffect(() => {
     const cartData = localStorage.getItem("cart");
@@ -92,7 +98,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     0,
   );
 
-  const clearCart = () => setProducts([]);
+  const clearCart = () => {
+    setPaymentMethod(null);
+    setProducts([]);
+    return;
+  };
 
   const totalPriceWithDiscounts = products.reduce(
     (acc, product) =>
@@ -115,6 +125,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         totalPriceWithDiscounts,
         totalPriceWithoutDiscounts,
         totalDiscounts,
+        paymentMethod,
+        setPaymentMethod,
         addProductToCart,
         incrementQuantity,
         decrementQuantity,
