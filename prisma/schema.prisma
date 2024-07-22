@@ -38,15 +38,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  orders        Order[]
-  address       Address[]
+  id               String                @id @default(cuid())
+  name             String?
+  email            String?               @unique
+  emailVerified    DateTime?             @map("email_verified")
+  image            String?
+  accounts         Account[]
+  sessions         Session[]
+  orders           Order[]
+  addresses        Address[]
+  favoriteProducts UserFavoriteProduct[]
 
   @@map("users")
 }
@@ -58,40 +59,6 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
-}
-
-enum State {
-  AC
-  AL
-  AP
-  AM
-  BA
-  CE
-  DF
-  ES
-  GO
-  MA
-  MT
-  MS
-  MG
-  PA
-  PB
-  PR
-  PE
-  PI
-  RJ
-  RN
-  RS
-  RO
-  RR
-  SC
-  SP
-  SE
-  TO
-}
-
-enum Country {
-  BRA
 }
 
 model Address {
@@ -128,19 +95,20 @@ model Category {
 }
 
 model Product {
-  id                 String         @id @default(uuid())
+  id                 String                @id @default(uuid())
   name               String
-  slug               String         @unique
+  slug               String                @unique
   description        String
-  basePrice          Decimal        @db.Decimal(8, 2)
+  basePrice          Decimal               @db.Decimal(8, 2)
   imageUrls          String[]
   categoryId         String
-  category           Category       @relation(fields: [categoryId], references: [id])
-  discountPercentage Int            @default(0)
-  status             ProductStatus  @default(ACTIVE)
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
+  category           Category              @relation(fields: [categoryId], references: [id])
+  discountPercentage Int                   @default(0)
+  status             ProductStatus         @default(ACTIVE)
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
   orderProduct       OrderProduct[]
+  usersWhoFavorited  UserFavoriteProduct[]
 }
 
 enum ProductStatus {
@@ -200,4 +168,48 @@ model Order {
   addressComplement      String?
   createdAt              DateTime       @default(now())
   updatedAt              DateTime       @default(now()) @updatedAt
+}
+
+model UserFavoriteProduct {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@id([userId, productId])
+}
+
+enum State {
+  AC
+  AL
+  AP
+  AM
+  BA
+  CE
+  DF
+  ES
+  GO
+  MA
+  MT
+  MS
+  MG
+  PA
+  PB
+  PR
+  PE
+  PI
+  RJ
+  RN
+  RS
+  RO
+  RR
+  SC
+  SP
+  SE
+  TO
+}
+
+enum Country {
+  BRA
 }
