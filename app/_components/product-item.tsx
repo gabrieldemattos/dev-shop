@@ -1,10 +1,11 @@
-import { Prisma } from "@prisma/client";
-import { Heart, Star } from "lucide-react";
+import { Prisma, UserFavoriteProduct } from "@prisma/client";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
 import { cn } from "../_lib/utils";
+import ToggleFavoriteButton from "./toggle-favorite-button";
 
 interface ProductItemProps {
   product: Prisma.ProductGetPayload<{
@@ -17,9 +18,14 @@ interface ProductItemProps {
     };
   }>;
   className?: string;
+  userFavorites: UserFavoriteProduct[];
 }
 
-const ProductItem = ({ product, className }: ProductItemProps) => {
+const ProductItem = ({
+  product,
+  className,
+  userFavorites,
+}: ProductItemProps) => {
   return (
     <div className={cn("flex min-h-[150px] w-[150px] flex-col", className)}>
       <div
@@ -45,9 +51,11 @@ const ProductItem = ({ product, className }: ProductItemProps) => {
           )}
         </Link>
 
-        <div className="absolute -bottom-5 right-1 z-50 flex items-center justify-center rounded-full bg-white p-2 shadow-lg">
-          <Heart className="cursor-pointer hover:fill-primary hover:stroke-primary" />
-        </div>
+        <ToggleFavoriteButton
+          userFavorites={userFavorites}
+          productId={product.id}
+          className="-bottom-5 right-1"
+        />
       </div>
 
       <div className="mt-2 flex gap-1">

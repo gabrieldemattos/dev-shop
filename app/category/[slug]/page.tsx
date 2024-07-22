@@ -2,7 +2,9 @@ import Header from "@/app/_components/header";
 import ProductItem from "@/app/_components/product-item";
 import { Badge } from "@/app/_components/ui/badge";
 import { CATEGORY_ICON } from "@/app/_constants/category-icon";
+import { authOptions } from "@/app/_lib/auth";
 import { db } from "@/app/_lib/prisma";
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
 interface CategoryPageProps {
@@ -12,6 +14,14 @@ interface CategoryPageProps {
 }
 
 const CategoryPage = async ({ params }: CategoryPageProps) => {
+  const session = await getServerSession(authOptions);
+
+  const userFavorites = await db.userFavoriteProduct.findMany({
+    where: {
+      userId: session?.user?.id,
+    },
+  });
+
   const category = await db.category.findUnique({
     where: {
       slug: params.slug,
@@ -45,6 +55,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
               key={product.id}
               product={{ ...product, category }}
               className="min-w-full"
+              userFavorites={userFavorites}
             />
           ))}
         </div>

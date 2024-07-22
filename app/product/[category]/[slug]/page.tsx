@@ -6,6 +6,8 @@ import ProductDetails from "./_components/product-details";
 import ProductStatus from "./_components/product-status";
 import ProductReviews from "./_components/product-reviews";
 import AddProductToCart from "./_components/add-product-to-cart";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/_lib/auth";
 
 interface ProductPageProps {
   params: {
@@ -15,6 +17,14 @@ interface ProductPageProps {
 }
 
 const ProductPage = async ({ params }: ProductPageProps) => {
+  const session = await getServerSession(authOptions);
+
+  const userFavorites = await db.userFavoriteProduct.findMany({
+    where: {
+      userId: session?.user?.id,
+    },
+  });
+
   const product = await db.product.findUnique({
     where: {
       slug: params.slug,
@@ -51,7 +61,12 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <ProductImages imageUrls={product.imageUrls} productName={product.name} />
+      <ProductImages
+        imageUrls={product.imageUrls}
+        productName={product.name}
+        userFavorites={userFavorites}
+        productId={product.id}
+      />
 
       <div className="flex flex-col space-y-4 px-5">
         <ProductStatus />
@@ -76,7 +91,11 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 
         <div className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
           {relatedProductsFiltered.map((product) => (
-            <ProductItem key={product.id} product={product} />
+            <ProductItem
+              key={product.id}
+              product={product}
+              userFavorites={userFavorites}
+            />
           ))}
         </div>
       </div>
