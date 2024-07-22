@@ -1,0 +1,53 @@
+import { getServerSession } from "next-auth";
+import Header from "../_components/header";
+import { db } from "../_lib/prisma";
+import { authOptions } from "../_lib/auth";
+import ProductItem from "../_components/product-item";
+import { Heart } from "lucide-react";
+
+const MyFavoritesPage = async () => {
+  const session = await getServerSession(authOptions);
+
+  const userFavorites = await db.userFavoriteProduct.findMany({
+    where: {
+      userId: session?.user?.id,
+    },
+    include: {
+      product: {
+        include: {
+          category: true,
+        },
+      },
+    },
+  });
+
+  console.log(userFavorites);
+
+  return (
+    <>
+      <Header />
+
+      <div className="p-8">
+        <div className="mb-8">
+          <div className="flex w-fit items-center gap-2 rounded-full bg-background px-3 py-[5px] uppercase shadow-md">
+            <Heart />
+            <h2 className="font-bold">Meus Favoritos</h2>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8">
+          {userFavorites.map((favorite) => (
+            <ProductItem
+              key={favorite.product.id}
+              product={favorite.product}
+              className="min-w-full"
+              userFavorites={userFavorites}
+            />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default MyFavoritesPage;

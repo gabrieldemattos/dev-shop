@@ -205,7 +205,7 @@ const Header = () => {
 
                       <MenuButton
                         className="font-normal"
-                        href="/"
+                        href="/my-favorites"
                         icon={<HeartIcon size={16} />}
                         label="Favoritos"
                       />
