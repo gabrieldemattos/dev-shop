@@ -66,7 +66,7 @@ const MyOrderPage = async () => {
                 >
                   <AccordionTrigger className="p-5">
                     <p
-                      className={`rounded-full ${orderStatus[order.status].backgroundColor} px-3 py-[2px] text-lg text-white`}
+                      className={`rounded-lg ${orderStatus[order.status].backgroundColor} px-3 py-[2px] text-white`}
                     >
                       {orderStatus[order.status].label} -{" "}
                       {order.createdAt.toLocaleDateString("pt-BR")}

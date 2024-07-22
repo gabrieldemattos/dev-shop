@@ -10,7 +10,7 @@ export const getUserActiveAddress = async (userId: string | undefined) => {
       id: userId,
     },
     select: {
-      address: {
+      addresses: {
         where: {
           active: true,
         },
