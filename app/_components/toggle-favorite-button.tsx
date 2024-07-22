@@ -37,6 +37,7 @@ const ToggleFavoriteButton = ({
           ? "Produto removido dos favoritos!"
           : "Produto favoritado com sucesso!",
         {
+          position: "bottom-center",
           action: {
             label: "Ver favoritos",
             onClick: () => router.push("/my-favorites"),
