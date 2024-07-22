@@ -8,6 +8,7 @@ import ProductReviews from "./_components/product-reviews";
 import AddProductToCart from "./_components/add-product-to-cart";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/_lib/auth";
+import Header from "@/app/_components/header";
 
 interface ProductPageProps {
   params: {
@@ -60,46 +61,52 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   if (!product) return notFound();
 
   return (
-    <div className="flex flex-col gap-4">
-      <ProductImages
-        imageUrls={product.imageUrls}
-        productName={product.name}
-        userFavorites={userFavorites}
-        productId={product.id}
-      />
-
-      <div className="flex flex-col space-y-4 px-5">
-        <ProductStatus />
-
-        <ProductDetails product={product} />
-
-        <AddProductToCart product={JSON.parse(JSON.stringify(product))} />
-
-        <div className="py-4">
-          <h2 className="text-lg font-bold">Descrição</h2>
-
-          <span className="text-sm text-muted-foreground">
-            {product.description}
-          </span>
+    <>
+      <div className="flex flex-col gap-4">
+        <div className="mb-[-16px]">
+          <Header />
         </div>
 
-        <ProductReviews />
-      </div>
+        <ProductImages
+          imageUrls={product.imageUrls}
+          productName={product.name}
+          userFavorites={userFavorites}
+          productId={product.id}
+        />
 
-      <div className="space-y-4 pl-5 text-lg font-bold">
-        <h2>Produtos Relacionados</h2>
+        <div className="flex flex-col space-y-4 px-5">
+          <ProductStatus />
 
-        <div className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {relatedProductsFiltered.map((product) => (
-            <ProductItem
-              key={product.id}
-              product={product}
-              userFavorites={userFavorites}
-            />
-          ))}
+          <ProductDetails product={product} />
+
+          <AddProductToCart product={JSON.parse(JSON.stringify(product))} />
+
+          <div className="py-4">
+            <h2 className="text-lg font-bold">Descrição</h2>
+
+            <span className="text-sm text-muted-foreground">
+              {product.description}
+            </span>
+          </div>
+
+          <ProductReviews />
+        </div>
+
+        <div className="space-y-4 pl-5 text-lg font-bold">
+          <h2>Produtos Relacionados</h2>
+
+          <div className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+            {relatedProductsFiltered.map((product) => (
+              <ProductItem
+                key={product.id}
+                product={product}
+                userFavorites={userFavorites}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
