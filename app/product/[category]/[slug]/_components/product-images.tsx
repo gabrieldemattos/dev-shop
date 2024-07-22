@@ -1,7 +1,9 @@
 "use client";
 
 import ImageZoom from "@/app/_components/image-zoom";
+import ToggleFavoriteButton from "@/app/_components/toggle-favorite-button";
 import { Button } from "@/app/_components/ui/button";
+import { UserFavoriteProduct } from "@prisma/client";
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -10,9 +12,16 @@ import { useState } from "react";
 interface ProductImagesProps {
   imageUrls: string[];
   productName: string;
+  userFavorites: UserFavoriteProduct[];
+  productId: string;
 }
 
-const ProductImages = ({ imageUrls, productName }: ProductImagesProps) => {
+const ProductImages = ({
+  imageUrls,
+  productName,
+  userFavorites,
+  productId,
+}: ProductImagesProps) => {
   const [activeImageUrl, setActiveImageUrl] = useState<string>(imageUrls[0]);
   const [isImageZoomed, setIsImageZoomed] = useState<boolean>(false);
 
@@ -46,6 +55,12 @@ const ProductImages = ({ imageUrls, productName }: ProductImagesProps) => {
           >
             <ChevronLeft />
           </Button>
+
+          <ToggleFavoriteButton
+            userFavorites={userFavorites}
+            productId={productId}
+            className="absolute right-2 top-2"
+          />
         </div>
 
         <div className="grid grid-cols-4 gap-4 px-5">
