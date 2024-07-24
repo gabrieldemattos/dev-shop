@@ -48,8 +48,8 @@ const OrderConfirmationPage = () => {
     const fetchUserActiveAddress = async () => {
       try {
         setIsAddressLoading(true);
-        const fetchActiveAddress = await getUserActiveAddress(data.user.id);
-        const activeAddress = fetchActiveAddress?.address[0];
+        const fetchActiveAddress = await getUserActiveAddress(data?.user.id);
+        const activeAddress = fetchActiveAddress?.addresses[0];
 
         setUserActiveAddress(activeAddress);
       } catch (error) {
@@ -60,7 +60,7 @@ const OrderConfirmationPage = () => {
     };
 
     if (data?.user.id) fetchUserActiveAddress();
-  }, [data?.user.id!]);
+  }, [data]);
 
   const handleClearCartClick = () => {
     router.push(`/`);
