@@ -1,11 +1,11 @@
 import { Prisma, UserFavoriteProduct } from "@prisma/client";
-import { Star } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
 import { cn } from "../_lib/utils";
 import ToggleFavoriteButton from "./toggle-favorite-button";
+import DisplayProductAverageRating from "./display-product-average-rating";
 
 interface ProductItemProps {
   product: Prisma.ProductGetPayload<{
@@ -59,11 +59,11 @@ const ProductItem = ({
       </div>
 
       <div className="mt-2 flex gap-1">
-        <Star size={12} className="fill-primary text-primary" />
-        <Star size={12} className="fill-primary text-primary" />
-        <Star size={12} className="fill-primary text-primary" />
-        <Star size={12} className="fill-primary text-primary" />
-        <Star size={12} className="fill-primary text-primary" />
+        <DisplayProductAverageRating
+          totalStars={5}
+          iconSize={12}
+          averageRating={product.averageRating}
+        />
       </div>
 
       <p className="truncate">{product.name}</p>
