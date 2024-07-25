@@ -10,9 +10,8 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import { Prisma, Review } from "@prisma/client";
-import Image from "next/image";
-import Link from "next/link";
 import ProductReviewImage from "./product-review-image";
+import { MAX_STARS_RATING } from "@/app/_constants/max-stars-review";
 
 interface DisplayReviewProps {
   review: Review;
@@ -56,7 +55,7 @@ const DisplayReview = ({ review, product }: DisplayReviewProps) => {
             <div className="flex gap-2">
               <DisplayUserReviewRating
                 iconSize={50}
-                totalStars={5}
+                totalStars={MAX_STARS_RATING}
                 userRating={review.rating}
               />
             </div>

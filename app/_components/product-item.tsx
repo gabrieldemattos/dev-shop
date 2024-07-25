@@ -6,6 +6,7 @@ import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
 import { cn } from "../_lib/utils";
 import ToggleFavoriteButton from "./toggle-favorite-button";
 import DisplayProductAverageRating from "./display-product-average-rating";
+import { MAX_STARS_RATING } from "../_constants/max-stars-review";
 
 interface ProductItemProps {
   product: Prisma.ProductGetPayload<{
@@ -60,7 +61,7 @@ const ProductItem = ({
 
       <div className="mt-2 flex gap-1">
         <DisplayProductAverageRating
-          totalStars={5}
+          totalStars={MAX_STARS_RATING}
           iconSize={12}
           averageRating={product.averageRating}
         />

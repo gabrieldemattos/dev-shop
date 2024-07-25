@@ -1,4 +1,5 @@
 import DisplayProductAverageRating from "@/app/_components/display-product-average-rating";
+import { MAX_STARS_RATING } from "@/app/_constants/max-stars-review";
 import { db } from "@/app/_lib/prisma";
 import Link from "next/link";
 
@@ -25,7 +26,7 @@ const ProductStatus = async ({
       <Link className="flex items-center gap-2" href="#reviews">
         <div className="flex gap-1">
           <DisplayProductAverageRating
-            totalStars={5}
+            totalStars={MAX_STARS_RATING}
             iconSize={20}
             averageRating={getAverageRating!.averageRating}
           />

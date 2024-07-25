@@ -15,13 +15,10 @@ import {
 import { Prisma } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import ProductReviewImage from "./product-review-image";
-
-const MAX_STARS_RATING = 5;
+import { MAX_STARS_RATING } from "@/app/_constants/max-stars-review";
 
 interface CreateReviewProps {
   orderProductId: string;

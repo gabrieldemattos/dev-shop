@@ -1,5 +1,6 @@
 import DisplayUserReviewRating from "@/app/_components/display-user-review-rating";
 import { Separator } from "@/app/_components/ui/separator";
+import { MAX_STARS_RATING } from "@/app/_constants/max-stars-review";
 import { formatDate, formatHour } from "@/app/_helpers/format-date";
 
 interface ReviewDetailsProps {
@@ -24,7 +25,7 @@ const ReviewDetails = ({
       <div className="flex items-center justify-between">
         <div className="flex gap-1">
           <DisplayUserReviewRating
-            totalStars={5}
+            totalStars={MAX_STARS_RATING}
             iconSize={15}
             userRating={userRating}
           />
