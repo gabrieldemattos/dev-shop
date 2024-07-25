@@ -19,7 +19,7 @@ interface AddProductToCartProps {
 }
 
 const AddProductToCart = ({ product }: AddProductToCartProps) => {
-  const { addProductToCart, products } = useCartContext();
+  const { addProductToCart } = useCartContext();
 
   const [quantity, setQuantity] = useState<number>(1);
 

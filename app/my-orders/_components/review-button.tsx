@@ -27,8 +27,6 @@ const ReviewButton = async ({ orderProductId, product }: ReviewButtonProps) => {
     product.id as string,
   );
 
-  console.log(product);
-
   return (
     <>
       {review ? (

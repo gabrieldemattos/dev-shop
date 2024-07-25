@@ -51,8 +51,6 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     },
   });
 
-  console.log(product?.reviews.map((review) => review.rating));
-
   const relatedProducts = await db.product.findMany({
     where: {
       category: {

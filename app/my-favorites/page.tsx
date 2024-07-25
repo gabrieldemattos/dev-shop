@@ -21,8 +21,6 @@ const MyFavoritesPage = async () => {
     },
   });
 
-  console.log(userFavorites);
-
   return (
     <>
       <Header />

@@ -24,8 +24,6 @@ interface ProductReviewsProps {
 }
 
 const ProductReviews = ({ reviews }: ProductReviewsProps) => {
-  console.log(reviews);
-
   const lastReview = reviews?.[reviews.length - 1];
 
   const orderedReviews = [...reviews].reverse();
