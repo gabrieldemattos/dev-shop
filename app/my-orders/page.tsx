@@ -18,6 +18,9 @@ import { Button } from "../_components/ui/button";
 import { redirect } from "next/navigation";
 import { formatPhoneNumber } from "../_helpers/format-phone-number";
 import { paymentIconsTranslations } from "../_constants/payment-icons-translations";
+import AddressInfoParagraph from "./_components/address-info-paragraph";
+import BuyAgainButton from "./_components/buy-again-button";
+import ReviewButton from "./_components/review-button";
 
 const MyOrderPage = async () => {
   const session = await getServerSession(authOptions);
@@ -36,6 +39,7 @@ const MyOrderPage = async () => {
               category: true,
             },
           },
+          reviews: true,
         },
       },
     },
@@ -94,19 +98,26 @@ const MyOrderPage = async () => {
                         </h3>
 
                         <div className="w-[350px] space-y-2">
-                          <p className="truncate text-ellipsis">
-                            Quem receberá:{" "}
-                            <span className="font-semibold capitalize italic">
-                              {order.addressFirstName} {order.addressLastName}
-                            </span>
-                          </p>
+                          <AddressInfoParagraph
+                            addressInfo="Nome do endereço"
+                            label={order.addressLabel}
+                          />
 
-                          <p>
-                            Endereço:{" "}
-                            <span className="font-semibold capitalize italic">
-                              {order.addressStreet}, {order.addressNumber}
-                            </span>
-                          </p>
+                          <AddressInfoParagraph
+                            addressInfo="Quem receberá"
+                            label={
+                              order.addressFirstName +
+                              " " +
+                              order.addressLastName
+                            }
+                          />
+
+                          <AddressInfoParagraph
+                            addressInfo="Endereço"
+                            label={
+                              order.addressStreet + ", " + order.addressNumber
+                            }
+                          />
 
                           <p>
                             Bairro:{" "}
@@ -120,90 +131,112 @@ const MyOrderPage = async () => {
                           </p>
 
                           {order.addressComplement && (
-                            <p>
-                              Complemento:{" "}
-                              <span className="font-semibold capitalize italic">
-                                {order.addressComplement}
-                              </span>
-                            </p>
+                            <AddressInfoParagraph
+                              addressInfo="Complemento"
+                              label={order.addressComplement}
+                            />
                           )}
 
                           {order.addressComplement && (
-                            <p>
-                              Referência:{" "}
-                              <span className="font-semibold capitalize italic">
-                                {order.addressReference}
-                              </span>
-                            </p>
+                            <AddressInfoParagraph
+                              addressInfo="Referência"
+                              label={order.addressReference ?? ""}
+                            />
                           )}
 
-                          <p>
-                            Telefone para contato:{" "}
-                            <span className="font-semibold capitalize italic">
-                              {formatPhoneNumber(
-                                order.addressTelephoneDDD,
-                                order.addressTelephoneNumber,
-                              )}
-                            </span>
-                          </p>
+                          <AddressInfoParagraph
+                            addressInfo="Telefone para contato"
+                            label={formatPhoneNumber(
+                              order.addressTelephoneDDD,
+                              order.addressTelephoneNumber,
+                            )}
+                          />
                         </div>
                       </div>
 
                       <Separator />
 
-                      {order.products.map((product) => (
-                        <div className="flex space-x-4" key={product.id}>
-                          <Link
-                            href={`/product/${product.product.category.slug}/${product.product.slug}`}
-                            className="relative aspect-square min-h-[80px] w-[80px] rounded-md border"
-                          >
-                            <Image
-                              src={product.product.imageUrls[0]}
-                              alt={product.product.name}
-                              fill
-                              sizes="100%"
-                              className="object-contain"
-                              quality={100}
-                            />
-                          </Link>
+                      {order.products.map((product, index) => (
+                        <div key={product.id} className="space-y-3">
+                          <div className="flex space-x-4">
+                            <Link
+                              href={`/product/${product.product.category.slug}/${product.product.slug}`}
+                              className="relative aspect-square min-h-[80px] w-[80px] rounded-md border"
+                            >
+                              <Image
+                                src={product.product.imageUrls[0]}
+                                alt={product.product.name}
+                                fill
+                                sizes="100%"
+                                className="object-contain"
+                                quality={100}
+                              />
+                            </Link>
 
-                          <div className="flex w-full flex-col justify-between">
-                            <div className="rounded-md bg-muted py-[2px] text-center">
-                              <p className="text-xs">
-                                Vendido e entregue por:{" "}
-                                <span className="font-bold">DEVShop</span>
-                              </p>
-                            </div>
-
-                            <p className="w-[250px] truncate text-ellipsis text-xs">
-                              {order.products[0].product.name}
-                            </p>
-
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <p className="text-sm font-bold">
-                                  {formatCurrency(
-                                    calculateProductTotalPrice(product),
-                                  )}
+                            <div className="flex w-full flex-col justify-between">
+                              <div className="rounded-md bg-muted py-[2px] text-center">
+                                <p className="text-xs">
+                                  Vendido e entregue por:{" "}
+                                  <span className="font-bold">DEVShop</span>
                                 </p>
-
-                                {product.discountPercentage > 0 && (
-                                  <p className="text-xs text-muted-foreground line-through">
-                                    {formatCurrency(Number(product.basePrice))}
-                                  </p>
-                                )}
                               </div>
 
-                              <p className="text-xs text-muted-foreground">
-                                Qtd: {product.quantity}
+                              <p className="w-[250px] truncate text-ellipsis text-xs">
+                                {product.product.name}
                               </p>
+
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <p className="text-sm font-bold">
+                                    {formatCurrency(
+                                      calculateProductTotalPrice(product),
+                                    )}
+                                  </p>
+
+                                  {product.discountPercentage > 0 && (
+                                    <p className="text-xs text-muted-foreground line-through">
+                                      {formatCurrency(
+                                        Number(product.basePrice),
+                                      )}
+                                    </p>
+                                  )}
+                                </div>
+
+                                <p className="text-xs text-muted-foreground">
+                                  Qtd: {product.quantity}
+                                </p>
+                              </div>
                             </div>
                           </div>
+
+                          {order.status === "DELIVERED" && (
+                            <>
+                              <div className="flex items-center justify-between px-3">
+                                <ReviewButton
+                                  orderProductId={order.products[0].id}
+                                  product={JSON.parse(
+                                    JSON.stringify(product.product),
+                                  )}
+                                />
+
+                                <BuyAgainButton
+                                  product={JSON.parse(
+                                    JSON.stringify(product.product),
+                                  )}
+                                  quantity={product.quantity}
+                                />
+                              </div>
+
+                              <div className="px-3 py-1">
+                                <Separator />
+                              </div>
+                            </>
+                          )}
                         </div>
                       ))}
 
                       <div className="space-y-[10px]">
-                        <Separator />
+                        {order.status !== "DELIVERED" && <Separator />}
 
                         <div className="flex justify-between text-sm">
                           <p>Subtotal</p>
