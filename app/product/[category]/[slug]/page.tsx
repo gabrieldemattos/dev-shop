@@ -36,8 +36,22 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           slug: true,
         },
       },
+      reviews: {
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
     },
   });
+
+  console.log(product?.reviews.map((review) => review.rating));
 
   const relatedProducts = await db.product.findMany({
     where: {
@@ -75,7 +89,10 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         />
 
         <div className="flex flex-col space-y-4 px-5">
-          <ProductStatus />
+          <ProductStatus
+            totalReviews={product.reviews.length}
+            productId={product.id}
+          />
 
           <ProductDetails product={product} />
 
@@ -89,7 +106,9 @@ const ProductPage = async ({ params }: ProductPageProps) => {
             </span>
           </div>
 
-          <ProductReviews />
+          {product.reviews.length > 0 && (
+            <ProductReviews reviews={product.reviews} />
+          )}
         </div>
 
         <div className="space-y-4 pl-5 text-lg font-bold">
