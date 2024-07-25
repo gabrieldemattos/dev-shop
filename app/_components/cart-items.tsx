@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { memo } from "react";
+import { memo } from "react";
 import { Button } from "./ui/button";
 import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "lucide-react";
 import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
