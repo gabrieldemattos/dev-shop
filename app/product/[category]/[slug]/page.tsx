@@ -107,7 +107,11 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           </div>
 
           {product.reviews.length > 0 && (
-            <ProductReviews reviews={product.reviews} />
+            <ProductReviews
+              reviews={product.reviews}
+              categorySlug={product.category.slug}
+              productSlug={params.slug}
+            />
           )}
         </div>
 

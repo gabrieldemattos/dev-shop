@@ -1,4 +1,3 @@
-import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,8 +7,11 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import { Prisma } from "@prisma/client";
-import { ChevronRight, ThumbsUp } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import ReviewDetails from "./review-details";
+import { getUserLikedReviews } from "@/app/_actions/get-user-liked-reviews";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/_lib/auth";
 
 interface ProductReviewsProps {
   reviews: Prisma.ReviewGetPayload<{
@@ -21,12 +23,22 @@ interface ProductReviewsProps {
       };
     };
   }>[];
+  categorySlug: string;
+  productSlug: string;
 }
 
-const ProductReviews = ({ reviews }: ProductReviewsProps) => {
+const ProductReviews = async ({
+  reviews,
+  categorySlug,
+  productSlug,
+}: ProductReviewsProps) => {
+  const session = await getServerSession(authOptions);
+
   const lastReview = reviews?.[reviews.length - 1];
 
   const orderedReviews = [...reviews].reverse();
+
+  const getUserLikes = await getUserLikedReviews(session?.user?.id as string);
 
   return (
     <div className="flex flex-col" id="reviews">
@@ -51,11 +63,12 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
                 {orderedReviews.map((review) => (
                   <ReviewDetails
                     key={review.id}
+                    review={review}
+                    userLikes={getUserLikes}
+                    likeCount={review.likeCount}
+                    categorySlug={categorySlug}
+                    productSlug={productSlug}
                     separator
-                    userName={review.user.name!}
-                    userRating={review.rating}
-                    userComment={review.comment}
-                    createdAt={review.createdAt}
                   />
                 ))}
               </div>
@@ -65,22 +78,12 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
       </div>
 
       <ReviewDetails
-        key={lastReview.id}
-        userName={lastReview.user.name!}
-        userRating={lastReview.rating}
-        userComment={lastReview.comment}
-        createdAt={lastReview.createdAt}
+        review={lastReview}
+        userLikes={getUserLikes}
+        likeCount={lastReview?.likeCount}
+        categorySlug={categorySlug}
+        productSlug={productSlug}
       />
-
-      <div className="mt-6 flex flex-col items-start gap-2">
-        <p className="text-xs font-light text-muted-foreground">
-          2 pessoas acharam esta avaliação útil
-        </p>
-
-        <Button variant="ghost" className="gap-2 p-0 text-muted-foreground">
-          Marcar como útil <ThumbsUp size={18} />
-        </Button>
-      </div>
     </div>
   );
 };
