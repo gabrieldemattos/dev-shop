@@ -19,6 +19,17 @@ import { formatPhoneNumber } from "../_helpers/format-phone-number";
 import { createOrder } from "../_actions/order";
 import PaymentMethods from "./_components/payment_method";
 import { paymentIconsTranslations } from "../_constants/payment-icons-translations";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../_components/ui/alert-dialog";
 
 const OrderConfirmationPage = () => {
   const { data } = useSession();
@@ -159,9 +170,29 @@ const OrderConfirmationPage = () => {
           <div className="flex items-center justify-between p-5">
             <BackButton />
             <span className="uppercase">Sacola</span>
-            <Button variant="link" onClick={handleClearCartClick}>
-              Limpar
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="link" disabled={isConfirmationOrder}>
+                  Limpar
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Deseja realmente limpar o carrinho?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Todos os itens adicionados serão removidos permanentemente.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleClearCartClick}>
+                    Limpar
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         ) : (
           <>
