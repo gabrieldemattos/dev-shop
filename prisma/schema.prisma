@@ -49,6 +49,7 @@ model User {
   addresses        Address[]
   favoriteProducts UserFavoriteProduct[]
   reviews          Review[]
+  reviewLikes      ReviewLike[]
 
   @@map("users")
 }
@@ -194,10 +195,23 @@ model Review {
   orderProduct   OrderProduct @relation(fields: [orderProductId], references: [id], onDelete: Cascade)
   rating         Int          @default(0)
   comment        String       @db.VarChar(100)
+  likeCount      Int          @default(0)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  reviewLikes    ReviewLike[]
 
   @@unique([userId, productId, orderProductId])
+}
+
+model ReviewLike {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reviewId  String
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, reviewId])
 }
 
 enum State {
