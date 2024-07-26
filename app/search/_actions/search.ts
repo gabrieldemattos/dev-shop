@@ -15,5 +15,5 @@ export const searchProducts = async (query: string) => {
     },
   });
 
-  return products;
+  return JSON.parse(JSON.stringify(products));
 };
