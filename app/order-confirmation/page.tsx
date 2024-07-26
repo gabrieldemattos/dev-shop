@@ -340,7 +340,10 @@ const OrderConfirmationPage = () => {
               className="w-full"
               onClick={handleFinishOrderClick}
               disabled={
-                isConfirmationOrder || isAddressLoading || !paymentMethod
+                isConfirmationOrder ||
+                isAddressLoading ||
+                !paymentMethod ||
+                !userActiveAddress
               }
             >
               {isConfirmationOrder && (

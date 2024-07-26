@@ -28,7 +28,7 @@ const ToggleFavoriteButton = ({
   );
 
   const handleFavoriteClick = async () => {
-    if (!data) return;
+    if (!data) return router.push("/login");
 
     try {
       await toggleFavoriteProduct(productId, data?.user?.id as string);
