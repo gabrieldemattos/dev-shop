@@ -16,11 +16,13 @@ interface CategoryPageProps {
 const CategoryPage = async ({ params }: CategoryPageProps) => {
   const session = await getServerSession(authOptions);
 
-  const userFavorites = await db.userFavoriteProduct.findMany({
-    where: {
-      userId: session?.user?.id,
-    },
-  });
+  const userFavorites = session
+    ? await db.userFavoriteProduct.findMany({
+        where: {
+          userId: session?.user?.id,
+        },
+      })
+    : [];
 
   const category = await db.category.findUnique({
     where: {

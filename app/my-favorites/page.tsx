@@ -4,22 +4,27 @@ import { db } from "../_lib/prisma";
 import { authOptions } from "../_lib/auth";
 import ProductItem from "../_components/product-item";
 import { Heart } from "lucide-react";
+import { redirect } from "next/navigation";
 
 const MyFavoritesPage = async () => {
   const session = await getServerSession(authOptions);
 
-  const userFavorites = await db.userFavoriteProduct.findMany({
-    where: {
-      userId: session?.user?.id,
-    },
-    include: {
-      product: {
-        include: {
-          category: true,
+  if (!session?.user) return redirect("/login");
+
+  const userFavorites = session
+    ? await db.userFavoriteProduct.findMany({
+        where: {
+          userId: session?.user?.id,
         },
-      },
-    },
-  });
+        include: {
+          product: {
+            include: {
+              category: true,
+            },
+          },
+        },
+      })
+    : [];
 
   return (
     <>

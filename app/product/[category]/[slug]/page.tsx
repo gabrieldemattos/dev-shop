@@ -20,11 +20,13 @@ interface ProductPageProps {
 const ProductPage = async ({ params }: ProductPageProps) => {
   const session = await getServerSession(authOptions);
 
-  const userFavorites = await db.userFavoriteProduct.findMany({
-    where: {
-      userId: session?.user?.id,
-    },
-  });
+  const userFavorites = session
+    ? await db.userFavoriteProduct.findMany({
+        where: {
+          userId: session?.user?.id,
+        },
+      })
+    : [];
 
   const product = await db.product.findUnique({
     where: {

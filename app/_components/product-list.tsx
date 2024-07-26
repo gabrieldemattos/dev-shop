@@ -23,11 +23,13 @@ const ProductList = async () => {
     take: 10,
   });
 
-  const userFavorites = await db.userFavoriteProduct.findMany({
-    where: {
-      userId: session?.user?.id,
-    },
-  });
+  const userFavorites = session
+    ? await db.userFavoriteProduct.findMany({
+        where: {
+          userId: session?.user?.id,
+        },
+      })
+    : [];
 
   return (
     <div className="flex w-full gap-4 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">

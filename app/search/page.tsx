@@ -6,11 +6,13 @@ import { db } from "../_lib/prisma";
 const SearchPage = async () => {
   const session = await getServerSession(authOptions);
 
-  const userFavorites = await db.userFavoriteProduct.findMany({
-    where: {
-      userId: session?.user?.id,
-    },
-  });
+  const userFavorites = session
+    ? await db.userFavoriteProduct.findMany({
+        where: {
+          userId: session?.user?.id,
+        },
+      })
+    : [];
 
   return (
     <>
