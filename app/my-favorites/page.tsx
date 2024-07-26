@@ -44,7 +44,7 @@ const MyFavoritesPage = async () => {
               key={favorite.product.id}
               product={favorite.product}
               className="min-w-full"
-              userFavorites={userFavorites}
+              userFavorites={JSON.parse(JSON.stringify(userFavorites))}
             />
           ))}
         </div>
