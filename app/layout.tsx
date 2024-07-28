@@ -3,6 +3,7 @@ import "./globals.css";
 import { CartProvider } from "./_context/cart";
 import AuthProvider from "./_providers/auth";
 import { Toaster } from "./_components/ui/sonner";
+import Footer from "./_components/footer";
 
 export const metadata: Metadata = {
   title: "DEV Shop",
@@ -16,9 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="pb-10">
+      <body>
         <AuthProvider>
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            {children}
+            <Footer />
+          </CartProvider>
         </AuthProvider>
 
         <Toaster />
