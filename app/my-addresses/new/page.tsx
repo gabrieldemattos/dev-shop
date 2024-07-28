@@ -54,7 +54,7 @@ const NewAddressPage = () => {
       >
         <Input
           label="Nome do Endereço"
-          maxLength={90}
+          maxLength={50}
           placeholder="Casa, Trabalho, Escola, etc.."
           {...register("label")}
           errors={errors?.label?.message}

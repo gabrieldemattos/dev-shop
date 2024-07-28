@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { db } from "../_lib/prisma";
 import AddressOptions from "./_components/address-options";
+import Title from "../_components/title";
 
 const MyAddressesPage = async () => {
   const session = await getServerSession(authOptions);
@@ -32,12 +33,9 @@ const MyAddressesPage = async () => {
     <>
       <Header />
 
-      <div className="p-8">
+      <div className="p-8 lg:pt-0 xl:px-20 2xl:px-64">
         <div className="mb-8 flex justify-between">
-          <div className="flex w-fit items-center gap-2 rounded-full bg-background px-3 py-[5px] uppercase shadow-md">
-            <MapPin />
-            <h2 className="font-bold">Meus Endereços</h2>
-          </div>
+          <Title icon={<MapPin />} title="Meus Endereços" />
 
           {addresses.length > 0 && (
             <Button className="gap-2 uppercase" asChild>
@@ -50,7 +48,7 @@ const MyAddressesPage = async () => {
         </div>
 
         {addresses.length > 0 ? (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-8">
             {addresses.map((address) => (
               <div
                 className="relative flex w-full flex-col items-center justify-center gap-4 capitalize"
@@ -58,7 +56,7 @@ const MyAddressesPage = async () => {
               >
                 <div
                   data-active={address.active}
-                  className="flex w-full items-center gap-2 rounded-sm bg-white p-5 shadow-md data-[active=true]:border-2 data-[active=true]:border-red-500"
+                  className="flex w-full items-center gap-2 rounded-sm bg-white p-5 shadow-md data-[active=true]:border-2 data-[active=true]:border-red-500 lg:min-h-full"
                 >
                   <MapPinned size={35} className="text-gray-500" />
 

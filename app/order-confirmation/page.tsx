@@ -154,7 +154,9 @@ const OrderConfirmationPage = () => {
 
       router.push("/my-orders");
     } catch (error) {
-      toast.error("Erro ao finalizar o pedido, tente novamente!");
+      toast.error("Erro ao finalizar o pedido, tente novamente!", {
+        position: "bottom-center",
+      });
     } finally {
       setIsConfirmationOrder(false);
     }
@@ -165,7 +167,7 @@ const OrderConfirmationPage = () => {
 
   return (
     <>
-      <div>
+      <div className="lg:px-40 xl:px-60 2xl:px-96">
         {products.length > 0 ? (
           <div className="flex items-center justify-between p-5">
             <BackButton />
@@ -299,7 +301,7 @@ const OrderConfirmationPage = () => {
               {userActiveAddress ? (
                 <div className="flex items-center justify-between px-2">
                   <div className="flex flex-col">
-                    <p className="font-semibold capitalize">
+                    <p className="w-72 truncate font-semibold capitalize">
                       {userActiveAddress.firstName} {userActiveAddress.lastName}
                     </p>
                     <p className="capitalize">
@@ -322,7 +324,10 @@ const OrderConfirmationPage = () => {
                     </p>
                     {userActiveAddress.reference && (
                       <p className="mt-1 flex items-center text-xs text-muted-foreground">
-                        <Dot size={15} /> {userActiveAddress.reference}
+                        <Dot size={15} />{" "}
+                        <span className="w-72 truncate">
+                          {userActiveAddress.reference}
+                        </span>
                       </p>
                     )}
                   </div>

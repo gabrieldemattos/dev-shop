@@ -9,6 +9,13 @@ import AddProductToCart from "./_components/add-product-to-cart";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/_lib/auth";
 import Header from "@/app/_components/header";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/app/_components/ui/carousel";
 
 interface ProductPageProps {
   params: {
@@ -76,11 +83,9 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
-        <div className="mb-[-16px]">
-          <Header />
-        </div>
+      <Header />
 
+      <div className="flex flex-col gap-4 lg:hidden">
         <ProductImages
           imageUrls={product.imageUrls}
           productName={product.name}
@@ -126,6 +131,80 @@ const ProductPage = async ({ params }: ProductPageProps) => {
                 userFavorites={userFavorites}
               />
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-10 hidden lg:block lg:px-5 xl:px-20 2xl:px-64">
+        <div className="flex flex-col space-y-4">
+          <div className="flex">
+            <ProductImages
+              imageUrls={product.imageUrls}
+              productName={product.name}
+              userFavorites={userFavorites}
+              productId={product.id}
+            />
+
+            <div className="flex min-w-[500px] max-w-[1000px] flex-col rounded rounded-bl-none rounded-tl-none border-b-2 bg-linear-secondary p-5 pb-10">
+              <div className="h-auto flex-1 space-y-7">
+                <ProductStatus
+                  totalReviews={product.reviews.length}
+                  productId={product.id}
+                />
+
+                <ProductDetails product={product} />
+              </div>
+
+              <AddProductToCart product={JSON.parse(JSON.stringify(product))} />
+            </div>
+          </div>
+
+          <div className="rounded bg-linear-secondary p-5 shadow">
+            <h2 className="text-lg font-bold">Descrição</h2>
+
+            <span className="text-sm text-muted-foreground">
+              {product.description}
+            </span>
+          </div>
+
+          {product.reviews.length > 0 && (
+            <div className="flex items-center justify-center">
+              <div className="w-[440px] rounded bg-linear-secondary p-5 shadow">
+                <ProductReviews
+                  reviews={product.reviews}
+                  categorySlug={product.category.slug}
+                  productSlug={params.slug}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-4 px-10 text-lg font-bold">
+            <h2>Produtos Relacionados</h2>
+
+            <Carousel
+              opts={{
+                align: "start",
+              }}
+              className="hidden lg:block lg:w-full"
+            >
+              <CarouselContent>
+                {relatedProductsFiltered.map((product) => (
+                  <CarouselItem
+                    className="lg:basis-1/4 xl:basis-1/5"
+                    key={product.id}
+                  >
+                    <ProductItem
+                      product={product}
+                      userFavorites={userFavorites}
+                      className="w-full"
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
           </div>
         </div>
       </div>

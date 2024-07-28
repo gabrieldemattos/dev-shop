@@ -41,22 +41,24 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
 
   return (
     <>
-      <div className="mb-8">
+      <div className="mb-8 lg:mb-0">
         <Header />
       </div>
 
-      <div className="mx-auto flex flex-col justify-center gap-5 px-5">
-        <Badge variant="outline" className="space-x-2 border-none p-2 text-lg">
-          {CATEGORY_ICON[category.name as keyof typeof CATEGORY_ICON]}
-          <span className="text-xl font-bold uppercase">{category.name}</span>
-        </Badge>
+      <div className="mx-auto flex flex-col justify-center gap-5 px-5 pb-5 xl:px-20 2xl:px-64">
+        <div className="flex w-fit items-center gap-2 rounded-full bg-background px-3 py-[5px] uppercase shadow-md lg:col-span-4">
+          <Badge variant="outline" className="space-x-2 border-none text-lg">
+            {CATEGORY_ICON[category.name as keyof typeof CATEGORY_ICON]}
+            <span className="text-xl font-bold uppercase">{category.name}</span>
+          </Badge>
+        </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {orderedProducts.map((product) => (
             <ProductItem
               key={product.id}
               product={{ ...product, category }}
-              className="min-w-full"
+              className="g min-w-full"
               userFavorites={userFavorites}
             />
           ))}

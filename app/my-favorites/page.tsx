@@ -5,6 +5,7 @@ import { authOptions } from "../_lib/auth";
 import ProductItem from "../_components/product-item";
 import { Heart } from "lucide-react";
 import { redirect } from "next/navigation";
+import Title from "../_components/title";
 
 const MyFavoritesPage = async () => {
   const session = await getServerSession(authOptions);
@@ -30,15 +31,12 @@ const MyFavoritesPage = async () => {
     <>
       <Header />
 
-      <div className="p-8">
+      <div className="p-8 lg:pt-0 xl:px-20 2xl:px-64">
         <div className="mb-8">
-          <div className="flex w-fit items-center gap-2 rounded-full bg-background px-3 py-[5px] uppercase shadow-md">
-            <Heart />
-            <h2 className="font-bold">Meus Favoritos</h2>
-          </div>
+          <Title icon={<Heart />} title="Meus Favoritos" />
         </div>
 
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {userFavorites.map((favorite) => (
             <ProductItem
               key={favorite.product.id}
