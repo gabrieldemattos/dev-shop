@@ -46,13 +46,13 @@ const Products = ({ userFavorites }: ProductProps) => {
     <>
       <Header />
 
-      <div className="mt-5 flex flex-col space-y-6 px-5">
+      <div className="mt-5 flex flex-col space-y-6 px-5 xl:px-20 2xl:px-64">
         <h2 className="truncate text-xl text-foreground">
           Resultados para:{" "}
           <span className="font-bold text-foreground">{searchFor}</span>
         </h2>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {!isLoading &&
             products.length > 0 &&
             products.map((product) => (

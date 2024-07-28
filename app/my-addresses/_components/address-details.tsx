@@ -9,11 +9,14 @@ interface AddressDetailsProps {
 const AddressDetails = ({ address }: AddressDetailsProps) => {
   return (
     <div className="flex w-10/12 flex-col gap-1 px-5">
-      <p className="text-lg font-semibold uppercase">{address.label}</p>
+      <p className="w-72 truncate text-lg font-semibold uppercase">
+        {address.label}
+      </p>
 
       <AddressParagraph
         label="Quem receberá:"
         content={`${address.firstName} ${address.lastName}`}
+        className="truncate"
       />
 
       <AddressParagraph
@@ -25,6 +28,7 @@ const AddressDetails = ({ address }: AddressDetailsProps) => {
         <AddressParagraph
           label="Ponto de referência:"
           content={address.reference}
+          className="truncate"
         />
       )}
 
