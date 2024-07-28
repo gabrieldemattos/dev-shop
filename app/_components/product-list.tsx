@@ -9,29 +9,22 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { Prisma } from "@prisma/client";
 
-const ProductList = async () => {
-  const session = await getServerSession(authOptions);
-
-  const products = await db.product.findMany({
-    where: {
-      status: "ACTIVE",
-      discountPercentage: {
-        not: 0,
-      },
-    },
+interface ProductListProps {
+  products: Prisma.ProductGetPayload<{
     include: {
       category: {
         select: {
-          slug: true,
-        },
-      },
-    },
-    take: 10,
-    orderBy: {
-      discountPercentage: "desc",
-    },
-  });
+          slug: true;
+        };
+      };
+    };
+  }>[];
+}
+
+const ProductList = async ({ products }: ProductListProps) => {
+  const session = await getServerSession(authOptions);
 
   const userFavorites = session
     ? await db.userFavoriteProduct.findMany({
