@@ -70,11 +70,11 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="bg-linear-primary px-8 py-3">
+    <div className="relative bg-linear-primary px-8 py-3 lg:mb-16 2xl:px-64">
       <div className="flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <Sheet>
-            <SheetTrigger asChild>
+            <SheetTrigger asChild className="block lg:hidden">
               <Button
                 size="icon"
                 variant="outline"
@@ -92,34 +92,18 @@ const Header = () => {
               <div className="space-y-2 pt-6">
                 <CategoriesMenu categories={categories} />
               </div>
-
-              <AlertDialog
-                open={confirmedSignOut}
-                onOpenChange={setConfirmedSignOut}
-              >
-                <AlertDialogContent className="w-[400px] rounded-md">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Sair da conta</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Tem certeza que deseja sair da sua conta?
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleSignOutClick}>
-                      Sair
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
             </SheetContent>
           </Sheet>
 
           <Link href="/">
-            <p className="text-2xl font-bold text-red-700 text-opacity-70">
+            <p className="permanent-marker-regular text-2xl font-bold text-red-700 text-opacity-70">
               DEV<span className="text-white">Shop</span>
             </p>
           </Link>
+
+          <div className="hidden w-[60%] lg:block">
+            <Search />
+          </div>
 
           <div className="flex gap-1">
             <Sheet>
@@ -275,7 +259,26 @@ const Header = () => {
           </div>
         </div>
 
-        <Search />
+        <div className="block lg:hidden">
+          <Search />
+        </div>
+      </div>
+
+      <div className="absolute bottom-[-40px] left-0 hidden w-full animate-[wiggle_1s_ease-in-out] border-y bg-background shadow transition-all lg:flex 2xl:px-64">
+        {categories.map((category) => (
+          <Link
+            href={`/category/${category.slug}`}
+            className="block w-full text-center"
+            key={category.id}
+          >
+            <Button
+              variant="ghost"
+              className="w-full font-semibold text-muted-foreground hover:bg-transparent hover:text-primary hover:underline hover:underline-offset-4"
+            >
+              {category.name}
+            </Button>
+          </Link>
+        ))}
       </div>
     </div>
   );
