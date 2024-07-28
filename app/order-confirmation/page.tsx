@@ -167,9 +167,9 @@ const OrderConfirmationPage = () => {
 
   return (
     <>
-      <div className="lg:px-40 xl:px-60 2xl:px-96">
+      <div>
         {products.length > 0 ? (
-          <div className="flex items-center justify-between p-5">
+          <div className="flex items-center justify-between p-5 lg:px-40 xl:px-60 2xl:px-96">
             <BackButton />
             <span className="uppercase">Sacola</span>
             <AlertDialog>
@@ -203,7 +203,7 @@ const OrderConfirmationPage = () => {
         )}
 
         {products.length > 0 ? (
-          <div className="space-y-10 p-8">
+          <div className="space-y-10 p-8 lg:px-40 xl:px-60 2xl:px-96">
             <div className="space-y-5">
               <div className="flex flex-col gap-2">
                 {products.map((product) => (
