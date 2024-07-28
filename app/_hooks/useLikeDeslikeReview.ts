@@ -40,7 +40,9 @@ export const useLikeDeslikeReview = (
         );
       }
     } catch (error) {
-      toast.error("Erro ao curtir/descurtir a avaliação");
+      toast.error("Erro ao curtir/descurtir a avaliação", {
+        position: "bottom-center",
+      });
     } finally {
       setIsLikeDislikeLoading(false);
     }

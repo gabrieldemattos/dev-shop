@@ -45,7 +45,9 @@ const ToggleFavoriteButton = ({
         },
       );
     } catch (error) {
-      toast.error("Erro ao favoritar o restaurante");
+      toast.error("Erro ao favoritar o restaurante", {
+        position: "bottom-center",
+      });
     }
   };
 

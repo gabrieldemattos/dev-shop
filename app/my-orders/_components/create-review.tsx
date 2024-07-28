@@ -71,7 +71,9 @@ const CreateReview = ({ orderProductId, product }: CreateReviewProps) => {
         position: "bottom-center",
       });
     } catch (error) {
-      toast.error("Erro ao avaliar seu pedido, tente novamente!");
+      toast.error("Erro ao avaliar seu pedido, tente novamente!", {
+        position: "bottom-center",
+      });
       console.log(error);
     } finally {
       setIsSendingReview(false);
