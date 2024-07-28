@@ -50,9 +50,9 @@ const ReviewDetails = async ({
         </span>
       </div>
 
-      <div>
+      <div className="w-96">
         {review.comment ? (
-          <span className="text-sm text-muted-foreground">
+          <span className="break-words text-sm text-muted-foreground">
             {review.comment}
           </span>
         ) : (
