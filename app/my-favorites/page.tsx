@@ -3,7 +3,7 @@ import Header from "../_components/header";
 import { db } from "../_lib/prisma";
 import { authOptions } from "../_lib/auth";
 import ProductItem from "../_components/product-item";
-import { Heart } from "lucide-react";
+import { Heart, HeartCrack } from "lucide-react";
 import { redirect } from "next/navigation";
 import Title from "../_components/title";
 
@@ -36,16 +36,28 @@ const MyFavoritesPage = async () => {
           <Title icon={<Heart />} title="Meus Favoritos" />
         </div>
 
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {userFavorites.map((favorite) => (
-            <ProductItem
-              key={favorite.product.id}
-              product={favorite.product}
-              className="min-w-full"
-              userFavorites={JSON.parse(JSON.stringify(userFavorites))}
+        {userFavorites.length > 0 ? (
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {userFavorites.map((favorite) => (
+              <ProductItem
+                key={favorite.product.id}
+                product={favorite.product}
+                className="min-w-full"
+                userFavorites={JSON.parse(JSON.stringify(userFavorites))}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-20 flex h-full flex-col items-center justify-center gap-6 pt-10">
+            <HeartCrack
+              className="h-16 w-16 animate-bounce text-muted-foreground"
+              aria-hidden="true"
             />
-          ))}
-        </div>
+            <h2 className="text-center text-2xl text-muted-foreground">
+              Sua lista de favoritos está vazia.
+            </h2>
+          </div>
+        )}
       </div>
     </>
   );
