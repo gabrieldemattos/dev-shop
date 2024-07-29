@@ -273,7 +273,7 @@ const Header = () => {
           >
             <Button
               variant="ghost"
-              className="w-full font-semibold text-muted-foreground hover:bg-transparent hover:text-primary hover:underline hover:underline-offset-4"
+              className="w-full font-semibold text-muted-foreground hover:bg-transparent hover:text-primary"
             >
               {category.name}
             </Button>

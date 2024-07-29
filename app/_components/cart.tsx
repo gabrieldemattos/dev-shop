@@ -108,7 +108,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
-                  className="mt-6 w-full gap-1 uppercase"
+                  className="my-2 w-full gap-1 uppercase"
                   disabled={isSubmitLoading}
                   variant="destructive"
                 >
