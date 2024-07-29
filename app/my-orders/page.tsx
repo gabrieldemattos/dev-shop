@@ -517,7 +517,7 @@ const MyOrderPage = async () => {
             </div>
           </div>
         ) : (
-          <div className="flex h-full flex-col items-center justify-center gap-6 pt-10">
+          <div className="mt-20 flex h-full flex-col items-center justify-center gap-6">
             <ShoppingCart className="h-16 w-16" />
 
             <h2 className="text-2xl font-semibold">

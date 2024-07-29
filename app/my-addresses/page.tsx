@@ -76,12 +76,17 @@ const MyAddressesPage = async () => {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center gap-4 rounded-lg p-4 text-center text-sm font-semibold text-muted-foreground">
-            <MapPin size={24} className="text-gray-500" />
-            <p className="mt-2 text-base">Nenhum endereço cadastrado ainda</p>
-            <p className="text-sm text-gray-500">
+          <div className="mt-20 flex flex-col items-center justify-center gap-6 text-center">
+            <MapPin className="h-16 w-16" />
+
+            <h2 className="text-2xl font-semibold">
+              Nenhum endereço cadastrado ainda
+            </h2>
+
+            <p className="text-md text-gray-600">
               Para facilitar suas compras, adicione um endereço de entrega.
             </p>
+
             <Button className="gap-2 uppercase" asChild>
               <Link href="/my-addresses/new">
                 <>

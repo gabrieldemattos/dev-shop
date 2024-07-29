@@ -48,14 +48,15 @@ const MyFavoritesPage = async () => {
             ))}
           </div>
         ) : (
-          <div className="mt-20 flex h-full flex-col items-center justify-center gap-6 pt-10">
-            <HeartCrack
-              className="h-16 w-16 animate-bounce text-muted-foreground"
-              aria-hidden="true"
-            />
-            <h2 className="text-center text-2xl text-muted-foreground">
+          <div className="mt-20 flex h-full flex-col items-center justify-center gap-6">
+            <HeartCrack className="h-16 w-16 animate-bounce" />
+            <h2 className="text-2xl font-semibold">
               Sua lista de favoritos está vazia.
             </h2>
+
+            <p className="text-md text-gray-600">
+              Que tal explorar nossos produtos e adicionar seus favoritos?
+            </p>
           </div>
         )}
       </div>
