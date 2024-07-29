@@ -50,7 +50,7 @@ const ProductReviews = async ({
             <DialogTrigger className="flex items-center gap-1">
               Ver mais <ChevronRight />
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="flex flex-col break-words">
               <DialogHeader>
                 <DialogTitle className="text-center">
                   Todas as avaliações
