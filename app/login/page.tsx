@@ -19,11 +19,12 @@ const LoginPage = () => {
     <>
       <Header />
 
-      <div className="absolute top-0 z-[-1] flex h-screen w-full items-center justify-center">
+      <div className="absolute top-0 flex h-screen w-full items-center justify-center">
         <div className="flex flex-col items-center rounded-lg bg-white p-8 shadow-lg">
           <h2 className="mb-6 text-xl font-semibold text-gray-800">
             Bem-vindo, faça login para continuar!
           </h2>
+
           <Button
             variant="outline"
             className="w-full text-base"
