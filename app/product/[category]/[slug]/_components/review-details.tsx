@@ -49,7 +49,7 @@ const ReviewDetails = async ({
 
         <span className="text-xs font-semibold text-gray-400">
           {formatDate(review.createdAt)} às{" "}
-          {formatHour(review.createdAt, userTimeZone)}h
+          {formatHour(review.createdAt, "America/Sao_Paulo")}h
         </span>
       </div>
 
