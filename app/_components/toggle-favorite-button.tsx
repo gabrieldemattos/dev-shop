@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { UserFavoriteProduct } from "@prisma/client";
 import { Heart } from "lucide-react";
 import { cn } from "../_lib/utils";
+import { useState } from "react";
 
 interface ToggleFavoriteButtonProps {
   userFavorites: UserFavoriteProduct[];
@@ -23,12 +24,14 @@ const ToggleFavoriteButton = ({
 
   const router = useRouter();
 
-  const isFavorite = userFavorites.some(
-    (favorite) => favorite.productId === productId,
+  const [isFavorite, setIsFavorite] = useState<boolean>(
+    userFavorites.some((favorite) => favorite.productId === productId),
   );
 
   const handleFavoriteClick = async () => {
     if (!data) return router.push("/login");
+
+    setIsFavorite((prev) => !prev);
 
     try {
       await toggleFavoriteProduct(productId, data?.user?.id as string);
@@ -45,6 +48,8 @@ const ToggleFavoriteButton = ({
         },
       );
     } catch (error) {
+      setIsFavorite((prev) => !prev);
+
       toast.error("Erro ao favoritar o restaurante", {
         position: "bottom-center",
       });

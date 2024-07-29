@@ -25,7 +25,7 @@ export const toggleFavoriteProduct = async (
     });
 
     revalidatePath("/");
-    return;
+    return true;
   }
 
   await db.userFavoriteProduct.create({
@@ -36,4 +36,5 @@ export const toggleFavoriteProduct = async (
   });
 
   revalidatePath("/");
+  return true;
 };
