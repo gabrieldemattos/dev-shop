@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
 interface ImageZoomProps {
   imageUrl: string;
@@ -16,13 +16,23 @@ const ImageZoom = ({
   isImageZoomed,
   setIsImageZoomed,
 }: ImageZoomProps) => {
-  const handleKeyPress = (event: KeyboardEvent) => {
-    if (event.key === "Escape") {
-      setIsImageZoomed(false);
-    }
-  };
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsImageZoomed(false);
+      }
+    };
 
-  window.addEventListener("keydown", handleKeyPress);
+    if (isImageZoomed) {
+      document.addEventListener("keydown", handleKeyPress);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [isImageZoomed, setIsImageZoomed]);
+
+  if (!isImageZoomed) return null;
 
   return (
     <div
