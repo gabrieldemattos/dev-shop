@@ -32,6 +32,8 @@ const ReviewDetails = async ({
 }: ReviewDetailsProps) => {
   const findLike = userLikes?.find((like) => like === review.id);
 
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   return (
     <div className="space-y-2">
       <p className="text-base font-bold">{review.user.name}</p>
@@ -46,7 +48,8 @@ const ReviewDetails = async ({
         </div>
 
         <span className="text-xs font-semibold text-gray-400">
-          {formatDate(review.createdAt)} às {formatHour(review.createdAt)}h
+          {formatDate(review.createdAt)} às{" "}
+          {formatHour(review.createdAt, userTimeZone)}h
         </span>
       </div>
 
