@@ -33,8 +33,8 @@ const MyAddressesPage = async () => {
     <>
       <Header />
 
-      <div className="p-8 lg:pt-0 xl:px-20 2xl:px-64">
-        <div className="mb-8 flex justify-between">
+      <div className="xl:px-20 2xl:px-64">
+        <div className="flex flex-col justify-between gap-5 p-8 sm:flex-row">
           <Title
             icon={<MapPin />}
             title="Meus Endereços"
@@ -42,7 +42,7 @@ const MyAddressesPage = async () => {
           />
 
           {addresses.length > 0 && (
-            <Button className="gap-2 uppercase" asChild>
+            <Button className="w-fit gap-2 uppercase" asChild>
               <Link href="/my-addresses/new">
                 <Plus size={16} />
                 Novo Endereço
@@ -52,7 +52,7 @@ const MyAddressesPage = async () => {
         </div>
 
         {addresses.length > 0 ? (
-          <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-8">
+          <div className="flex flex-col gap-4 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-8">
             {addresses.map((address) => (
               <div
                 className="relative flex w-full flex-col items-center justify-center gap-4 capitalize"

@@ -203,13 +203,13 @@ const OrderConfirmationPage = () => {
         )}
 
         {products.length > 0 ? (
-          <div className="space-y-10 p-8 lg:px-40 xl:px-60 2xl:px-96">
+          <div className="space-y-10 lg:px-40 xl:px-60 2xl:px-96">
             <div className="space-y-5">
               <div className="flex flex-col gap-2">
                 {products.map((product) => (
                   <div
                     key={product.id}
-                    className="flex items-center justify-between px-2"
+                    className="flex items-center justify-between px-4"
                   >
                     <div className="flex items-center gap-4">
                       <Link
@@ -229,8 +229,8 @@ const OrderConfirmationPage = () => {
                         </span>
                       </Link>
 
-                      <div className="flex w-[200px] flex-col gap-1 font-semibold text-muted-foreground">
-                        <span className="truncate text-sm capitalize">
+                      <div className="flex w-[150px] flex-col gap-1 font-semibold text-muted-foreground sm:w-[200px] md:w-[450px]">
+                        <span className="truncate text-sm capitalize md:whitespace-normal">
                           {product.name}
                         </span>
                       </div>
@@ -248,7 +248,7 @@ const OrderConfirmationPage = () => {
               <Separator />
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 px-8">
               <h2 className="font-semibold">Pagamento</h2>
 
               {!paymentMethod ? (
@@ -293,7 +293,7 @@ const OrderConfirmationPage = () => {
               )}
             </div>
 
-            <div>
+            <div className="px-8">
               <h2 className="mb-2 font-bold uppercase">Endereço de entrega</h2>
 
               {isAddressLoading && <p>Carregando..</p>}
@@ -347,7 +347,7 @@ const OrderConfirmationPage = () => {
               )}
             </div>
 
-            <div>
+            <div className="px-8">
               <h2 className="mb-2 font-bold uppercase">Resumo de valores</h2>
 
               <div className="flex flex-col gap-1 px-2">
@@ -372,22 +372,24 @@ const OrderConfirmationPage = () => {
               </div>
             </div>
 
-            <Button
-              className="w-full"
-              onClick={handleFinishOrderClick}
-              disabled={
-                isConfirmationOrder ||
-                isAddressLoading ||
-                !paymentMethod ||
-                !userActiveAddress
-              }
-            >
-              {isConfirmationOrder && (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Confirmar pedido -{" "}
-              {formatCurrency(Number(totalPriceWithDiscounts))}
-            </Button>
+            <div className="px-8">
+              <Button
+                className="w-full"
+                onClick={handleFinishOrderClick}
+                disabled={
+                  isConfirmationOrder ||
+                  isAddressLoading ||
+                  !paymentMethod ||
+                  !userActiveAddress
+                }
+              >
+                {isConfirmationOrder && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Confirmar pedido -{" "}
+                {formatCurrency(Number(totalPriceWithDiscounts))}
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="mt-20 flex flex-col items-center">

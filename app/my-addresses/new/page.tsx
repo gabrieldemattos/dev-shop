@@ -32,7 +32,9 @@ const NewAddressPage = () => {
       <div className="mt-8 flex items-center justify-between px-8">
         <div className="flex items-center gap-2">
           <Contact size={25} />
-          <h2 className="font-bold uppercase">Cadastrar novo endereço</h2>
+          <h2 className="text-xs font-bold uppercase sm:text-base">
+            Cadastrar novo endereço
+          </h2>
         </div>
 
         <Button

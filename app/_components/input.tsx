@@ -14,7 +14,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="flex w-full flex-col gap-1">
         <label
           data-error={errors}
-          className="font-semibold data-[error]:text-destructive"
+          className="text-nowrap text-sm font-semibold data-[error]:text-destructive sm:text-base"
         >
           {label}:
         </label>

@@ -55,9 +55,13 @@ const AddressOptions = ({ address }: AddressOptionsProps) => {
               </p>
             </div>
 
-            <div className="flex w-full items-center justify-center gap-3">
+            <div className="flex w-full flex-col items-center justify-center gap-3 sm:flex-row">
               <SheetClose asChild>
-                <Button variant="outline" onClick={handleEditAddresClick}>
+                <Button
+                  variant="outline"
+                  onClick={handleEditAddresClick}
+                  className="w-full"
+                >
                   <Pencil className="mr-2 h-4 w-4" />
                   <span>Editar</span>
                 </Button>
@@ -67,6 +71,7 @@ const AddressOptions = ({ address }: AddressOptionsProps) => {
                 <Button
                   variant="destructive"
                   onClick={handleDeleteAddressClick}
+                  className="w-full"
                 >
                   <Trash2Icon className="mr-2 h-4 w-4" />
                   <span>Excluir</span>
@@ -74,7 +79,11 @@ const AddressOptions = ({ address }: AddressOptionsProps) => {
               </SheetClose>
 
               <SheetClose asChild>
-                <Button variant="outline" onClick={activeAddressConfirmation}>
+                <Button
+                  variant="outline"
+                  onClick={activeAddressConfirmation}
+                  className="w-full"
+                >
                   <Check className="mr-2 h-4 w-4" />
                   <span>Tornar como Principal</span>
                 </Button>

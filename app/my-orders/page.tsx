@@ -80,7 +80,7 @@ const MyOrderPage = async () => {
                 >
                   <AccordionTrigger className="p-5">
                     <p
-                      className={`rounded-lg ${orderStatus[order.status].backgroundColor} px-3 py-[2px] text-white`}
+                      className={`rounded-lg ${orderStatus[order.status].backgroundColor} px-3 py-[2px] text-xs text-white md:text-base`}
                     >
                       {orderStatus[order.status].label} -{" "}
                       {order.createdAt.toLocaleDateString("pt-BR")}
@@ -107,7 +107,7 @@ const MyOrderPage = async () => {
                           Informações de entrega
                         </h3>
 
-                        <div className="w-[350px] space-y-2">
+                        <div className="space-y-2 break-words">
                           <AddressInfoParagraph
                             addressInfo="Nome do endereço"
                             label={order.addressLabel}
@@ -151,7 +151,6 @@ const MyOrderPage = async () => {
                             <AddressInfoParagraph
                               addressInfo="Referência"
                               label={order.addressReference ?? ""}
-                              className="w-72 truncate xl:w-96"
                             />
                           )}
 
@@ -169,24 +168,26 @@ const MyOrderPage = async () => {
 
                       {order.products.map((product, index) => (
                         <div key={product.id} className="space-y-3">
-                          <div className="flex space-x-4">
-                            <Link
-                              href={`/product/${product.product.category.slug}/${product.product.slug}`}
-                              className="relative aspect-square min-h-[80px] w-[80px] rounded-md border"
-                            >
-                              <Image
-                                src={product.product.imageUrls[0]}
-                                alt={product.product.name}
-                                fill
-                                sizes="100%"
-                                className="object-contain"
-                                quality={100}
-                              />
-                            </Link>
+                          <div className="flex flex-col space-y-4">
+                            <div className="flex items-center justify-center">
+                              <Link
+                                href={`/product/${product.product.category.slug}/${product.product.slug}`}
+                                className="relative aspect-square min-h-[80px] w-[80px] rounded-md border"
+                              >
+                                <Image
+                                  src={product.product.imageUrls[0]}
+                                  alt={product.product.name}
+                                  fill
+                                  sizes="100%"
+                                  className="object-contain"
+                                  quality={100}
+                                />
+                              </Link>
+                            </div>
 
-                            <div className="flex w-full flex-col justify-between">
-                              <div className="rounded-md bg-muted py-[2px] text-center">
-                                <p className="text-xs">
+                            <div className="flex w-full flex-col space-y-3">
+                              <div className="flex items-center justify-center">
+                                <p className="rounded-md bg-muted px-2 py-[2px] text-xs">
                                   Vendido e entregue por:{" "}
                                   <span className="font-bold">DEVShop</span>
                                 </p>
