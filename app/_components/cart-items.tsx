@@ -39,10 +39,10 @@ const CartItem = ({ product }: CartItemProps) => {
           />
         </Link>
 
-        <div className="w-[180px] space-y-1">
+        <div className="w-[135px] space-y-1 md:w-44">
           <h3 className="truncate text-sm">{product.name}</h3>
 
-          <div className="flex items-center gap-1">
+          <div className="flex flex-col gap-1 md:flex-row md:items-center">
             <h4 className="text-sm font-semibold text-red-600">
               {formatCurrency(calculateProductTotalPrice(product))}
             </h4>
@@ -53,26 +53,37 @@ const CartItem = ({ product }: CartItemProps) => {
             )}
           </div>
 
-          <div className="flex items-center text-center">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center text-center">
+              <Button
+                size="icon"
+                className="h-7 w-7 shadow"
+                disabled={product.quantity === 1}
+                variant="default"
+                onClick={handleDecrementQuantityClick}
+              >
+                <ChevronLeftIcon size={16} />
+              </Button>
+
+              <p className="block w-8 text-xs">{product.quantity}</p>
+
+              <Button
+                size="icon"
+                className="h-7 w-7 shadow"
+                variant="default"
+                onClick={handleIncrementQuantityClick}
+              >
+                <ChevronRightIcon size={16} />
+              </Button>
+            </div>
+
             <Button
               size="icon"
-              className="h-7 w-7 shadow"
-              disabled={product.quantity === 1}
-              variant="default"
-              onClick={handleDecrementQuantityClick}
+              variant="destructive"
+              className="h-7 w-7 shadow md:hidden"
+              onClick={handleDeleteProductClick}
             >
-              <ChevronLeftIcon size={16} />
-            </Button>
-
-            <p className="block w-8 text-xs">{product.quantity}</p>
-
-            <Button
-              size="icon"
-              className="h-7 w-7 shadow"
-              variant="default"
-              onClick={handleIncrementQuantityClick}
-            >
-              <ChevronRightIcon size={16} />
+              <TrashIcon size={16} />
             </Button>
           </div>
         </div>
@@ -81,7 +92,7 @@ const CartItem = ({ product }: CartItemProps) => {
       <Button
         size="icon"
         variant="destructive"
-        className="h-8 w-8 shadow"
+        className="hidden h-7 w-7 shadow md:flex"
         onClick={handleDeleteProductClick}
       >
         <TrashIcon size={16} />

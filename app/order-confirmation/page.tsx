@@ -249,7 +249,19 @@ const OrderConfirmationPage = () => {
             </div>
 
             <div className="flex flex-col gap-2 px-8">
-              <h2 className="font-semibold">Pagamento</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="font-semibold">Pagamento</h2>
+
+                {paymentMethod && (
+                  <Button
+                    variant="link"
+                    className="h-fit p-0"
+                    onClick={handleChosePaymentMethod}
+                  >
+                    Trocar
+                  </Button>
+                )}
+              </div>
 
               {!paymentMethod ? (
                 <div>
@@ -277,14 +289,6 @@ const OrderConfirmationPage = () => {
                       }
                     </p>
                   </div>
-
-                  <Button
-                    variant="link"
-                    className="h-fit p-0"
-                    onClick={handleChosePaymentMethod}
-                  >
-                    Trocar
-                  </Button>
                 </div>
               )}
 
@@ -294,14 +298,28 @@ const OrderConfirmationPage = () => {
             </div>
 
             <div className="px-8">
-              <h2 className="mb-2 font-bold uppercase">Endereço de entrega</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="mb-2 font-bold uppercase">
+                  Endereço de entrega
+                </h2>
+
+                {userActiveAddress && (
+                  <Button
+                    variant="link"
+                    className="h-fit p-0"
+                    onClick={() => router.push("/my-addresses")}
+                  >
+                    Trocar
+                  </Button>
+                )}
+              </div>
 
               {isAddressLoading && <p>Carregando..</p>}
 
               {userActiveAddress ? (
-                <div className="flex items-center justify-between px-2">
-                  <div className="flex flex-col">
-                    <p className="w-72 truncate font-semibold capitalize">
+                <div className="flex items-center justify-between">
+                  <div className="flex w-full flex-col break-words">
+                    <p className="font-semibold capitalize">
                       {userActiveAddress.firstName} {userActiveAddress.lastName}
                     </p>
                     <p className="capitalize">
@@ -325,20 +343,12 @@ const OrderConfirmationPage = () => {
                     {userActiveAddress.reference && (
                       <p className="mt-1 flex items-center text-xs text-muted-foreground">
                         <Dot size={15} />{" "}
-                        <span className="w-72 truncate">
+                        <span className="truncate">
                           {userActiveAddress.reference}
                         </span>
                       </p>
                     )}
                   </div>
-
-                  <Button
-                    variant="link"
-                    className="h-fit p-0"
-                    onClick={() => router.push("/my-addresses")}
-                  >
-                    Trocar
-                  </Button>
                 </div>
               ) : (
                 <Button variant="link" className="h-fit p-0" asChild>
@@ -417,7 +427,6 @@ const OrderConfirmationPage = () => {
           </div>
         )}
       </div>
-      ;
     </>
   );
 };
