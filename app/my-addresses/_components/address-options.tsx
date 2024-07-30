@@ -8,6 +8,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetClose,
+  SheetDescription,
 } from "@/app/_components/ui/sheet";
 import { Check, EllipsisVertical, Pencil, Trash2Icon } from "lucide-react";
 import { useState } from "react";
@@ -40,9 +41,10 @@ const AddressOptions = ({ address }: AddressOptionsProps) => {
         </SheetTrigger>
         <SheetContent side="bottom">
           <SheetHeader>
-            <SheetTitle className="text-center capitalize">
+            <SheetTitle className="break-words text-center capitalize">
               {address.label}
             </SheetTitle>
+            <SheetDescription />
           </SheetHeader>
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-col gap-1 capitalize">
@@ -53,7 +55,7 @@ const AddressOptions = ({ address }: AddressOptionsProps) => {
               </p>
             </div>
 
-            <div className="flex w-full items-center justify-center gap-5">
+            <div className="flex w-full items-center justify-center gap-3">
               <SheetClose asChild>
                 <Button variant="outline" onClick={handleEditAddresClick}>
                   <Pencil className="mr-2 h-4 w-4" />

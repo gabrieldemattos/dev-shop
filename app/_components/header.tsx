@@ -14,6 +14,7 @@ import {
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -87,6 +88,7 @@ const Header = () => {
             <SheetContent side="left">
               <SheetHeader>
                 <SheetTitle className="text-left">Categorias</SheetTitle>
+                <SheetDescription />
               </SheetHeader>
 
               <div className="space-y-2 pt-6">
@@ -122,6 +124,7 @@ const Header = () => {
                   <SheetTitle className="text-left">
                     {data?.user ? "Sua conta" : "Acesse sua conta"}
                   </SheetTitle>
+                  <SheetDescription />
                 </SheetHeader>
 
                 {data?.user ? (
@@ -251,6 +254,7 @@ const Header = () => {
               <SheetContent className="w-[80vw] bg-[#f3f3f3]" side="right">
                 <SheetHeader>
                   <SheetTitle className="text-left">Meu Carrinho</SheetTitle>
+                  <SheetDescription />
                 </SheetHeader>
 
                 <Cart setIsOpen={setIsCartOpen} />

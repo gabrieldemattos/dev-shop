@@ -35,7 +35,11 @@ const MyAddressesPage = async () => {
 
       <div className="p-8 lg:pt-0 xl:px-20 2xl:px-64">
         <div className="mb-8 flex justify-between">
-          <Title icon={<MapPin />} title="Meus Endereços" />
+          <Title
+            icon={<MapPin />}
+            title="Meus Endereços"
+            className="text-sm sm:text-xl"
+          />
 
           {addresses.length > 0 && (
             <Button className="gap-2 uppercase" asChild>
