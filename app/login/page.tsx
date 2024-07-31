@@ -17,7 +17,9 @@ const LoginPage = () => {
 
   return (
     <>
-      <Header />
+      <div className="absolute left-0 right-0 top-0 z-50">
+        <Header />
+      </div>
 
       <div className="absolute top-0 flex h-screen w-full items-center justify-center">
         <div className="flex flex-col items-center rounded-lg bg-white p-8 shadow-lg">
