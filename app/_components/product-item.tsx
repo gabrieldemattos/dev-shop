@@ -1,4 +1,6 @@
-import { Prisma, UserFavoriteProduct } from "@prisma/client";
+"use client";
+
+import { UserFavoriteProduct } from "@prisma/client";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
@@ -7,17 +9,10 @@ import { cn } from "../_lib/utils";
 import ToggleFavoriteButton from "./toggle-favorite-button";
 import DisplayProductAverageRating from "./display-product-average-rating";
 import { MAX_STARS_RATING } from "../_constants/max-stars-review";
+import { IProductWithTotalReviews } from "../_interfaces/ProductWithTotalReviews";
 
 interface ProductItemProps {
-  product: Prisma.ProductGetPayload<{
-    include: {
-      category: {
-        select: {
-          slug: true;
-        };
-      };
-    };
-  }>;
+  product: IProductWithTotalReviews;
   className?: string;
   userFavorites: UserFavoriteProduct[];
 }
@@ -59,12 +54,19 @@ const ProductItem = ({
         />
       </div>
 
-      <div className="mt-2 flex gap-1">
-        <DisplayProductAverageRating
-          totalStars={MAX_STARS_RATING}
-          iconSize={12}
-          averageRating={product.averageRating}
-        />
+      <div className="mt-2 flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          <DisplayProductAverageRating
+            totalStars={MAX_STARS_RATING}
+            iconSize={12}
+            averageRating={product.averageRating}
+          />
+        </div>
+
+        <span className="text-xs text-gray-400">
+          ({product.totalReviews}{" "}
+          {product.totalReviews === 1 ? "avaliação" : "avaliações"})
+        </span>
       </div>
 
       <p className="truncate">{product.name}</p>
@@ -74,9 +76,11 @@ const ProductItem = ({
           {formatCurrency(calculateProductTotalPrice(product))}
         </p>
 
-        <p className="truncate text-xs text-gray-400 line-through">
-          {formatCurrency(Number(product.basePrice))}
-        </p>
+        {product.discountPercentage > 0 && (
+          <p className="truncate text-xs text-gray-400 line-through">
+            {formatCurrency(Number(product.basePrice))}
+          </p>
+        )}
       </div>
     </div>
   );
