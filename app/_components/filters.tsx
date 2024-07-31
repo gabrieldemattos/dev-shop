@@ -30,6 +30,11 @@ const Filters = ({
     setOpenFilter(false);
   };
 
+  const handleClearFilters = () => {
+    onClearFilters();
+    setOpenFilter(false);
+  };
+
   return (
     <div className="flex w-fit items-center gap-3 border">
       <span className="hidden md:flex">Ordenar por</span>
@@ -70,9 +75,9 @@ const Filters = ({
 
             <Button
               className="mt-4 uppercase md:w-fit"
-              onClick={onClearFilters}
+              onClick={handleClearFilters}
             >
-              Limpar Filtros
+              Limpar Filtro
             </Button>
           </div>
         </SheetContent>
