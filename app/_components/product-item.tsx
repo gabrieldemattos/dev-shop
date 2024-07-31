@@ -54,7 +54,7 @@ const ProductItem = ({
         />
       </div>
 
-      <div className="mt-2 flex items-center gap-2">
+      <div className="mt-2 flex flex-col gap-1">
         <div className="flex items-center gap-1">
           <DisplayProductAverageRating
             totalStars={MAX_STARS_RATING}

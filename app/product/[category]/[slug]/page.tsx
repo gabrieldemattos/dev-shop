@@ -93,8 +93,6 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     (relatedProduct) => relatedProduct.slug !== params.slug,
   );
 
-  console.log(relatedProductsWithTotalReviews);
-
   if (!product) return notFound();
 
   return (
