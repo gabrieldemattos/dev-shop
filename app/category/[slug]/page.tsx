@@ -1,11 +1,11 @@
 import Header from "@/app/_components/header";
-import ProductItem from "@/app/_components/product-item";
 import { Badge } from "@/app/_components/ui/badge";
 import { CATEGORY_ICON } from "@/app/_constants/category-icon";
 import { authOptions } from "@/app/_lib/auth";
 import { db } from "@/app/_lib/prisma";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
+import Products from "./_components/products";
 
 interface CategoryPageProps {
   params: {
@@ -35,7 +35,21 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
 
   if (!category) return notFound();
 
-  const orderedProducts = category.products.sort((a, b) => {
+  const productsWithTotalReviews = await Promise.all(
+    category.products.map(async (product) => {
+      const totalReviews = await db.review.count({
+        where: {
+          productId: product.id,
+        },
+      });
+      return {
+        ...product,
+        totalReviews,
+      };
+    }),
+  );
+
+  const orderedProducts = productsWithTotalReviews.sort((a, b) => {
     return b.discountPercentage - a.discountPercentage;
   });
 
@@ -55,16 +69,11 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
           </Badge>
         </div>
 
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {orderedProducts.map((product) => (
-            <ProductItem
-              key={product.id}
-              product={{ ...product, category }}
-              className="g min-w-full"
-              userFavorites={userFavorites}
-            />
-          ))}
-        </div>
+        <Products
+          userFavorites={userFavorites}
+          category={category.slug}
+          orderedProducts={JSON.parse(JSON.stringify(orderedProducts))}
+        />
       </div>
     </>
   );
