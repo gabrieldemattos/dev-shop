@@ -75,9 +75,25 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     take: 10,
   });
 
-  const relatedProductsFiltered = relatedProducts.filter(
+  const relatedProductsWithTotalReviews = await Promise.all(
+    relatedProducts.map(async (product) => {
+      const totalReviews = await db.review.count({
+        where: {
+          productId: product.id,
+        },
+      });
+      return {
+        ...product,
+        totalReviews,
+      };
+    }),
+  );
+
+  const relatedProductsFiltered = relatedProductsWithTotalReviews.filter(
     (relatedProduct) => relatedProduct.slug !== params.slug,
   );
+
+  console.log(relatedProductsWithTotalReviews);
 
   if (!product) return notFound();
 
@@ -124,10 +140,10 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           <h2>Produtos Relacionados</h2>
 
           <div className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-            {relatedProductsFiltered.map((product) => (
+            {relatedProductsFiltered.map((relatedProduct, index) => (
               <ProductItem
-                key={product.id}
-                product={product}
+                key={index}
+                product={JSON.parse(JSON.stringify(relatedProduct))}
                 userFavorites={userFavorites}
               />
             ))}
@@ -179,8 +195,8 @@ const ProductPage = async ({ params }: ProductPageProps) => {
             </div>
           )}
 
-          <div className="space-y-4 px-10 text-lg font-bold">
-            <h2>Produtos Relacionados</h2>
+          <div className="space-y-4 px-10">
+            <h2 className="text-lg font-bold">Produtos Relacionados</h2>
 
             <Carousel
               opts={{
@@ -189,13 +205,13 @@ const ProductPage = async ({ params }: ProductPageProps) => {
               className="hidden lg:block lg:w-full"
             >
               <CarouselContent>
-                {relatedProductsFiltered.map((product) => (
+                {relatedProductsFiltered.map((product, index) => (
                   <CarouselItem
                     className="lg:basis-1/4 xl:basis-1/5"
-                    key={product.id}
+                    key={index}
                   >
                     <ProductItem
-                      product={product}
+                      product={JSON.parse(JSON.stringify(product))}
                       userFavorites={userFavorites}
                       className="w-full"
                     />
