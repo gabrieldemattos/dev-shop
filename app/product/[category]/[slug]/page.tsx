@@ -16,6 +16,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/app/_components/ui/carousel";
+import { fetchProductTotalReviews } from "@/app/_helpers/fetch-product-total-reviews";
 
 interface ProductPageProps {
   params: {
@@ -75,19 +76,8 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     take: 10,
   });
 
-  const relatedProductsWithTotalReviews = await Promise.all(
-    relatedProducts.map(async (product) => {
-      const totalReviews = await db.review.count({
-        where: {
-          productId: product.id,
-        },
-      });
-      return {
-        ...product,
-        totalReviews,
-      };
-    }),
-  );
+  const relatedProductsWithTotalReviews =
+    await fetchProductTotalReviews(relatedProducts);
 
   const relatedProductsFiltered = relatedProductsWithTotalReviews.filter(
     (relatedProduct) => relatedProduct.slug !== params.slug,

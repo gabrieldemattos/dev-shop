@@ -1,5 +1,6 @@
 "use server";
 
+import { fetchProductTotalReviews } from "@/app/_helpers/fetch-product-total-reviews";
 import { db } from "@/app/_lib/prisma";
 
 export const searchProducts = async (query: string) => {
@@ -45,19 +46,7 @@ export const searchProducts = async (query: string) => {
     },
   });
 
-  const productsWithTotalReviews = await Promise.all(
-    products.map(async (product) => {
-      const totalReviews = await db.review.count({
-        where: {
-          productId: product.id,
-        },
-      });
-      return {
-        ...product,
-        totalReviews,
-      };
-    }),
-  );
+  const productsWithTotalReviews = await fetchProductTotalReviews(products);
 
   return JSON.parse(JSON.stringify(productsWithTotalReviews));
 };

@@ -6,6 +6,7 @@ import ProductItem from "../_components/product-item";
 import { Heart, HeartCrack } from "lucide-react";
 import { redirect } from "next/navigation";
 import Title from "../_components/title";
+import { fetchProductTotalReviews } from "../_helpers/fetch-product-total-reviews";
 
 const MyFavoritesPage = async () => {
   const session = await getServerSession(authOptions);
@@ -27,6 +28,10 @@ const MyFavoritesPage = async () => {
       })
     : [];
 
+  const userFavoritesWithTotalReviews = await fetchProductTotalReviews(
+    userFavorites.map((product) => product.product),
+  );
+
   return (
     <>
       <Header />
@@ -38,10 +43,10 @@ const MyFavoritesPage = async () => {
 
         {userFavorites.length > 0 ? (
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {userFavorites.map((favorite) => (
+            {userFavoritesWithTotalReviews.map((favorite) => (
               <ProductItem
-                key={favorite.product.id}
-                product={favorite.product}
+                key={favorite.id}
+                product={JSON.parse(JSON.stringify(favorite))}
                 className="min-w-full"
                 userFavorites={JSON.parse(JSON.stringify(userFavorites))}
               />

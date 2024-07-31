@@ -6,6 +6,8 @@ import { db } from "@/app/_lib/prisma";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import Products from "./_components/products";
+import { fetchProductTotalReviews } from "@/app/_helpers/fetch-product-total-reviews";
+import { IProductWithTotalReviews } from "@/app/_interfaces/ProductWithTotalReviews";
 
 interface CategoryPageProps {
   params: {
@@ -35,18 +37,8 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
 
   if (!category) return notFound();
 
-  const productsWithTotalReviews = await Promise.all(
-    category.products.map(async (product) => {
-      const totalReviews = await db.review.count({
-        where: {
-          productId: product.id,
-        },
-      });
-      return {
-        ...product,
-        totalReviews,
-      };
-    }),
+  const productsWithTotalReviews = await fetchProductTotalReviews(
+    category.products as IProductWithTotalReviews[],
   );
 
   const orderedProducts = productsWithTotalReviews.sort((a, b) => {
