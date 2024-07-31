@@ -31,7 +31,9 @@ const Products = ({
         {filteredProducts.map((product) => (
           <ProductItem
             key={product.id}
-            product={JSON.parse(JSON.stringify({ ...product, category }))}
+            product={JSON.parse(
+              JSON.stringify({ ...product, category: { slug: category } }),
+            )}
             className="g min-w-full"
             userFavorites={userFavorites}
           />

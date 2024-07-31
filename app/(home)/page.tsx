@@ -1,4 +1,3 @@
-import Image from "next/image";
 import CategoryList from "../_components/category-list";
 import ProductList from "../_components/product-list";
 import { ChevronRight } from "lucide-react";
@@ -6,6 +5,7 @@ import Link from "next/link";
 import Header from "../_components/header";
 import { db } from "../_lib/prisma";
 import Banner from "./_components/banner";
+import { fetchProductTotalReviews } from "../_helpers/fetch-product-total-reviews";
 
 export default async function Home() {
   const productsOnOffer = await db.product.findMany({
@@ -28,6 +28,9 @@ export default async function Home() {
     },
   });
 
+  const productsOnOfferWithTotalReviews =
+    await fetchProductTotalReviews(productsOnOffer);
+
   const computers = await db.product.findMany({
     where: {
       status: "ACTIVE",
@@ -45,6 +48,8 @@ export default async function Home() {
     take: 10,
   });
 
+  const computersWithTotalReviews = await fetchProductTotalReviews(computers);
+
   const smartphonesAndTablets = await db.product.findMany({
     where: {
       status: "ACTIVE",
@@ -61,6 +66,10 @@ export default async function Home() {
     },
     take: 10,
   });
+
+  const smartphonesAndTabletsWithTotalReviews = await fetchProductTotalReviews(
+    smartphonesAndTablets,
+  );
 
   return (
     <div className="space-y-8">
@@ -98,7 +107,11 @@ export default async function Home() {
         <div className="space-y-1 pl-5 lg:px-16 2xl:p-0">
           <h2 className="text-xl font-bold">Ofertas</h2>
 
-          <ProductList products={productsOnOffer} />
+          <ProductList
+            products={JSON.parse(
+              JSON.stringify(productsOnOfferWithTotalReviews),
+            )}
+          />
         </div>
 
         <div className="px-5 py-2 lg:hidden">
@@ -131,7 +144,11 @@ export default async function Home() {
         <div className="space-y-1 pl-5 lg:px-16 2xl:p-0">
           <h2 className="text-xl font-bold">Smartphones e Tablets</h2>
 
-          <ProductList products={smartphonesAndTablets} />
+          <ProductList
+            products={JSON.parse(
+              JSON.stringify(smartphonesAndTabletsWithTotalReviews),
+            )}
+          />
         </div>
 
         <div className="px-5 py-2 lg:hidden">
@@ -146,7 +163,9 @@ export default async function Home() {
         <div className="space-y-1 pl-5 lg:px-16 2xl:p-0">
           <h2 className="text-xl font-bold">Computadores</h2>
 
-          <ProductList products={computers} />
+          <ProductList
+            products={JSON.parse(JSON.stringify(computersWithTotalReviews))}
+          />
         </div>
       </div>
     </div>

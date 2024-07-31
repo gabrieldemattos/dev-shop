@@ -9,18 +9,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
-import { Prisma } from "@prisma/client";
+import { IProductWithTotalReviews } from "../_interfaces/ProductWithTotalReviews";
 
 interface ProductListProps {
-  products: Prisma.ProductGetPayload<{
-    include: {
-      category: {
-        select: {
-          slug: true;
-        };
-      };
-    };
-  }>[];
+  products: IProductWithTotalReviews[];
 }
 
 const ProductList = async ({ products }: ProductListProps) => {
@@ -40,7 +32,12 @@ const ProductList = async ({ products }: ProductListProps) => {
         {products.map((product) => (
           <ProductItem
             key={product.id}
-            product={product}
+            product={JSON.parse(
+              JSON.stringify({
+                ...product,
+                category: { slug: product.category.slug },
+              }),
+            )}
             userFavorites={userFavorites}
           />
         ))}
@@ -59,7 +56,12 @@ const ProductList = async ({ products }: ProductListProps) => {
               key={product.id}
             >
               <ProductItem
-                product={product}
+                product={JSON.parse(
+                  JSON.stringify({
+                    ...product,
+                    category: { slug: product.category.slug },
+                  }),
+                )}
                 userFavorites={userFavorites}
                 className="w-full"
               />
