@@ -37,9 +37,27 @@ export const searchProducts = async (query: string) => {
       ],
     },
     include: {
-      category: true,
+      category: {
+        select: {
+          slug: true,
+        },
+      },
     },
   });
 
-  return JSON.parse(JSON.stringify(products));
+  const productsWithTotalReviews = await Promise.all(
+    products.map(async (product) => {
+      const totalReviews = await db.review.count({
+        where: {
+          productId: product.id,
+        },
+      });
+      return {
+        ...product,
+        totalReviews,
+      };
+    }),
+  );
+
+  return JSON.parse(JSON.stringify(productsWithTotalReviews));
 };

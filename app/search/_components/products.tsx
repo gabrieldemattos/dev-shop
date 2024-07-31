@@ -1,6 +1,6 @@
 "use client";
 
-import { Product, UserFavoriteProduct } from "@prisma/client";
+import { UserFavoriteProduct } from "@prisma/client";
 import { notFound, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { searchProducts } from "../_actions/search";
@@ -8,6 +8,9 @@ import ProductItem from "@/app/_components/product-item";
 import { Frown } from "lucide-react";
 import Header from "@/app/_components/header";
 import Loader from "@/app/_components/loader";
+import { IProductWithTotalReviews } from "@/app/_interfaces/ProductWithTotalReviews";
+import Filters from "@/app/_components/filters";
+import { useFilters } from "@/app/_hooks/useFilter";
 
 interface ProductProps {
   userFavorites: UserFavoriteProduct[];
@@ -17,8 +20,11 @@ const Products = ({ userFavorites }: ProductProps) => {
   const searchParams = useSearchParams();
   const searchFor = searchParams.get("q");
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<IProductWithTotalReviews[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const { filteredProducts, selectedFilter, handleFilterChange, clearFilters } =
+    useFilters({ initialProducts: products });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -47,15 +53,29 @@ const Products = ({ userFavorites }: ProductProps) => {
       <Header />
 
       <div className="mt-5 flex flex-col space-y-6 px-5 xl:px-20 2xl:px-64">
-        <h2 className="truncate text-xl text-foreground">
-          Resultados para:{" "}
-          <span className="font-bold text-foreground">{searchFor}</span>
-        </h2>
+        <div className="flex flex-col gap-6">
+          <h2 className="truncate text-xl text-foreground">
+            Resultados para:{" "}
+            <span className="font-bold text-foreground">{searchFor}</span>
+          </h2>
 
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {!isLoading &&
-            products.length > 0 &&
-            products.map((product) => (
+          {products.length > 0 && (
+            <p>
+              Encontramos {products.length}{" "}
+              {products.length === 1 ? "produto" : "produtos"}
+            </p>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-6">
+          <Filters
+            selectedFilter={selectedFilter}
+            onFilterChange={handleFilterChange}
+            onClearFilters={clearFilters}
+          />
+
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {filteredProducts.map((product) => (
               <ProductItem
                 key={product.id}
                 product={JSON.parse(JSON.stringify(product))}
@@ -63,6 +83,7 @@ const Products = ({ userFavorites }: ProductProps) => {
                 userFavorites={userFavorites}
               />
             ))}
+          </div>
         </div>
       </div>
 
