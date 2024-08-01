@@ -32,8 +32,6 @@ const ReviewDetails = async ({
 }: ReviewDetailsProps) => {
   const findLike = userLikes?.find((like) => like === review.id);
 
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
   return (
     <div className="space-y-2">
       <p className="text-base font-bold">{review.user.name}</p>

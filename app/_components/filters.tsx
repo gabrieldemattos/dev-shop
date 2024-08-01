@@ -36,7 +36,7 @@ const Filters = ({
   };
 
   return (
-    <div className="flex w-fit items-center gap-3 border">
+    <div className="w-flex flex items-center gap-3 md:w-fit">
       <span className="hidden md:flex">Ordenar por</span>
       <Sheet open={openFilter} onOpenChange={setOpenFilter}>
         <SheetTrigger asChild>

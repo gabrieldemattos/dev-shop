@@ -53,9 +53,9 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
 
       <div className="mx-auto flex flex-col justify-center gap-5 px-5 pb-5 xl:px-20 2xl:px-64">
         <div className="flex w-fit items-center gap-2 rounded-full bg-background px-3 py-[5px] uppercase shadow-md lg:col-span-4">
-          <Badge variant="outline" className="space-x-2 border-none text-lg">
+          <Badge variant="outline" className="space-x-2 border-none">
             {CATEGORY_ICON[category.name as keyof typeof CATEGORY_ICON]}
-            <span className="text-base font-bold uppercase sm:text-xl">
+            <span className="text-sm font-bold uppercase sm:text-xl md:text-base">
               {category.name}
             </span>
           </Badge>

@@ -76,7 +76,7 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
         </Button>
       </div>
 
-      <div className="mt-6 space-y-2">
+      <div className="mt-6 space-y-2 lg:flex lg:items-center lg:gap-5 lg:space-y-0">
         <Button
           className="w-full font-semibold uppercase shadow-md"
           onClick={handleAddToCartClick}

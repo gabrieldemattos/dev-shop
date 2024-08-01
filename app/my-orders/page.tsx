@@ -166,7 +166,7 @@ const MyOrderPage = async () => {
 
                       <Separator />
 
-                      {order.products.map((product, index) => (
+                      {order.products.map((product) => (
                         <div key={product.id} className="space-y-3">
                           <div className="flex flex-col space-y-4">
                             <div className="flex items-center justify-center">
@@ -193,20 +193,20 @@ const MyOrderPage = async () => {
                                 </p>
                               </div>
 
-                              <p className="w-[250px] truncate text-ellipsis text-xs">
+                              <p className="w-[250px] truncate text-ellipsis text-xs md:w-full md:text-base">
                                 {product.product.name}
                               </p>
 
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                  <p className="text-sm font-bold">
+                                  <p className="text-sm font-bold md:text-base">
                                     {formatCurrency(
                                       calculateProductTotalPrice(product),
                                     )}
                                   </p>
 
                                   {product.discountPercentage > 0 && (
-                                    <p className="text-xs text-muted-foreground line-through">
+                                    <p className="text-xs text-muted-foreground line-through md:text-sm">
                                       {formatCurrency(
                                         Number(product.basePrice),
                                       )}
@@ -214,7 +214,7 @@ const MyOrderPage = async () => {
                                   )}
                                 </div>
 
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-xs text-muted-foreground md:text-sm">
                                   Qtd: {product.quantity}
                                 </p>
                               </div>
@@ -223,7 +223,7 @@ const MyOrderPage = async () => {
 
                           {order.status === "DELIVERED" && (
                             <>
-                              <div className="flex items-center justify-between px-3">
+                              <div className="flex items-center justify-between gap-3 px-2 md:justify-center">
                                 <ReviewButton
                                   orderProductId={order.products[0].id}
                                   product={JSON.parse(
@@ -348,6 +348,26 @@ const MyOrderPage = async () => {
                                   Qtd: {product.quantity}
                                 </p>
                               </div>
+
+                              {order.status === "DELIVERED" && (
+                                <div className="py-4">
+                                  <div className="flex items-center justify-center gap-4">
+                                    <ReviewButton
+                                      orderProductId={order.products[0].id}
+                                      product={JSON.parse(
+                                        JSON.stringify(product.product),
+                                      )}
+                                    />
+
+                                    <BuyAgainButton
+                                      product={JSON.parse(
+                                        JSON.stringify(product.product),
+                                      )}
+                                      quantity={product.quantity}
+                                    />
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           </CarouselItem>
                         ))}
@@ -486,32 +506,6 @@ const MyOrderPage = async () => {
                         />
                       </div>
                     </div>
-
-                    {order.status === "DELIVERED" && (
-                      <>
-                        <Separator />
-
-                        {order.products.map((product) => (
-                          <div key={product.id}>
-                            <div className="flex items-center justify-between">
-                              <ReviewButton
-                                orderProductId={order.products[0].id}
-                                product={JSON.parse(
-                                  JSON.stringify(product.product),
-                                )}
-                              />
-
-                              <BuyAgainButton
-                                product={JSON.parse(
-                                  JSON.stringify(product.product),
-                                )}
-                                quantity={product.quantity}
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </>
-                    )}
                   </div>
                 </div>
               ))}

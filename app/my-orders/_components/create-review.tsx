@@ -36,16 +36,17 @@ interface CreateReviewProps {
 const CreateReview = ({ orderProductId, product }: CreateReviewProps) => {
   const { data } = useSession();
 
-  const [rating, setRating] = useState<number>(0);
+  const [selectedRating, setSelectedRating] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
   const [isSendingReview, setIsSendingReview] = useState<boolean>(false);
 
-  const handleRating = (currentRating: number) => setRating(currentRating);
+  const handleRating = (currentRating: number) =>
+    setSelectedRating(currentRating);
 
   const handleCreateReviewClick = async () => {
     if (!data?.user.id) return;
 
-    if (!rating)
+    if (!selectedRating)
       return toast("Avalie o pedido!", {
         description: "Selecione uma estrela para avaliar o pedido.",
         position: "bottom-center",
@@ -63,7 +64,7 @@ const CreateReview = ({ orderProductId, product }: CreateReviewProps) => {
         orderProduct: {
           connect: { id: orderProductId },
         },
-        rating,
+        rating: selectedRating,
         comment,
       });
 
@@ -118,7 +119,7 @@ const CreateReview = ({ orderProductId, product }: CreateReviewProps) => {
                 totalStars={MAX_STARS_RATING}
                 iconSize={50}
                 handleRating={handleRating}
-                averageRating={rating}
+                selectedRating={selectedRating}
                 className="cursor-pointer hover:fill-primary hover:text-primary"
               />
             </div>
