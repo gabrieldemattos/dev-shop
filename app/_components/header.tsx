@@ -85,13 +85,13 @@ const Header = () => {
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="left">
+            <SheetContent side="left" className="p-0">
               <SheetHeader>
-                <SheetTitle className="text-left">Categorias</SheetTitle>
+                <SheetTitle className="p-6 text-left">Categorias</SheetTitle>
                 <SheetDescription />
               </SheetHeader>
 
-              <div className="space-y-2 pt-6">
+              <div className="space-y-2 pl-2">
                 <CategoriesMenu categories={categories} />
               </div>
             </SheetContent>
