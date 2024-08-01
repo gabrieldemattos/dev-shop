@@ -3,6 +3,7 @@ import CategoryItem from "./category-item";
 
 const CategoryList = async () => {
   const categories = await db.category.findMany({
+    where: { isVisible: true },
     take: 4,
     orderBy: { name: "asc" },
   });

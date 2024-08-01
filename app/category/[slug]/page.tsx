@@ -29,6 +29,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
   const category = await db.category.findUnique({
     where: {
       slug: params.slug,
+      isVisible: true,
     },
     include: {
       products: true,

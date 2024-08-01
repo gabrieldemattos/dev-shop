@@ -5,7 +5,10 @@ import CategoryCard from "./_components/category-card";
 import Title from "../_components/title";
 
 const CategoriesPage = async () => {
-  const categories = await db.category.findMany({ orderBy: { name: "asc" } });
+  const categories = await db.category.findMany({
+    where: { isVisible: true },
+    orderBy: { name: "asc" },
+  });
 
   return (
     <>
