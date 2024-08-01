@@ -92,6 +92,7 @@ model Category {
   name      String
   slug      String    @unique
   imageUrl  String
+  isVisible Boolean   @default(false)
   products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
