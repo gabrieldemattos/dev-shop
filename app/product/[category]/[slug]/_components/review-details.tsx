@@ -63,7 +63,7 @@ const ReviewDetails = async ({
         )}
       </div>
 
-      <div className="flex items-center justify-between pt-3">
+      <div className="flex flex-col items-start pt-3 md:flex-row md:items-center md:justify-between">
         <p className="text-xs font-light text-muted-foreground">
           {likeCount === 1
             ? "1 pessoa achou esta avaliação útil"
