@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 interface RatingSelectorProps {
   totalStars: number;
   iconSize: number;
-  averageRating?: number;
+  selectedRating?: number;
   className?: string;
   handleRating?: (currentRating: number) => void;
 }
@@ -16,7 +16,7 @@ interface RatingSelectorProps {
 const RatingSelector = ({
   totalStars,
   iconSize,
-  averageRating,
+  selectedRating,
   className,
   handleRating,
 }: RatingSelectorProps) => {
@@ -41,10 +41,11 @@ const RatingSelector = ({
           className="p-0"
         >
           <StarIcon
+            key={selectedRating}
             size={iconSize}
             className={cn(
               `${
-                averageRating && index < averageRating
+                selectedRating && index < selectedRating
                   ? "fill-primary text-primary"
                   : "fill-gray-200 text-gray-200"
               }`,
