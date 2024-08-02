@@ -3,6 +3,7 @@
 import {
   HeartIcon,
   HomeIcon,
+  LockKeyhole,
   LogInIcon,
   LogOutIcon,
   MapPin,
@@ -128,7 +129,7 @@ const Header = () => {
                 </SheetHeader>
 
                 {data?.user ? (
-                  <>
+                  <div className="flex flex-col">
                     <div className="flex justify-between pt-6">
                       <div className="flex items-center gap-3">
                         <Avatar>
@@ -151,7 +152,18 @@ const Header = () => {
                         </div>
                       </div>
                     </div>
-                  </>
+
+                    {data.user.isAdmin && (
+                      <div className="pt-6">
+                        <MenuButton
+                          className="text-lg font-bold text-red-500"
+                          href="/dashboard"
+                          icon={<LockKeyhole size={18} />}
+                          label="Painel de Admin"
+                        />
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <div className="flex items-center justify-between pt-10">
                     <h2 className="font-semibold">Faça login para continuar</h2>
