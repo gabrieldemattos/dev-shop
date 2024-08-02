@@ -5,6 +5,7 @@ import AuthProvider from "@/app/_providers/auth";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../_lib/auth";
 import { redirect } from "next/navigation";
+import AdminSidebar from "./_components/admin-sidebar";
 
 export const metadata: Metadata = {
   title: "DEV Shop",
@@ -22,11 +23,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="flex h-screen flex-col bg-gray-100">
+      <body className="flex h-screen flex-col bg-gray-100 lg:flex-row">
         <AuthProvider>
-          <div className="flex flex-1">
-            <div className="flex-1 p-4">{children}</div>
-          </div>
+          <AdminSidebar />
+          <div className="flex-1">{children}</div>
         </AuthProvider>
 
         <Toaster />
