@@ -31,6 +31,24 @@ const AdminSidebar = () => {
 
   const pathname = usePathname();
 
+  const options = [
+    {
+      href: "/dashboard/products",
+      icon: <Barcode size={20} />,
+      label: "Produtos",
+    },
+    {
+      href: "/dashboard/categories",
+      icon: <List size={20} />,
+      label: "Categorias",
+    },
+    {
+      href: "/dashboard/orders",
+      icon: <ArrowLeftRight size={20} />,
+      label: "Pedidos",
+    },
+  ];
+
   return (
     <>
       <aside className="hidden h-full w-fit flex-col border-r-2 border-black bg-muted-foreground p-6 lg:flex">
@@ -39,45 +57,20 @@ const AdminSidebar = () => {
         </h1>
 
         <div className="flex flex-1 flex-col gap-3 pt-12 text-base font-bold text-white">
-          <Button
-            variant="ghost"
-            data-option={
-              pathname === "/dashboard/products" ? "active" : "inactive"
-            }
-            className="data-[option=active]:text-white-500 h-fit w-full justify-start gap-2 rounded-full py-3 pl-4 text-lg transition-none hover:bg-transparent data-[option=active]:border-4 data-[option=active]:border-b-0 data-[option=active]:border-t-0 data-[option=active]:border-black data-[option=active]:bg-black data-[option=active]:bg-opacity-30 data-[option=active]:shadow-lg data-[option=active]:hover:text-white"
-            asChild
-          >
-            <Link href="/dashboard/products">
-              <Barcode size={20} />
-              Produtos
-            </Link>
-          </Button>
-          <Button
-            variant="ghost"
-            data-option={
-              pathname === "/dashboard/categories" ? "active" : "inactive"
-            }
-            className="data-[option=active]:text-white-500 h-fit w-full justify-start gap-2 rounded-full py-3 pl-4 text-lg transition-none hover:bg-transparent data-[option=active]:border-4 data-[option=active]:border-b-0 data-[option=active]:border-t-0 data-[option=active]:border-black data-[option=active]:bg-black data-[option=active]:bg-opacity-30 data-[option=active]:shadow-lg data-[option=active]:hover:text-white"
-            asChild
-          >
-            <Link href="/dashboard/categories">
-              <List size={20} />
-              Categorias
-            </Link>
-          </Button>
-          <Button
-            variant="ghost"
-            data-option={
-              pathname === "/dashboard/orders" ? "active" : "inactive"
-            }
-            className="data-[option=active]:text-white-500 h-fit w-full justify-start gap-2 rounded-full py-3 pl-4 text-lg transition-none hover:bg-transparent data-[option=active]:border-4 data-[option=active]:border-b-0 data-[option=active]:border-t-0 data-[option=active]:border-black data-[option=active]:bg-black data-[option=active]:bg-opacity-30 data-[option=active]:shadow-lg data-[option=active]:hover:text-white"
-            asChild
-          >
-            <Link href="/dashboard/orders">
-              <ArrowLeftRight size={20} />
-              Pedidos
-            </Link>
-          </Button>
+          {options.map((option) => (
+            <Button
+              key={option.href}
+              variant="ghost"
+              data-option={pathname === option.href ? "active" : "inactive"}
+              className="data-[option=active]:text-white-500 h-fit w-full justify-start gap-2 rounded-full py-3 pl-4 text-lg transition-none hover:bg-transparent data-[option=active]:border-4 data-[option=active]:border-b-0 data-[option=active]:border-t-0 data-[option=active]:border-black data-[option=active]:bg-black data-[option=active]:bg-opacity-30 data-[option=active]:shadow-lg data-[option=active]:hover:text-white"
+              asChild
+            >
+              <Link href={option.href}>
+                {option.icon}
+                {option.label}
+              </Link>
+            </Button>
+          ))}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -124,48 +117,23 @@ const AdminSidebar = () => {
               <SheetDescription />
 
               <div className="flex flex-col space-y-4">
-                <Button
-                  variant="ghost"
-                  data-option={
-                    pathname === "/dashboard/products" ? "active" : "inactive"
-                  }
-                  className="h-fit w-full justify-start gap-2 rounded-full py-3 pl-4 text-xl transition-none hover:bg-transparent data-[option=active]:border-4 data-[option=active]:border-b-0 data-[option=active]:border-t-0 data-[option=active]:border-red-500 data-[option=active]:bg-red-400 data-[option=active]:bg-opacity-30 data-[option=active]:text-red-500"
-                  onClick={handleMenuClick}
-                  asChild
-                >
-                  <Link href="/dashboard/products">
-                    <Barcode size={20} />
-                    Produtos
-                  </Link>
-                </Button>
-                <Button
-                  variant="ghost"
-                  data-option={
-                    pathname === "/dashboard/categories" ? "active" : "inactive"
-                  }
-                  className="h-fit w-full justify-start gap-2 rounded-full py-3 pl-4 text-xl transition-none hover:bg-transparent data-[option=active]:border-4 data-[option=active]:border-b-0 data-[option=active]:border-t-0 data-[option=active]:border-red-500 data-[option=active]:bg-red-400 data-[option=active]:bg-opacity-30 data-[option=active]:text-red-500"
-                  onClick={handleMenuClick}
-                  asChild
-                >
-                  <Link href="/dashboard/categories">
-                    <List size={20} />
-                    Categorias
-                  </Link>
-                </Button>
-                <Button
-                  variant="ghost"
-                  data-option={
-                    pathname === "/dashboard/orders" ? "active" : "inactive"
-                  }
-                  className="h-fit w-full justify-start gap-2 rounded-full py-3 pl-4 text-xl transition-none hover:bg-transparent data-[option=active]:border-4 data-[option=active]:border-b-0 data-[option=active]:border-t-0 data-[option=active]:border-red-500 data-[option=active]:bg-red-400 data-[option=active]:bg-opacity-30 data-[option=active]:text-red-500"
-                  onClick={handleMenuClick}
-                  asChild
-                >
-                  <Link href="/dashboard/orders">
-                    <ArrowLeftRight size={20} />
-                    Pedidos
-                  </Link>
-                </Button>
+                {options.map((option) => (
+                  <Button
+                    key={option.href}
+                    variant="ghost"
+                    data-option={
+                      pathname === option.href ? "active" : "inactive"
+                    }
+                    className="h-fit w-full justify-start gap-2 rounded-full py-3 pl-4 text-xl transition-none hover:bg-transparent data-[option=active]:border-4 data-[option=active]:border-b-0 data-[option=active]:border-t-0 data-[option=active]:border-red-500 data-[option=active]:bg-red-400 data-[option=active]:bg-opacity-30 data-[option=active]:text-red-500"
+                    onClick={handleMenuClick}
+                    asChild
+                  >
+                    <Link href={option.href}>
+                      {option.icon}
+                      {option.label}
+                    </Link>
+                  </Button>
+                ))}
               </div>
             </SheetHeader>
           </SheetContent>
