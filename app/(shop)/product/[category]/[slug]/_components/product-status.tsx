@@ -6,11 +6,13 @@ import Link from "next/link";
 interface ProductStatusProps {
   totalReviews: number;
   productId: string;
+  status: "ACTIVE" | "INACTIVE";
 }
 
 const ProductStatus = async ({
   totalReviews,
   productId,
+  status,
 }: ProductStatusProps) => {
   const getAverageRating = await db.product.findUnique({
     where: {
@@ -39,7 +41,11 @@ const ProductStatus = async ({
         </span>
       </Link>
 
-      <span className="font-semibold text-green-600">Em estoque</span>
+      {status === "ACTIVE" ? (
+        <span className="font-semibold text-green-600">Em estoque</span>
+      ) : (
+        <span className="font-semibold text-red-600">Fora de estoque</span>
+      )}
     </div>
   );
 };

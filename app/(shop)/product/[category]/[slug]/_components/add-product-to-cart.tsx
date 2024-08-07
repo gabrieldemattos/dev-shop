@@ -55,7 +55,7 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
     <div>
       <div className="flex items-center gap-2 text-center">
         <Button
-          disabled={quantity === 1}
+          disabled={quantity === 1 || product.status === "INACTIVE"}
           size="icon"
           variant="default"
           className="shadow"
@@ -71,6 +71,7 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
           variant="default"
           className="shadow"
           onClick={handleIncreaseQuantityClick}
+          disabled={product.status === "INACTIVE"}
         >
           <ChevronRight />
         </Button>
@@ -80,6 +81,7 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
         <Button
           className="w-full font-semibold uppercase shadow-md"
           onClick={handleAddToCartClick}
+          disabled={product.status === "INACTIVE"}
         >
           Adicionar ao carrinho
         </Button>
@@ -87,6 +89,7 @@ const AddProductToCart = ({ product }: AddProductToCartProps) => {
         <Button
           className="w-full font-semibold uppercase shadow-md"
           onClick={handleBuyNowClick}
+          disabled={product.status === "INACTIVE"}
         >
           Comprar
         </Button>
