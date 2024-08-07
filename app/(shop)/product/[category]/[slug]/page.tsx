@@ -66,6 +66,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
       category: {
         slug: params.category,
       },
+      status: "ACTIVE",
     },
     include: {
       category: true,
@@ -101,6 +102,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           <ProductStatus
             totalReviews={product.reviews.length}
             productId={product.id}
+            status={product.status}
           />
 
           <ProductDetails product={product} />
@@ -154,6 +156,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
                 <ProductStatus
                   totalReviews={product.reviews.length}
                   productId={product.id}
+                  status={product.status}
                 />
 
                 <ProductDetails product={product} />

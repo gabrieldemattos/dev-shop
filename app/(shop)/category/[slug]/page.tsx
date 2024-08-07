@@ -32,7 +32,11 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
       isVisible: true,
     },
     include: {
-      products: true,
+      products: {
+        where: {
+          status: "ACTIVE",
+        },
+      },
     },
   });
 
