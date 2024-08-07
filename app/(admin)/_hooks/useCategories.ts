@@ -21,7 +21,6 @@ export const useCategories = (category?: Category) => {
     handleSubmit,
     setValue,
     control,
-    reset,
     formState: { errors },
   } = useForm<FormEditCategoryData>({
     resolver: zodResolver(EditCategorySchema),
@@ -49,13 +48,13 @@ export const useCategories = (category?: Category) => {
 
       resetCreateCategory();
 
-      return toast.success("CATEGORIA CADASTRADA COM SUCESSO", {
+      return toast.success("Categoria cadastrada com sucesso.", {
         position: "bottom-center",
         duration: 2000,
       });
     } catch (error) {
       console.log(error);
-      return toast.error("ERRO AO CADASTRAR CATEGORIA", {
+      return toast.error("Erro ao cadastrar categoria.", {
         position: "bottom-center",
         duration: 2000,
       });
