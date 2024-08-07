@@ -12,10 +12,8 @@ import {
 } from "@/app/_components/ui/dialog";
 import { Label } from "@/app/_components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
+import { Controller } from "react-hook-form";
 
 interface CreateNewCategoryProps {
   openAddCategory: boolean;
