@@ -18,6 +18,10 @@ export const getCategory = async (id: string) => {
   });
 };
 
+export const fetchAllCategories = async () => {
+  return await db.category.findMany({ orderBy: { createdAt: "desc" } });
+};
+
 export const deleteCategory = async (id: string) => {
   await db.category.delete({
     where: {
