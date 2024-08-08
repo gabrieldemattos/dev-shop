@@ -1,7 +1,6 @@
 "use client";
 
 import { formatCurrency } from "@/app/(shop)/_helpers/price";
-import { Prisma } from "@prisma/client";
 import {
   DollarSign,
   Edit,
@@ -20,25 +19,10 @@ import { Button } from "@/app/_components/ui/button";
 import { Separator } from "@/app/_components/ui/separator";
 import Link from "next/link";
 import { useProducts } from "@/app/(admin)/_hooks/useProducts";
+import { IProduct } from "@/app/(admin)/_interface/Products";
 
 interface ProductCardProps {
-  product: Prisma.ProductGetPayload<{
-    include: {
-      category: {
-        select: {
-          slug: true;
-          name: true;
-        };
-      };
-      _count: {
-        select: {
-          reviews: true;
-          orderProduct: true;
-          usersWhoFavorited: true;
-        };
-      };
-    };
-  }>;
+  product: IProduct;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
