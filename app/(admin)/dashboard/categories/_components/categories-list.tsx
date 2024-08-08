@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Category } from "@prisma/client";
 import { Plus } from "lucide-react";
 import CategoriesCard from "./category-card";
@@ -8,21 +8,14 @@ import CreateNewCategory from "./create-new-category";
 
 interface ProductsListProps {
   categories: Category[];
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
 }
 
-const CategoriesList = ({ categories }: ProductsListProps) => {
+const CategoriesList = ({ categories, query, setQuery }: ProductsListProps) => {
   const [openAddCategory, setOpenAddCategory] = useState<boolean>(false);
 
   const handleOpenAddCategoryClick = () => setOpenAddCategory(true);
-
-  const [query, setQuery] = useState<string>("");
-
-  const filteredCategories =
-    query.length > 0
-      ? categories.filter((category) =>
-          category.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
-        )
-      : categories;
 
   return (
     <div className="container mx-auto px-0 py-8 md:px-4">
@@ -45,7 +38,7 @@ const CategoriesList = ({ categories }: ProductsListProps) => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {filteredCategories.map((category) => (
+        {categories.map((category) => (
           <CategoriesCard
             key={category.id}
             category={JSON.parse(JSON.stringify(category))}
