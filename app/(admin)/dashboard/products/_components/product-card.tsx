@@ -20,14 +20,32 @@ import { Separator } from "@/app/_components/ui/separator";
 import Link from "next/link";
 import { useProducts } from "@/app/(admin)/_hooks/useProducts";
 import { IProduct } from "@/app/(admin)/_interface/Products";
+import EditProduct from "./edit-product";
+import { Category } from "@prisma/client";
 
 interface ProductCardProps {
   product: IProduct;
+  categories: Category[];
+  revalidateProducts: () => void;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  categories,
+  revalidateProducts,
+}: ProductCardProps) => {
   const [showMore, setShowMore] = useState(false);
   const [mainImage, setMainImage] = useState<string>(product.imageUrls[0]);
+
+  const [openEditProduct, setOpenEditProduct] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<IProduct>(
+    {} as IProduct,
+  );
+
+  const handleEditProdu = (product: IProduct) => {
+    setSelectedProduct(product);
+    setOpenEditProduct(true);
+  };
 
   const { handleDeleteProduct } = useProducts();
 
@@ -35,8 +53,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
     setShowMore(!showMore);
   };
 
-  const handleDeleteProductClick = async (id: string) =>
+  const handleDeleteProductClick = async (id: string) => {
     await handleDeleteProduct(product.id);
+
+    revalidateProducts();
+  };
 
   return (
     <div className="flex flex-col rounded-lg border-2 border-gray-200 bg-white p-4 shadow-lg transition duration-200 hover:border-primary hover:shadow-xl">
@@ -99,7 +120,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         <ParagraphProductInfo
           icon={<Info className="mr-1 inline" />}
-          text={product.status === "ACTIVE" ? "Em Estoque" : "Indisponível"}
+          text={product.status === "ACTIVE" ? "Em Estoque" : "Fora de Estoque"}
           label="Status"
         />
 
@@ -124,6 +145,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Button
           variant="outline"
           className="flex w-full items-center rounded bg-green-500 px-4 py-2 text-white transition duration-200 hover:bg-green-600 hover:text-white"
+          onClick={() => handleEditProdu(product)}
         >
           <Edit className="mr-2" /> Editar Produto
         </Button>
@@ -158,6 +180,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {product._count.usersWhoFavorited}
         </p>
       </div>
+
+      <EditProduct
+        product={selectedProduct}
+        openEditProduct={openEditProduct}
+        setOpenEditProduct={setOpenEditProduct}
+        categories={categories}
+        revalidateProducts={revalidateProducts}
+      />
     </div>
   );
 };

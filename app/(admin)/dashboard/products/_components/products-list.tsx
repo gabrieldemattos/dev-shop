@@ -10,15 +10,19 @@ import { IProduct } from "@/app/(admin)/_interface/Products";
 interface ProductsListProps {
   products: IProduct[];
   categories: Category[];
+  totalProducts: number;
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
+  revalidateProducts: () => void;
 }
 
 const ProductsList = ({
   products,
   categories,
+  totalProducts,
   query,
   setQuery,
+  revalidateProducts,
 }: ProductsListProps) => {
   const [openAddProduct, setOpenAddProduct] = useState<boolean>(false);
 
@@ -44,11 +48,19 @@ const ProductsList = ({
         </button>
       </div>
 
+      <h1 className="py-3 pl-3 text-sm font-bold sm:text-xl">
+        {totalProducts}{" "}
+        {totalProducts === 1 ? "Produto encontrado" : "Produtos encontrados"} no
+        total
+      </h1>
+
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {products.map((product) => (
           <ProductCard
             key={product.id}
             product={JSON.parse(JSON.stringify(product))}
+            categories={categories}
+            revalidateProducts={revalidateProducts}
           />
         ))}
       </div>
@@ -57,6 +69,7 @@ const ProductsList = ({
         openAddProduct={openAddProduct}
         setOpenAddProduct={setOpenAddProduct}
         categories={categories}
+        revalidateProducts={revalidateProducts}
       />
     </div>
   );

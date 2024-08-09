@@ -28,12 +28,14 @@ interface CreateNewProductProps {
   openAddProduct: boolean;
   setOpenAddProduct: (open: boolean) => void;
   categories: Category[];
+  revalidateProducts: () => void;
 }
 
 const CreateNewProduct = ({
   openAddProduct,
   setOpenAddProduct,
   categories,
+  revalidateProducts,
 }: CreateNewProductProps) => {
   const {
     handleCreateProduct,
@@ -51,6 +53,12 @@ const CreateNewProduct = ({
     append({ url: "" });
   };
 
+  const handleCreateProductClick = async () => {
+    await handleSubmit(handleCreateProduct)();
+
+    revalidateProducts();
+  };
+
   return (
     <Dialog open={openAddProduct} onOpenChange={setOpenAddProduct}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[425px]">
@@ -63,7 +71,7 @@ const CreateNewProduct = ({
         </DialogHeader>
 
         <form
-          onSubmit={handleSubmit(handleCreateProduct)}
+          onSubmit={handleCreateProductClick}
           className="space-y-10 px-5 py-3"
         >
           <Input
