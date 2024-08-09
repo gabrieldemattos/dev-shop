@@ -20,12 +20,14 @@ interface EditCategoryProps {
   category: Category;
   openEditCategory: boolean;
   setEditCategory: (open: boolean) => void;
+  revalidateCategories: () => void;
 }
 
 const EditCategory = ({
   category,
   openEditCategory,
   setEditCategory,
+  revalidateCategories,
 }: EditCategoryProps) => {
   const {
     handleEditCategory,
@@ -35,6 +37,11 @@ const EditCategory = ({
     isLoading,
     control,
   } = useCategories(category);
+
+  const handleEditCategoryClick = async () => {
+    await handleSubmit(handleEditCategory)();
+    revalidateCategories();
+  };
 
   return (
     <Dialog open={openEditCategory} onOpenChange={setEditCategory}>
@@ -48,7 +55,7 @@ const EditCategory = ({
         </DialogHeader>
 
         <form
-          onSubmit={handleSubmit(handleEditCategory)}
+          onSubmit={handleEditCategoryClick}
           className="space-y-10 px-5 py-3"
         >
           <Input

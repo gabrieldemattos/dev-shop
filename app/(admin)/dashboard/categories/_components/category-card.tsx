@@ -11,9 +11,10 @@ import { useState } from "react";
 
 interface ProductCardProps {
   category: Category;
+  revalidateCategories: () => void;
 }
 
-const CategoryCard = ({ category }: ProductCardProps) => {
+const CategoryCard = ({ category, revalidateCategories }: ProductCardProps) => {
   const { handleDeleteCategory, isLoading } = useCategories();
   const [openEditCategory, setOpenEditCategory] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<Category>(
@@ -25,8 +26,11 @@ const CategoryCard = ({ category }: ProductCardProps) => {
     setOpenEditCategory(true);
   };
 
-  const handleDeleteCategoryClick = async (id: string) =>
+  const handleDeleteCategoryClick = async (id: string) => {
     await handleDeleteCategory(id);
+
+    revalidateCategories();
+  };
 
   return (
     <div className="flex flex-col rounded-lg border-2 border-gray-200 bg-white p-4 shadow-lg transition duration-200 hover:border-primary hover:shadow-xl">
@@ -87,6 +91,7 @@ const CategoryCard = ({ category }: ProductCardProps) => {
         category={selectedCategory}
         openEditCategory={openEditCategory}
         setEditCategory={setOpenEditCategory}
+        revalidateCategories={revalidateCategories}
       />
     </div>
   );

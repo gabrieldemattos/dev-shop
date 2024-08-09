@@ -18,11 +18,13 @@ import { Controller } from "react-hook-form";
 interface CreateNewCategoryProps {
   openAddCategory: boolean;
   setOpenAddCategory: (open: boolean) => void;
+  revalidateCategories: () => void;
 }
 
 const CreateNewCategory = ({
   openAddCategory,
   setOpenAddCategory,
+  revalidateCategories,
 }: CreateNewCategoryProps) => {
   const {
     handleSubmitCreateCategory,
@@ -32,6 +34,12 @@ const CreateNewCategory = ({
     errorsCreateCategory,
     isLoading,
   } = useCategories();
+
+  const handleCreateCategoryClick = async () => {
+    await handleSubmitCreateCategory(handleCreateCategory)();
+
+    revalidateCategories();
+  };
 
   return (
     <Dialog open={openAddCategory} onOpenChange={setOpenAddCategory}>
@@ -45,7 +53,7 @@ const CreateNewCategory = ({
         </DialogHeader>
 
         <form
-          onSubmit={handleSubmitCreateCategory(handleCreateCategory)}
+          onSubmit={handleCreateCategoryClick}
           className="space-y-10 px-5 py-3"
         >
           <Input

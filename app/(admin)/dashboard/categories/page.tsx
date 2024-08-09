@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CategoriesList from "./_components/categories-list";
 import { Category } from "@prisma/client";
 import { fetchAllCategories } from "./_actions/fetch-categories";
@@ -12,25 +12,28 @@ const AdminCategoriesPage = () => {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState<string>("");
   const [totalCategories, setTotalCategories] = useState(0);
+  const [isLoadingNextPage, setIsLoadingNextPage] = useState<boolean>(false);
   const pageSize = 10;
 
   const handleNextPage = () => setPage((prev) => prev + 1);
   const handlePrevPage = () => setPage((prev) => Math.max(prev - 1, 1));
 
+  const fetchCategories = useCallback(async () => {
+    setIsLoadingNextPage(true);
+    const { categories, totalCategories } = await fetchAllCategories(
+      page,
+      pageSize,
+      query,
+    );
+
+    setCategories(categories);
+    setTotalCategories(totalCategories);
+    setIsLoadingNextPage(false);
+  }, [page, pageSize, query]);
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { categories, totalCategories } = await fetchAllCategories(
-        page,
-        pageSize,
-        query,
-      );
-
-      setCategories(categories);
-      setTotalCategories(totalCategories);
-    };
-
-    fetchProducts();
-  }, [page, query]);
+    fetchCategories();
+  }, [fetchCategories]);
 
   useEffect(() => {
     setPage(1);
@@ -41,8 +44,10 @@ const AdminCategoriesPage = () => {
       <div className="max-h-[750px] overflow-y-auto rounded-md bg-gray-200 bg-opacity-90 p-8 shadow-lg lg:w-[800px] xl:w-full">
         <CategoriesList
           categories={categories}
+          totalCategories={totalCategories}
           query={query}
           setQuery={setQuery}
+          revalidateCategories={fetchCategories}
         />
       </div>
 
@@ -58,7 +63,7 @@ const AdminCategoriesPage = () => {
         <Button
           className="gap-2 bg-blue-500 hover:bg-blue-600"
           onClick={handleNextPage}
-          disabled={page * pageSize >= totalCategories}
+          disabled={page * pageSize >= totalCategories || isLoadingNextPage}
         >
           <span className="hidden sm:block">Próxima</span> <ChevronRight />
         </Button>
