@@ -19,3 +19,14 @@ export const deleteProduct = async (id: string) => {
 
   revalidatePath("/dashboard/products");
 };
+
+export const updateProduct = async (data: Prisma.ProductCreateInput) => {
+  await db.product.update({
+    where: {
+      id: data.id as string,
+    },
+    data,
+  });
+
+  revalidatePath("/dashboard/products");
+};
