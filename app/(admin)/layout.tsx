@@ -31,8 +31,10 @@ export default async function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col bg-gray-100 lg:flex-row">
         <AuthProvider>
-          <AdminSidebar />
-          <div className="flex-1">{children}</div>
+          <div className="lg:fixed">
+            <AdminSidebar />
+          </div>
+          <div className="flex-1 lg:ml-64">{children}</div>
         </AuthProvider>
 
         <Toaster />
