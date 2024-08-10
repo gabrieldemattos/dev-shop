@@ -58,7 +58,7 @@ const AdminSidebar = () => {
 
   return (
     <>
-      <aside className="hidden min-h-screen w-fit flex-col border-r-2 border-black bg-muted-foreground p-6 lg:flex">
+      <aside className="hidden min-h-screen w-fit flex-col bg-muted-foreground p-6 shadow-[0_0_7px_5px_rgba(0,0,0,0.75)] lg:flex">
         <div className="flex gap-2">
           <div className="relative h-10 w-10">
             <Image
