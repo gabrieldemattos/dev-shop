@@ -151,6 +151,7 @@ enum PaymentMethod {
 
 model Order {
   id                     String         @id @default(uuid())
+  orderNumber            String         @unique
   userId                 String
   user                   User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   products               OrderProduct[]

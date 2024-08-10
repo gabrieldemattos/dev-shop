@@ -87,6 +87,11 @@ const MyOrderPage = async () => {
                     </p>
                   </AccordionTrigger>
                   <AccordionContent>
+                    <p className="px-5 font-bold">
+                      Número do pedido:{" "}
+                      <span className="font-normal">#{order.orderNumber}</span>
+                    </p>
+
                     <div className="space-y-5 p-5">
                       <Separator />
 
@@ -297,6 +302,10 @@ const MyOrderPage = async () => {
                   key={index}
                 >
                   <div className="flex flex-col lg:w-[400px] xl:w-[500px]">
+                    <p className="text-center font-bold">
+                      Número do pedido:{" "}
+                      <span className="font-normal">#{order.orderNumber}</span>
+                    </p>
                     <Carousel className="max-w-auto w-full flex-1">
                       <CarouselContent>
                         {order.products.map((product, index) => (

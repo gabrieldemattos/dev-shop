@@ -15,7 +15,7 @@ import { Address, PaymentMethod } from "@prisma/client";
 import { Dot, Loader2, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { formatPhoneNumber } from "../_helpers/format-phone-number";
-import { createOrder } from "../_actions/order";
+import { createOrder, generateOrderNumber } from "../_actions/order";
 import PaymentMethods from "./_components/payment_method";
 import { paymentIconsTranslations } from "../_constants/payment-icons-translations";
 import { Button } from "@/app/_components/ui/button";
@@ -105,7 +105,11 @@ const OrderConfirmationPage = () => {
 
     try {
       setIsConfirmationOrder(true);
+
+      const orderNumber = await generateOrderNumber();
+
       await createOrder({
+        orderNumber,
         user: {
           connect: {
             id: data.user.id,
