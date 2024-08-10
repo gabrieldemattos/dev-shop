@@ -189,7 +189,7 @@ const MyOrderPage = async () => {
                               <div className="flex items-center justify-center">
                                 <p className="rounded-md bg-muted px-2 py-[2px] text-xs">
                                   Vendido e entregue por:{" "}
-                                  <span className="font-bold">DEVShop</span>
+                                  <span className="font-bold">devSHOP</span>
                                 </p>
                               </div>
 
@@ -320,7 +320,7 @@ const MyOrderPage = async () => {
                             <div className="rounded-md bg-muted p-[4px] text-center">
                               <p className="text-[.6875rem]">
                                 Vendido e entregue por:{" "}
-                                <span className="font-bold">DEVShop</span>
+                                <span className="font-bold">devSHOP</span>
                               </p>
                             </div>
 

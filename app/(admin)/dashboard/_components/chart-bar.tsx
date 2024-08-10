@@ -53,8 +53,14 @@ const ChartBar = () => {
   if (!sales) return <div>Carregando dados...</div>;
 
   return (
-    <div className="margin-auto w-full max-w-[800px]">
-      <Chart options={options} series={series} type="bar" width="100%" />
+    <div className="h-[350px] w-full md:h-[390px]">
+      <Chart
+        options={options}
+        series={series}
+        type="bar"
+        width="100%"
+        height="100%"
+      />
     </div>
   );
 };

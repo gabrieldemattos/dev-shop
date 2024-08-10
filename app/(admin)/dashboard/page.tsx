@@ -41,7 +41,7 @@ const AdminPage = async () => {
   const sales = await getSalesForEachCategory();
 
   return (
-    <div className="flex w-full flex-col gap-4 p-3 sm:grid sm:grid-cols-2 lg:grid-cols-4 lg:p-6">
+    <div className="flex min-h-screen w-full flex-col gap-4 p-3 sm:grid sm:grid-cols-2 lg:grid-cols-4 lg:p-6">
       <InfoCard
         title="Total de vendas concluídas"
         icon={<DollarSign size={20} />}
@@ -71,7 +71,7 @@ const AdminPage = async () => {
         value={countOrderPast}
       />
 
-      <div className="border-xl w-full border bg-background p-5 shadow-md md:col-span-2 lg:col-span-4 lg:h-[215px] lg:overflow-y-auto xl:-order-1 xl:col-span-2 xl:row-span-2 xl:h-[360px]">
+      <div className="border-xl w-full border bg-background p-5 shadow-md md:col-span-2 lg:col-span-4 lg:h-[215px] lg:overflow-y-auto xl:-order-1 xl:col-span-2 xl:row-span-2 xl:h-[410px]">
         <div className="mb-6 space-y-2">
           <div className="flex w-full items-center justify-between">
             <p className="text-lg font-semibold">Últimos usuários</p>
@@ -105,7 +105,7 @@ const AdminPage = async () => {
         ))}
       </div>
 
-      <div className="border-xl w-full border bg-background p-5 shadow-md sm:col-span-2">
+      <div className="border-xl border bg-background p-5 shadow-md sm:col-span-2">
         <div className="flex flex-col space-y-3">
           <div className="flex w-auto items-center justify-between">
             <p className="text-xs font-semibold md:text-lg">
@@ -119,7 +119,7 @@ const AdminPage = async () => {
         </div>
       </div>
 
-      <div className="border-xl w-full border bg-background p-5 shadow-md sm:col-span-2">
+      <div className="border-xl border bg-background p-5 shadow-md sm:col-span-2">
         <div className="flex flex-col space-y-3">
           <div className="flex w-auto items-center justify-between">
             <p className="text-xs font-semibold md:text-lg">

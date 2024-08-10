@@ -29,12 +29,13 @@ const ChartDonut = ({ sales }: ChartDonutProps) => {
   if (!sales) return <div>Carregando dados...</div>;
 
   return (
-    <div className="mx-auto w-full">
+    <div className="h-[350px] w-full md:h-[390px]">
       <Chart
         options={configs.options}
         series={configs.series}
         type="pie"
         width="100%"
+        height="100%"
       />
     </div>
   );

@@ -41,7 +41,7 @@ const Search = () => {
 
       <SearchCheck className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-opacity-80" />
 
-      <Button size="icon" type="submit" className="absolute -right-1">
+      <Button size="icon" type="submit" className="absolute right-0">
         <SearchIcon size={20} />
       </Button>
     </form>

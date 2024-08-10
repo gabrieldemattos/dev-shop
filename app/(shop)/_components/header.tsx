@@ -47,6 +47,7 @@ import MenuButton from "./menu-button";
 import CategoriesMenu from "./categories-menu";
 import { Category } from "@prisma/client";
 import { getCategories } from "../_actions/get-categories";
+import Image from "next/image";
 
 const Header = () => {
   const [confirmedSignOut, setConfirmedSignOut] = useState<boolean>(false);
@@ -76,7 +77,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="relative bg-linear-primary px-8 py-3 lg:mb-16 2xl:px-64">
+    <div className="relative bg-linear-primary px-8 py-5 lg:mb-16 2xl:px-64">
       <div className="flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <Sheet>
@@ -102,11 +103,23 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
-          <Link href="/">
-            <p className="permanent-marker-regular text-2xl font-bold text-red-700 text-opacity-70">
-              DEV<span className="text-white">Shop</span>
-            </p>
-          </Link>
+          <div className="flex items-center gap-4">
+            <div className="relative h-10 w-10">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                fill
+                sizes="100%"
+                className="object-contain"
+              />
+            </div>
+
+            <Link href="/">
+              <p className="permanent-marker-regular text-2xl font-bold text-red-700 text-opacity-70">
+                dev<span className="text-white">SHOP</span>
+              </p>
+            </Link>
+          </div>
 
           <div className="hidden w-[60%] lg:block">
             <Search />

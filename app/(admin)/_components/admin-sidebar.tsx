@@ -22,6 +22,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const AdminSidebar = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -57,10 +58,22 @@ const AdminSidebar = () => {
 
   return (
     <>
-      <aside className="hidden h-full w-fit flex-col border-r-2 border-black bg-muted-foreground p-6 lg:flex">
-        <h1 className="permanent-marker-regular p-3 text-3xl font-bold text-red-500">
-          DEV<span className="text-white">Shop</span>
-        </h1>
+      <aside className="hidden min-h-screen w-fit flex-col border-r-2 border-black bg-muted-foreground p-6 lg:flex">
+        <div className="flex gap-2">
+          <div className="relative h-10 w-10">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              fill
+              sizes="100%"
+              className="object-contain"
+            />
+          </div>
+
+          <h1 className="permanent-marker-regular p-3 text-3xl font-bold text-red-500">
+            dev<span className="text-white">SHOP</span>
+          </h1>
+        </div>
 
         <div className="flex flex-1 flex-col gap-3 pt-12 text-base font-bold text-white">
           {options.map((option) => (
@@ -116,9 +129,21 @@ const AdminSidebar = () => {
           <SheetContent side="left" className="w-[250px]">
             <SheetHeader>
               <SheetTitle className="mb-5 text-left text-3xl" asChild>
-                <h1 className="permanent-marker-regular font-bold text-red-700 text-opacity-70">
-                  DEV<span className="text-black">Shop</span>
-                </h1>
+                <div className="flex gap-2">
+                  <div className="relative h-10 w-10">
+                    <Image
+                      src="/logo.png"
+                      alt="Logo"
+                      fill
+                      sizes="100%"
+                      className="object-contain"
+                    />
+                  </div>
+
+                  <h1 className="permanent-marker-regular font-bold text-red-700 text-opacity-70">
+                    dev<span className="text-black">SHOP</span>
+                  </h1>
+                </div>
               </SheetTitle>
               <SheetDescription />
 
