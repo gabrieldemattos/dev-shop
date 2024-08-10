@@ -13,6 +13,7 @@ import {
   ArrowBigLeft,
   ArrowLeftRight,
   Barcode,
+  HomeIcon,
   List,
   LogOut,
   MenuIcon,
@@ -32,6 +33,11 @@ const AdminSidebar = () => {
   const pathname = usePathname();
 
   const options = [
+    {
+      href: "/dashboard",
+      icon: <HomeIcon size={20} />,
+      label: "Início",
+    },
     {
       href: "/dashboard/products",
       icon: <Barcode size={20} />,
