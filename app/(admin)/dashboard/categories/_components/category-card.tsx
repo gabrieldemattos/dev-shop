@@ -8,6 +8,17 @@ import { Separator } from "@/app/_components/ui/separator";
 import EditCategory from "./edit-category";
 import { useCategories } from "@/app/(admin)/_hooks/useCategories";
 import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/_components/ui/alert-dialog";
 
 interface ProductCardProps {
   category: Category;
@@ -78,13 +89,39 @@ const CategoryCard = ({ category, revalidateCategories }: ProductCardProps) => {
           <Edit className="mr-2" /> Editar
         </Button>
 
-        <Button
-          className="flex w-full items-center rounded bg-red-500 px-4 py-2 text-white transition duration-200 hover:bg-red-600 hover:text-white"
-          onClick={() => handleDeleteCategoryClick(category.id)}
-          disabled={isLoading}
-        >
-          <Trash className="mr-2" /> Remover
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              className="flex w-full items-center rounded bg-red-500 px-4 py-2 text-white transition duration-200 hover:bg-red-600 hover:text-white"
+              disabled={isLoading}
+            >
+              <Trash className="mr-2" /> Remover
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Tem certeza que deseja excluir essa categoria?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                Você está prestes a remover a caterogia {category.name}, NÃO
+                SERÁ POSSIVEL DESFAZER esta ação.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={isLoading}>
+                Cancelar
+              </AlertDialogCancel>
+              <AlertDialogAction
+                disabled={isLoading}
+                onClick={() => handleDeleteCategoryClick(category.id)}
+                className="bg-destructive hover:bg-destructive/90"
+              >
+                Excluir
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
 
       <EditCategory

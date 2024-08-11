@@ -22,6 +22,17 @@ import { useProducts } from "@/app/(admin)/_hooks/useProducts";
 import { IProduct } from "@/app/(admin)/_interface/Products";
 import EditProduct from "./edit-product";
 import { Category } from "@prisma/client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/_components/ui/alert-dialog";
 
 interface ProductCardProps {
   product: IProduct;
@@ -42,12 +53,12 @@ const ProductCard = ({
     {} as IProduct,
   );
 
-  const handleEditProdu = (product: IProduct) => {
+  const handleEditProduct = (product: IProduct) => {
     setSelectedProduct(product);
     setOpenEditProduct(true);
   };
 
-  const { handleDeleteProduct } = useProducts();
+  const { handleDeleteProduct, isLoading } = useProducts();
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
@@ -130,7 +141,7 @@ const ProductCard = ({
           label="Avaliação Média"
         />
 
-        <p className="mb-2 text-gray-700">
+        <p className="mb-2 break-words text-gray-700">
           {showMore
             ? product.description
             : `${product.description.substring(0, 100)}...`}
@@ -145,17 +156,44 @@ const ProductCard = ({
         <Button
           variant="outline"
           className="flex w-full items-center rounded bg-green-500 px-4 py-2 text-white transition duration-200 hover:bg-green-600 hover:text-white"
-          onClick={() => handleEditProdu(product)}
+          onClick={() => handleEditProduct(product)}
         >
           <Edit className="mr-2" /> Editar Produto
         </Button>
 
-        <Button
-          className="flex w-full items-center rounded bg-red-500 px-4 py-2 text-white transition duration-200 hover:bg-red-600 hover:text-white"
-          onClick={() => handleDeleteProductClick(product.id)}
-        >
-          <Trash className="mr-2" /> Remover Produto
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              className="flex w-full items-center rounded bg-red-500 px-4 py-2 text-white transition duration-200 hover:bg-red-600 hover:text-white"
+              disabled={isLoading}
+            >
+              <Trash className="mr-2" /> Remover Produto
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Tem certeza que deseja excluir esse produto?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                Você está prestes a remover o produto {product.name}, NÃO SERÁ
+                POSSIVEL DESFAZER esta ação.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={isLoading}>
+                Cancelar
+              </AlertDialogCancel>
+              <AlertDialogAction
+                disabled={isLoading}
+                onClick={() => handleDeleteProductClick(product.id)}
+                className="bg-destructive hover:bg-destructive/90"
+              >
+                Excluir
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
 
       <div className="mt-4 space-y-2 text-gray-600">
