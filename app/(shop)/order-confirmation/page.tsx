@@ -17,7 +17,7 @@ import Link from "next/link";
 import { formatPhoneNumber } from "../_helpers/format-phone-number";
 import { createOrder, generateOrderNumber } from "../_actions/order";
 import PaymentMethods from "./_components/payment_method";
-import { paymentIconsTranslations } from "../_constants/payment-icons-translations";
+import { paymentIconsTranslations } from "../../_constants/payment-icons-translations";
 import { Button } from "@/app/_components/ui/button";
 import {
   AlertDialog,

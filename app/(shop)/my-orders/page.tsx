@@ -12,12 +12,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/app/_components/ui/accordion";
-import { orderStatus } from "../_constants/order-status";
+import { orderStatus } from "../../_constants/order-status";
 import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
 import { redirect } from "next/navigation";
 import { formatPhoneNumber } from "../_helpers/format-phone-number";
-import { paymentIconsTranslations } from "../_constants/payment-icons-translations";
+import { paymentIconsTranslations } from "../../_constants/payment-icons-translations";
 import AddressInfoParagraph from "./_components/address-info-paragraph";
 import BuyAgainButton from "./_components/buy-again-button";
 import ReviewButton from "./_components/review-button";
