@@ -11,8 +11,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/app/_components/ui/avatar";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/_lib/auth";
 import { Separator } from "@/app/_components/ui/separator";
 import InfoCard from "./_components/info-card";
 import { getNewUsersLast24Hours } from "../_actions/get-new-users-last-24-hours";
@@ -26,8 +24,6 @@ const ChartDonut = dynamic(() => import("./_components/chart-donut"), {
 });
 
 const AdminPage = async () => {
-  const session = await getServerSession(authOptions);
-
   const countRecentUsers = await getRecentUserCount(30);
 
   const countTodayOrders = await getTodayOrdersCount();

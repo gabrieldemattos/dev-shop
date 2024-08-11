@@ -6,6 +6,7 @@ import { Category } from "@prisma/client";
 import { fetchAllCategories } from "./_actions/fetch-categories";
 import { Button } from "@/app/_components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Container from "../../_components/container";
 
 const AdminCategoriesPage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -41,7 +42,7 @@ const AdminCategoriesPage = () => {
 
   return (
     <div className="p-8">
-      <div className="max-h-[750px] overflow-y-auto rounded-md bg-gray-200 bg-opacity-90 p-8 shadow-lg lg:max-h-full lg:w-[800px] xl:w-full">
+      <Container>
         <CategoriesList
           categories={categories}
           totalCategories={totalCategories}
@@ -49,7 +50,7 @@ const AdminCategoriesPage = () => {
           setQuery={setQuery}
           revalidateCategories={fetchCategories}
         />
-      </div>
+      </Container>
 
       <div className="mt-10 flex justify-between px-3">
         <Button

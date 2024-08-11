@@ -8,6 +8,7 @@ import { getAllProducts } from "./_actions/fetch-products";
 import { fetchAllCategories } from "../../_actions/category";
 import { Button } from "@/app/_components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Container from "../../_components/container";
 
 const AdminProductPage = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -54,7 +55,7 @@ const AdminProductPage = () => {
 
   return (
     <div className="p-8">
-      <div className="max-h-[750px] overflow-y-auto rounded-md bg-gray-200 bg-opacity-90 p-8 shadow-lg lg:max-h-full lg:w-[800px] xl:w-full">
+      <Container>
         <ProductsList
           products={products}
           categories={categories}
@@ -63,7 +64,7 @@ const AdminProductPage = () => {
           setQuery={setQuery}
           revalidateProducts={fetchProducts}
         />
-      </div>
+      </Container>
 
       <div className="mt-10 flex justify-between px-3">
         <Button
