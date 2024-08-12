@@ -12,6 +12,7 @@ import { EditCategorySchema } from "../_schemas/edit-category-schema";
 import { Category } from "@prisma/client";
 import { FormCreateCategoryData } from "../_types/create-category";
 import { createCategorySchema } from "../_schemas/create-category-schema";
+import { formatSlug } from "../_helpers/format-slug";
 
 export const useCategories = (category?: Category) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -20,6 +21,7 @@ export const useCategories = (category?: Category) => {
     register,
     handleSubmit,
     setValue,
+    watch,
     control,
     formState: { errors },
   } = useForm<FormEditCategoryData>({
@@ -30,11 +32,25 @@ export const useCategories = (category?: Category) => {
     handleSubmit: handleSubmitCreateCategory,
     register: registerCreateCategory,
     control: controlCreateCategory,
+    setValue: setValueCreateCategory,
+    watch: watchCreateCategory,
     reset: resetCreateCategory,
     formState: { errors: errorsCreateCategory },
   } = useForm<FormCreateCategoryData>({
     resolver: zodResolver(createCategorySchema),
   });
+
+  const editSlug = watch("category_slug");
+
+  useEffect(() => {
+    setValue("category_slug", formatSlug(editSlug));
+  }, [editSlug, setValue]);
+
+  const createSlug = watchCreateCategory("category_slug");
+
+  useEffect(() => {
+    setValueCreateCategory("category_slug", formatSlug(createSlug));
+  }, [createSlug, setValueCreateCategory]);
 
   const handleCreateCategory = async (data: FormCreateCategoryData) => {
     setIsLoading(true);
@@ -94,7 +110,7 @@ export const useCategories = (category?: Category) => {
       "category_visibility",
       category.isVisible ? "isVisible" : "isNotVisible",
     );
-  }, [category]);
+  }, [category, setValue]);
 
   const handleEditCategory = async (data: FormEditCategoryData) => {
     setIsLoading(true);

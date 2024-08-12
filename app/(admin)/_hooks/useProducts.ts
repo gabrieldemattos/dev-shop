@@ -15,6 +15,8 @@ import {
 import { FormEditProductData } from "../_types/edit-product";
 import { EditProductSchema } from "../_schemas/edit-product-schema";
 import { IProduct } from "../_interface/Products";
+import { filterOnlyNumbers } from "@/app/(shop)/_helpers/filter-only-numbers";
+import { formatSlug } from "../_helpers/format-slug";
 
 export const useProducts = (product?: Product | IProduct) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -22,8 +24,9 @@ export const useProducts = (product?: Product | IProduct) => {
   const {
     register: registerEditProduct,
     handleSubmit: handleSubmitEditProduct,
-    setValue,
+    setValue: setValueEditProduct,
     control: controlEditProduct,
+    watch: watchEditProduct,
     formState: { errors: errorsEditProduct },
   } = useForm<FormEditProductData>({
     resolver: zodResolver(EditProductSchema),
@@ -34,6 +37,8 @@ export const useProducts = (product?: Product | IProduct) => {
     register,
     control,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<FormCreateProductData>({
     resolver: zodResolver(createProductSchema),
@@ -44,7 +49,54 @@ export const useProducts = (product?: Product | IProduct) => {
     name: "product_imageUrls",
   });
 
+  // CREATE
+  const discount = watch("product_discountPercentage");
+
+  useEffect(() => {
+    setValue("product_discountPercentage", filterOnlyNumbers(discount));
+  }, [discount, setValue]);
+
+  const price = watch("product_basePrice");
+
+  useEffect(() => {
+    setValue("product_basePrice", filterOnlyNumbers(price));
+  }, [price, setValue]);
+
+  const slug = watch("product_slug");
+
+  useEffect(() => {
+    setValue("product_slug", formatSlug(slug));
+  }, [slug, setValue]);
+
+  // EDIT
+  const editDiscount = watchEditProduct("product_discountPercentage");
+
+  useEffect(() => {
+    setValueEditProduct(
+      "product_discountPercentage",
+      filterOnlyNumbers(editDiscount),
+    );
+  }, [editDiscount, setValueEditProduct]);
+
+  const editPrice = watchEditProduct("product_basePrice");
+
+  useEffect(() => {
+    setValueEditProduct("product_basePrice", filterOnlyNumbers(editPrice));
+  }, [editPrice, setValueEditProduct]);
+
+  const editSlug = watchEditProduct("product_slug");
+
+  useEffect(() => {
+    setValueEditProduct("product_slug", formatSlug(editSlug));
+  }, [editSlug, setValueEditProduct]);
+
   const handleCreateProduct = async (data: FormCreateProductData) => {
+    if (Number(data.product_discountPercentage) > 100)
+      return toast.error("Desconto não pode ser maior que 100.", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+
     setIsLoading(true);
     try {
       await createNewProduct({
@@ -101,23 +153,29 @@ export const useProducts = (product?: Product | IProduct) => {
   useEffect(() => {
     if (!product) return;
 
-    setValue("product_name", product.name);
-    setValue("product_slug", product.slug);
-    setValue("product_description", product.description);
-    setValue(
+    setValueEditProduct("product_name", product.name);
+    setValueEditProduct("product_slug", formatSlug(product.slug));
+    setValueEditProduct("product_description", product.description);
+    setValueEditProduct(
       "product_imageUrls",
       product.imageUrls?.map((image) => ({ url: image })),
     );
-    setValue("product_basePrice", product.basePrice?.toString());
-    setValue("product_category", product.categoryId);
-    setValue(
+    setValueEditProduct("product_basePrice", product.basePrice?.toString());
+    setValueEditProduct("product_category", product.categoryId);
+    setValueEditProduct(
       "product_discountPercentage",
       product.discountPercentage?.toString(),
     );
-    setValue("product_status", product.status);
-  }, [product, setValue]);
+    setValueEditProduct("product_status", product.status);
+  }, [product, setValueEditProduct]);
 
   const handleEditProduct = async (data: FormEditProductData) => {
+    if (Number(data.product_discountPercentage) > 100)
+      return toast.error("Desconto não pode ser maior que 100.", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+
     setIsLoading(true);
 
     if (!product) return;
