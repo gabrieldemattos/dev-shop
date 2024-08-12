@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { getUserActiveAddress } from "../_actions/get-user-active-address";
 import { Address, PaymentMethod } from "@prisma/client";
-import { Dot, Loader2, ShoppingCart } from "lucide-react";
+import { Dot, Loader2, ShoppingCart, Trash } from "lucide-react";
 import Link from "next/link";
 import { formatPhoneNumber } from "../_helpers/format-phone-number";
 import { createOrder, generateOrderNumber } from "../_actions/order";
@@ -30,6 +30,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog";
+import { getInactiveProductInOrder } from "./_actions/get-inactive-products-in-order";
 
 const OrderConfirmationPage = () => {
   const { data } = useSession();
@@ -41,11 +42,13 @@ const OrderConfirmationPage = () => {
     Address | undefined
   >(undefined);
   const [isOpenPaymentModal, setIsOpenPaymentModal] = useState<boolean>(false);
+  const [inactiveProducts, setInactiveProducts] = useState<string[]>([]);
 
   const router = useRouter();
 
   const {
     products,
+    deleteProductFromCart,
     clearCart,
     totalPriceWithDiscounts,
     totalPriceWithoutDiscounts,
@@ -84,10 +87,36 @@ const OrderConfirmationPage = () => {
     clearCart();
   };
 
+  useEffect(() => {
+    if (products.length === 0) return;
+    const checkIfProductIsActive = async () => {
+      const productsId = products.map((product) => product.id);
+
+      const isInactive = await Promise.all(
+        productsId.map((id) => getInactiveProductInOrder(id)),
+      );
+
+      setInactiveProducts(
+        isInactive
+          .filter((product) => product !== null)
+          .map((item) => item?.id),
+      );
+    };
+
+    checkIfProductIsActive();
+  }, [products]);
+
   const handleFinishOrderClick = async () => {
     if (!data?.user) return router.push("/login");
 
     if (products.length === 0) return;
+
+    if (inactiveProducts.length > 0) {
+      return toast.error("Um ou mais produtos estão fora de estoque.", {
+        position: "bottom-center",
+        duration: 2000,
+      });
+    }
 
     if (!userActiveAddress) {
       return toast.error("Adicione um endereço para finalizar o pedido.", {
@@ -169,6 +198,8 @@ const OrderConfirmationPage = () => {
   const handleChosePaymentMethod = () =>
     setIsOpenPaymentModal(!isOpenPaymentModal);
 
+  console.log(inactiveProducts);
+
   return (
     <>
       <div>
@@ -211,40 +242,76 @@ const OrderConfirmationPage = () => {
             <div className="space-y-5">
               <div className="flex flex-col gap-2">
                 {products.map((product) => (
-                  <div
-                    key={product.id}
-                    className="flex items-center justify-between px-4"
-                  >
-                    <div className="flex items-center gap-4">
-                      <Link
-                        className="relative h-20 w-20"
-                        href={`/product/${product.categorySlug}/${product.slug}`}
-                      >
-                        <Image
-                          src={product.imageUrls[0]}
-                          alt={product.name}
-                          fill
-                          sizes="100%"
-                          className="rounded-lg bg-background object-contain"
-                        />
+                  <div className="flex flex-col px-4" key={product.id}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <Link
+                          className="relative h-20 w-20"
+                          href={`/product/${product.categorySlug}/${product.slug}`}
+                        >
+                          <Image
+                            src={product.imageUrls[0]}
+                            alt={product.name}
+                            fill
+                            sizes="100%"
+                            className="rounded-lg bg-background object-contain"
+                          />
 
-                        <span className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-primary p-1 text-xs font-bold text-white">
-                          {product.quantity}
-                        </span>
-                      </Link>
+                          <span className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-primary p-1 text-xs font-bold text-white">
+                            {product.quantity}
+                          </span>
+                        </Link>
 
-                      <div className="flex w-[150px] flex-col gap-1 font-semibold text-muted-foreground sm:w-[200px] md:w-[450px]">
-                        <span className="truncate text-sm capitalize md:whitespace-normal">
-                          {product.name}
-                        </span>
+                        <div className="flex flex-col space-y-4">
+                          <div
+                            data-inactive-product={inactiveProducts.includes(
+                              product.id,
+                            )}
+                            className="flex w-[150px] flex-col gap-1 font-semibold text-muted-foreground data-[inactive-product=true]:text-destructive data-[inactive-product=true]:line-through sm:w-[200px] md:w-[450px]"
+                          >
+                            <span className="truncate text-sm capitalize md:whitespace-normal">
+                              {product.name}
+                            </span>
+                          </div>
+
+                          <div>
+                            <span className="text-sm font-semibold text-muted-foreground">
+                              {formatCurrency(Number(product.basePrice))}
+                            </span>
+                          </div>
+                        </div>
                       </div>
+
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Trash className="h-5 w-5 cursor-pointer text-destructive transition hover:opacity-70" />
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Tem certeza que deseja remover esse produto do
+                              carrinho?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription></AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => deleteProductFromCart(product.id)}
+                              className="bg-destructive hover:bg-destructive/90"
+                            >
+                              Remover
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
 
-                    <div>
-                      <span className="text-sm font-semibold text-muted-foreground">
-                        {formatCurrency(Number(product.basePrice))}
+                    {inactiveProducts.includes(product.id) && (
+                      <span className="pl-2 text-xs font-semibold text-destructive">
+                        Fora de estoque
                       </span>
-                    </div>
+                    )}
                   </div>
                 ))}
               </div>
