@@ -98,8 +98,8 @@ const OrderConfirmationPage = () => {
 
       setInactiveProducts(
         isInactive
-          .filter((product) => product !== null)
-          .map((item) => item?.id),
+          .filter((product) => product !== null && product !== undefined)
+          .map((item) => item!.id as string),
       );
     };
 
