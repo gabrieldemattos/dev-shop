@@ -14,6 +14,7 @@ interface ProductImagesProps {
   productName: string;
   userFavorites: UserFavoriteProduct[];
   productId: string;
+  productStatus: "ACTIVE" | "INACTIVE";
 }
 
 const ProductImages = ({
@@ -21,6 +22,7 @@ const ProductImages = ({
   productName,
   userFavorites,
   productId,
+  productStatus,
 }: ProductImagesProps) => {
   const [activeImageUrl, setActiveImageUrl] = useState<string>(imageUrls[0]);
   const [isImageZoomed, setIsImageZoomed] = useState<boolean>(false);
@@ -43,7 +45,8 @@ const ProductImages = ({
               height={0}
               width={0}
               sizes="100vw"
-              className="h-auto max-h-[70%] w-full max-w-[80%] object-contain lg:h-[450px] lg:w-[360px]"
+              data-status={productStatus}
+              className="h-auto max-h-[70%] w-full max-w-[80%] object-contain data-[status=INACTIVE]:opacity-50 lg:h-[450px] lg:w-[360px]"
             />
           </button>
 
@@ -77,7 +80,8 @@ const ProductImages = ({
                 height={0}
                 width={0}
                 sizes="100vw"
-                className="h-auto max-h-[70%] w-auto max-w-[80%]"
+                data-status={productStatus}
+                className="h-auto max-h-[70%] w-auto max-w-[80%] data-[status=INACTIVE]:opacity-50"
               />
             </button>
           ))}

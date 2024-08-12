@@ -103,18 +103,18 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
-          <div className="flex items-center gap-4">
-            <div className="relative h-10 w-10">
-              <Image
-                src="/logo.png"
-                alt="Logo"
-                fill
-                sizes="100%"
-                className="object-contain"
-              />
-            </div>
+          <div>
+            <Link href="/" className="flex items-center gap-4">
+              <div className="relative h-10 w-10">
+                <Image
+                  src="/logo.png"
+                  alt="Logo"
+                  fill
+                  sizes="100%"
+                  className="object-contain"
+                />
+              </div>
 
-            <Link href="/">
               <p className="permanent-marker-regular text-2xl font-bold text-red-700 text-opacity-70">
                 dev<span className="text-white">SHOP</span>
               </p>

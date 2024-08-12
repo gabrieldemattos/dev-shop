@@ -96,6 +96,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           productName={product.name}
           userFavorites={userFavorites}
           productId={product.id}
+          productStatus={product.status}
         />
 
         <div className="flex flex-col space-y-4 px-5">
@@ -149,6 +150,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
               productName={product.name}
               userFavorites={userFavorites}
               productId={product.id}
+              productStatus={product.status}
             />
 
             <div className="flex min-w-[500px] max-w-[1000px] flex-col rounded rounded-bl-none rounded-tl-none border-b-2 bg-linear-secondary p-5 pb-10">
