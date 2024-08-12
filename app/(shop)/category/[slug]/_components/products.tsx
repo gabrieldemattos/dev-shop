@@ -34,7 +34,7 @@ const Products = ({
             product={JSON.parse(
               JSON.stringify({ ...product, category: { slug: category } }),
             )}
-            className="g min-w-full"
+            className="min-w-full"
             userFavorites={userFavorites}
           />
         ))}

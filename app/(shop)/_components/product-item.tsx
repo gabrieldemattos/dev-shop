@@ -26,7 +26,7 @@ const ProductItem = ({
     <div className={cn("flex min-h-[150px] w-[150px] flex-col", className)}>
       <div
         className={cn(
-          "relative aspect-square min-h-[150px] w-[150px] rounded-lg bg-linear-secondary p-2",
+          "relative aspect-square min-h-[150px] w-[150px] rounded-lg bg-linear-secondary p-2 shadow transition-all hover:shadow-[0_0_17px_0_rgba(0,0,0,0.25)]",
           className,
         )}
       >
@@ -36,7 +36,7 @@ const ProductItem = ({
             alt={product.name}
             fill
             sizes="100%"
-            className="object-contain transition-all hover:scale-110"
+            className="object-contain"
             quality={100}
           />
 
