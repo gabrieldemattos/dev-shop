@@ -198,8 +198,6 @@ const OrderConfirmationPage = () => {
   const handleChosePaymentMethod = () =>
     setIsOpenPaymentModal(!isOpenPaymentModal);
 
-  console.log(inactiveProducts);
-
   return (
     <>
       <div>

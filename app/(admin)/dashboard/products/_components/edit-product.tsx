@@ -23,6 +23,7 @@ import {
 import { Textarea } from "@/app/_components/ui/textarea";
 import { Category } from "@prisma/client";
 import { Loader2 } from "lucide-react";
+import { FormEvent } from "react";
 import { Controller } from "react-hook-form";
 
 interface EditProductProps {
@@ -56,8 +57,12 @@ const EditProduct = ({
     append({ url: "" });
   };
 
-  const handleEditProductClick = async () => {
+  const handleEditProductClick = async (e: FormEvent<HTMLFormElement>) => {
     await handleSubmitEditProduct(handleEditProduct)();
+
+    e.preventDefault();
+
+    if (errorsEditProduct) return;
 
     revalidateProducts();
   };
@@ -198,6 +203,7 @@ const EditProduct = ({
           <Input
             label="Desconto em porcentagem"
             placeholder="ex: 10 (10%)"
+            maxLength={3}
             {...registerEditProduct("product_discountPercentage", {
               required: true,
             })}

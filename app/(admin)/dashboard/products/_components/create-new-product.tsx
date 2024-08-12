@@ -22,6 +22,7 @@ import {
 import { Textarea } from "@/app/_components/ui/textarea";
 import { Category } from "@prisma/client";
 import { Loader2 } from "lucide-react";
+import { FormEvent } from "react";
 import { Controller } from "react-hook-form";
 
 interface CreateNewProductProps {
@@ -53,8 +54,12 @@ const CreateNewProduct = ({
     append({ url: "" });
   };
 
-  const handleCreateProductClick = async () => {
+  const handleCreateProductClick = async (e: FormEvent<HTMLFormElement>) => {
     await handleSubmit(handleCreateProduct)();
+
+    e.preventDefault();
+
+    if (errors) return;
 
     revalidateProducts();
   };
@@ -193,6 +198,7 @@ const CreateNewProduct = ({
           <Input
             label="Desconto em porcentagem"
             placeholder="ex: 10 (10%)"
+            maxLength={3}
             {...register("product_discountPercentage", { required: true })}
             errors={errors?.product_discountPercentage?.message}
             disabled={isLoading}

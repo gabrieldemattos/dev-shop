@@ -14,6 +14,7 @@ import { Label } from "@/app/_components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
 import { Category } from "@prisma/client";
 import { Loader2 } from "lucide-react";
+import { FormEvent } from "react";
 import { Controller } from "react-hook-form";
 
 interface EditCategoryProps {
@@ -38,8 +39,13 @@ const EditCategory = ({
     control,
   } = useCategories(category);
 
-  const handleEditCategoryClick = async () => {
+  const handleEditCategoryClick = async (e: FormEvent<HTMLFormElement>) => {
     await handleSubmit(handleEditCategory)();
+
+    e.preventDefault();
+
+    if (errors) return;
+
     revalidateCategories();
   };
 

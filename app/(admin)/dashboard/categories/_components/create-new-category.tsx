@@ -13,6 +13,7 @@ import {
 import { Label } from "@/app/_components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
 import { Loader2 } from "lucide-react";
+import { FormEvent } from "react";
 import { Controller } from "react-hook-form";
 
 interface CreateNewCategoryProps {
@@ -35,8 +36,12 @@ const CreateNewCategory = ({
     isLoading,
   } = useCategories();
 
-  const handleCreateCategoryClick = async () => {
+  const handleCreateCategoryClick = async (e: FormEvent<HTMLFormElement>) => {
     await handleSubmitCreateCategory(handleCreateCategory)();
+
+    e.preventDefault();
+
+    if (errorsCreateCategory) return;
 
     revalidateCategories();
   };
