@@ -159,7 +159,7 @@ model Order {
   subtotalPrice          Decimal        @db.Decimal(10, 2)
   deliveryFee            Decimal        @db.Decimal(10, 2)
   discountValue          Decimal        @db.Decimal(10, 2)
-  status                 OrderStatus
+  status                 OrderStatus    @default(DELIVERED)
   paymentMethod          PaymentMethod
   addressFirstName       String
   addressLastName        String

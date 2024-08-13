@@ -30,7 +30,6 @@ const OrderList = ({
         {totalOrders === 1
           ? "1 pedido encontrado"
           : `${totalOrders} pedidos encontrados`}{" "}
-        desse usuário
       </p>
       <div className="w-full">
         {orders.map((order) => (

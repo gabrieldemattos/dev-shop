@@ -158,7 +158,6 @@ const OrderConfirmationPage = () => {
         subtotalPrice: totalPriceWithoutDiscounts,
         deliveryFee: 0,
         discountValue: totalDiscounts,
-        status: "WAITING_FOR_PAYMENT",
         paymentMethod: paymentMethod as PaymentMethod,
         addressFirstName: userActiveAddress.firstName,
         addressLastName: userActiveAddress.lastName,
