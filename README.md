@@ -32,6 +32,7 @@ O DevShop é um eCommerce FullStack desenvolvido para aprimorar conhecimentos em
 - Pesquisa de produtos: Os usuários podem buscar por produtos específicos, com a pesquisa abrangendo nome, slug e categoria dos produtos.
 - Favoritos: É possível adicionar produtos aos favoritos para acessá-los facilmente mais tarde.
 - Carrinho de compras: Adicione vários produtos ao carrinho, com a capacidade de salvar o estado do carrinho mesmo após atualizar a página. Os usuários também podem limpar todo o - carrinho de uma vez.
+- Integração com Stripe para Pagamentos: Os usuários podem realizar pagamentos de forma segura utilizando o Stripe, que suporta múltiplos métodos de pagamento, como cartões de crédito e débito.
 - Avaliações de produtos: Os usuários podem avaliar produtos após a entrega, e outras pessoas podem curtir essas avaliações para marcar como úteis.
 - Gestão de endereços: Cadastre múltiplos endereços de entrega para maior conveniência.
 - Admin Dashboard: Uma interface de administração robusta que permite:
@@ -60,6 +61,7 @@ O DevShop é um eCommerce FullStack desenvolvido para aprimorar conhecimentos em
 - [Next-auth](https://next-auth.js.org/): Biblioteca para autenticação de usuários com suporte ao OAuth.
 - [Prisma](https://www.prisma.io/): ORM (Object-Relational Mapping) para acesso ao banco de dados.
 - [Neon](https://neon.tech/): Plataforma de banco de dados e autenticação.
+- [Stripe](https://stripe.com/br): Plataforma de pagamentos online, utilizada para processar pagamentos de forma segura e eficiente.
 - [Tailwind CSS](https://tailwindcss.com/): Framework CSS para estilização que oferece várias classes para utilização já pré-estilizadas.
 - [TypeScript](https://www.typescriptlang.org/): Linguagem de programação.
 - [React Hook Form](https://react-hook-form.com/): Formulários de alto desempenho, flexíveis e extensíveis com validação fácil de usar.
@@ -80,7 +82,7 @@ Para utilizar o DevShop localmente, siga estas etapas:
 
 ## Deploy na Vercel 💻☁️
 
-Este projeto está atualmente disponível online através da Vercel. Você pode acessá-lo [aqui](https://dev-shop-rho.vercel.app/). Experimente a aplicação em tempo real!
+Este projeto está atualmente disponível online através da Vercel. Você pode acessá-lo [aqui](https://dev-shop-rho.vercel.app/). Experimente a aplicação em tempo real! Para testar pagamentos, utilize o cartão de teste fornecido pelo Stripe: 4242 4242 4242 4242.
 
 ## Imagens Relevantes 🖼️
 
@@ -88,28 +90,34 @@ Este projeto está atualmente disponível online através da Vercel. Você pode 
 
 Visão geral da página inicial do DevShop, tanto para Desktop quanto para Mobile. A página inicial é onde os usuários podem navegar pelos produtos em destaque, visualizar categorias populares e acessar rapidamente suas contas ou carrinhos de compras.
 
-<p>
-  <img src="screenshots/home-desktop.png" alt="Página Inicial - Desktop" width="45%" style="vertical-align: top;"/>
-  <img src="screenshots/home-mobile.png" alt="Página Inicial - Mobile" width="25%" style="vertical-align: top;"/>
-</p>
+<table>
+  <tr>
+    <td><img src="screenshots/home-desktop.png" alt="Página Inicial - Desktop" width="100%"/></td>
+    <td><img src="screenshots/home-mobile.png" alt="Página Inicial - Mobile" width="100%"/></td>
+  </tr>
+</table>
 
 ### Página de Categorias
 
 Visão geral da página de categorias, onde é exibida uma lista de todas as categorias disponíveis no DevShop. Os usuários podem clicar em qualquer categoria para ver os produtos correspondentes, tanto para Desktop quanto para Mobile.
 
-<p>
-  <img src="screenshots/categories-page-desktop.png" alt="Página de Categorias - Desktop" width="45%" style="vertical-align: top;"/>
-  <img src="screenshots/categories-page-mobile.png" alt="Página de Categorias - Mobile" width="25%" style="vertical-align: top;"/>
-</p>
+<table>
+  <tr>
+    <td><img src="screenshots/categories-page-desktop.png" alt="Página de Categorias - Desktop" width="100%"/></td>
+    <td><img src="screenshots/categories-page-mobile.png" alt="Página de Categorias - Mobile" width="100%"/></td>
+  </tr>
+</table>
 
 ### Página de Categoria Específica
 
 Visão geral da página de uma categoria específica, mostrando todos os produtos relacionados à aquela categoria. Isso inclui produtos filtrados por tipo, com visualizações otimizadas tanto para Desktop quanto para Mobile.
 
-<p>
-  <img src="screenshots/category-page-desktop.png" alt="Página de Categoria Específica - Desktop" width="45%" style="vertical-align: top;"/>
-  <img src="screenshots/category-page-mobile.png" alt="Página de Categoria Específica - Mobile" width="25%" style="vertical-align: top;"/>
-</p>
+<table>
+  <tr>
+    <td><img src="screenshots/category-page-desktop.png" alt="Página de Categoria Específica - Desktop" width="100%"/></td>
+    <td><img src="screenshots/category-page-mobile.png" alt="Página de Categoria Específica - Mobile" width="100%"/></td>
+  </tr>
+</table>
 
 ### Página para Registro de Endereço
 
@@ -127,19 +135,23 @@ Aqui, os usuários podem ver todos os endereços que cadastraram. O endereço co
 
 Nesta página, os usuários confirmam seus pedidos, escolhendo o método de pagamento e o endereço de entrega. Se necessário, podem alterar o endereço ou adicionar um novo. Visualização disponível tanto para Desktop quanto para Mobile.
 
-<p>
-  <img src="screenshots/order-confirmation-page-desktop.png" alt="Página de Confirmação de Pedido - Desktop" width="45%" style="vertical-align: top;"/>
-  <img src="screenshots/order-confirmation-page-mobile.png" alt="Página de Confirmação de Pedido - Mobile" width="25%" style="vertical-align: top;"/>
-</p>
+<table>
+  <tr>
+    <td><img src="screenshots/order-confirmation-page-desktop.png" alt="Página de Confirmação de Pedido - Desktop" width="100%"/></td>
+    <td><img src="screenshots/order-confirmation-page-mobile.png" alt="Página de Confirmação de Pedido - Mobile" width="100%"/></td>
+  </tr>
+</table>
 
 ### Página de Pedidos do Usuário
 
 Os usuários podem verificar todos os seus pedidos, incluindo detalhes como status de entrega e itens comprados. Visualização otimizada para Desktop e Mobile.
 
-<p>
-  <img src="screenshots/my-orders-desktop.png" alt="Página de Pedidos do Usuário - Desktop" width="45%" style="vertical-align: top;"/>
-  <img src="screenshots/my-orders-mobile.png" alt="Página de Pedidos do Usuário - Mobile" width="25%" style="vertical-align: top;"/>
-</p>
+<table>
+  <tr>
+    <td><img src="screenshots/my-orders-desktop.png" alt="Página de Pedidos do Usuário - Desktop" width="100%"/></td>
+    <td><img src="screenshots/my-orders-mobile.png" alt="Página de Pedidos do Usuário - Mobile" width="100%"/></td>
+  </tr>
+</table>
 
 ### Página de Produtos Salvos como Favoritos
 
@@ -157,10 +169,12 @@ Página onde os usuários podem pesquisar por produtos, com a opção de filtrar
 
 Visão geral da página de um produto específico, exibindo todas as informações relevantes, como descrição, avaliações de usuários e produtos relacionados. Disponível tanto para Desktop quanto para Mobile.
 
-<p>
-  <img src="screenshots/product-page-desktop.png" alt="Página do Produto - Desktop" width="45%" style="vertical-align: top;"/>
-  <img src="screenshots/product-page-mobile.png" alt="Página do Produto - Mobile" width="25%" style="vertical-align: top;"/>
-</p>
+<table>
+  <tr>
+    <td><img src="screenshots/product-page-desktop.png" alt="Página do Produto - Desktop" width="100%"/></td>
+    <td><img src="screenshots/product-page-mobile.png" alt="Página do Produto - Mobile" width="100%"/></td>
+  </tr>
+</table>
 
 ### Página Inicial - ADMIN Dashboard
 
