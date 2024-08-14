@@ -20,6 +20,8 @@ export async function POST(request: Request) {
   const userSession = await getServerSession(authOptions);
   const req = await request.json();
 
+  console.log(req);
+
   const {
     orderNumber,
     products,
@@ -58,7 +60,7 @@ export async function POST(request: Request) {
   }));
 
   const session = await stripe.checkout.sessions.create({
-    success_url: "/success/{CHECKOUT_SESSION_ID}",
+    success_url: `${process.env.HOST_URL!}/success/{CHECKOUT_SESSION_ID}`,
     metadata: {
       orderNumber,
       products: JSON.stringify(
