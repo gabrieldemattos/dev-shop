@@ -163,6 +163,9 @@ const Header = () => {
                           <h3 className="font-semibold">
                             Olá, {data.user?.name?.split(" ")[0]}
                           </h3>
+                          <span className="block text-xs text-muted-foreground">
+                            {data.user.email}
+                          </span>
                         </div>
                       </div>
                     </div>
