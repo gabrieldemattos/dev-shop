@@ -20,8 +20,6 @@ export async function POST(request: Request) {
   const userSession = await getServerSession(authOptions);
   const req = await request.json();
 
-  console.log(req);
-
   const {
     orderNumber,
     products,
