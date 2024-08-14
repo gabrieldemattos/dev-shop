@@ -6,7 +6,7 @@ import Header from "../_components/header";
 import { useCartContext } from "../_hooks/useCartContext";
 import { toast } from "sonner";
 import Image from "next/image";
-import { formatCurrency } from "../_helpers/price";
+import { calculateProductTotalPrice, formatCurrency } from "../_helpers/price";
 import { Separator } from "@/app/_components/ui/separator";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -31,6 +31,7 @@ import {
   AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog";
 import { getInactiveProductInOrder } from "./_actions/get-inactive-products-in-order";
+import { loadStripe } from "@stripe/stripe-js";
 
 const OrderConfirmationPage = () => {
   const { data } = useSession();
@@ -137,54 +138,112 @@ const OrderConfirmationPage = () => {
 
       const orderNumber = await generateOrderNumber();
 
-      await createOrder({
-        orderNumber,
-        user: {
-          connect: {
-            id: data.user.id,
+      if (paymentMethod === "PIX") {
+        await createOrder({
+          orderNumber,
+          user: {
+            connect: {
+              id: data.user.id,
+            },
           },
-        },
-        products: {
-          createMany: {
-            data: products.map((product) => ({
+          products: {
+            createMany: {
+              data: products.map((product) => ({
+                productId: product.id,
+                basePrice: product.basePrice,
+                discountPercentage: product.discountPercentage,
+                quantity: product.quantity,
+              })),
+            },
+          },
+          totalPrice: totalPriceWithDiscounts,
+          subtotalPrice: totalPriceWithoutDiscounts,
+          deliveryFee: 0,
+          discountValue: totalDiscounts,
+          paymentMethod: paymentMethod as PaymentMethod,
+          addressFirstName: userActiveAddress.firstName,
+          addressLastName: userActiveAddress.lastName,
+          addressLabel: userActiveAddress.label,
+          addressStreet: userActiveAddress.street,
+          addressNumber: userActiveAddress.number,
+          addressNeighborhood: userActiveAddress.neighborhood,
+          addressCity: userActiveAddress.city,
+          addressState: userActiveAddress.state,
+          addressCountry: userActiveAddress.country,
+          addressPostalCode: userActiveAddress.postalCode,
+          addressTelephoneDDD: userActiveAddress.telephoneDDD,
+          addressTelephoneNumber: userActiveAddress.telephoneNumber,
+          addressReference: userActiveAddress.reference ?? undefined,
+          addressComplement: userActiveAddress.complement ?? undefined,
+        });
+
+        clearCart();
+
+        toast("Pedido concluído com sucesso!", {
+          description:
+            "Obrigado! Seu pedido foi recebido e está sendo processado.",
+          position: "bottom-center",
+          duration: 3000,
+        });
+
+        return router.push("/my-orders");
+      }
+
+      const res = await fetch("/api/payment", {
+        method: "POST",
+        body: Buffer.from(
+          JSON.stringify({
+            orderNumber,
+            products: products.map((product) => ({
               productId: product.id,
-              basePrice: product.basePrice,
-              discountPercentage: product.discountPercentage,
+              basePrice: Number(product.basePrice).toFixed(2),
+              discountPercentage: Number(product.discountPercentage).toFixed(2),
+              productTotalPriceWithDiscounts: Number(
+                calculateProductTotalPrice(product),
+              ).toFixed(2),
               quantity: product.quantity,
+              name: product.name,
+              description: product.description,
+              image: product.imageUrls[0],
             })),
-          },
-        },
-        totalPrice: totalPriceWithDiscounts,
-        subtotalPrice: totalPriceWithoutDiscounts,
-        deliveryFee: 0,
-        discountValue: totalDiscounts,
-        paymentMethod: paymentMethod as PaymentMethod,
-        addressFirstName: userActiveAddress.firstName,
-        addressLastName: userActiveAddress.lastName,
-        addressLabel: userActiveAddress.label,
-        addressStreet: userActiveAddress.street,
-        addressNumber: userActiveAddress.number,
-        addressNeighborhood: userActiveAddress.neighborhood,
-        addressCity: userActiveAddress.city,
-        addressState: userActiveAddress.state,
-        addressCountry: userActiveAddress.country,
-        addressPostalCode: userActiveAddress.postalCode,
-        addressTelephoneDDD: userActiveAddress.telephoneDDD,
-        addressTelephoneNumber: userActiveAddress.telephoneNumber,
-        addressReference: userActiveAddress.reference ?? undefined,
-        addressComplement: userActiveAddress.complement ?? undefined,
+            totalPrice: Number(totalPriceWithDiscounts).toFixed(2),
+            subtotalPrice: Number(totalPriceWithoutDiscounts).toFixed(2),
+            deliveryFee: 0,
+            discountValue: Number(totalDiscounts).toFixed(2),
+            paymentMethod: paymentMethod as PaymentMethod,
+            addressFirstName: userActiveAddress.firstName,
+            addressLastName: userActiveAddress.lastName,
+            addressLabel: userActiveAddress.label,
+            addressStreet: userActiveAddress.street,
+            addressNumber: userActiveAddress.number,
+            addressNeighborhood: userActiveAddress.neighborhood,
+            addressCity: userActiveAddress.city,
+            addressState: userActiveAddress.state,
+            addressCountry: userActiveAddress.country,
+            addressPostalCode: userActiveAddress.postalCode,
+            addressTelephoneDDD: userActiveAddress.telephoneDDD,
+            addressTelephoneNumber: userActiveAddress.telephoneNumber,
+            addressReference: userActiveAddress.reference ?? undefined,
+            addressComplement: userActiveAddress.complement ?? undefined,
+          }),
+        ),
       });
 
-      clearCart();
+      if (!res.ok) {
+        return toast.error("Ocorreu um erro ao realizar a compra!", {
+          position: "bottom-center",
+        });
+      }
 
-      toast("Pedido concluído com sucesso!", {
-        description:
-          "Obrigado! Seu pedido foi recebido e está sendo processado.",
-        position: "bottom-center",
-        duration: 3000,
+      const { sessionId } = await res.json();
+
+      const stripe = await loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_KEY as string,
+      );
+
+      await stripe?.redirectToCheckout({
+        sessionId,
       });
-
-      router.push("/my-orders");
     } catch (error) {
       toast.error("Erro ao finalizar o pedido, tente novamente!", {
         position: "bottom-center",
