@@ -377,7 +377,14 @@ const OrderConfirmationPage = () => {
 
             <div className="flex flex-col gap-2 px-8">
               <div className="flex items-center justify-between">
-                <h2 className="font-semibold">Pagamento</h2>
+                <div className="flex flex-col space-y-1">
+                  <h2 className="font-semibold">Pagamento</h2>
+
+                  <div className="text-xs font-bold text-red-500 md:text-base">
+                    *Ao selecionar cartão: não use dados reais. Utilize o cartão
+                    de teste: 4242 4242 4242 4242.*
+                  </div>
+                </div>
 
                 {paymentMethod && (
                   <Button
@@ -443,7 +450,7 @@ const OrderConfirmationPage = () => {
 
               {isAddressLoading && <p>Carregando..</p>}
 
-              {userActiveAddress ? (
+              {userActiveAddress && (
                 <div className="flex items-center justify-between">
                   <div className="flex w-full flex-col break-words">
                     <p className="font-semibold capitalize">
@@ -477,8 +484,15 @@ const OrderConfirmationPage = () => {
                     )}
                   </div>
                 </div>
-              ) : (
-                <Button variant="link" className="h-fit p-0" asChild>
+              )}
+
+              {!isAddressLoading && !userActiveAddress && (
+                <Button
+                  variant="link"
+                  className="h-fit p-0"
+                  asChild
+                  disabled={isAddressLoading}
+                >
                   <Link href="/my-addresses/new">Adicionar endereço</Link>
                 </Button>
               )}
