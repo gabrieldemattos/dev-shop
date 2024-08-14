@@ -52,13 +52,13 @@ const PaymentMethods = ({ closePaymentModal }: PaymentMethodsProps) => {
                 value="payment_app"
                 className="w-full py-2 uppercase"
               >
-                Pague pelo app
+                Pagamento via Pix
               </TabsTrigger>
               <TabsTrigger
                 value="payment_on_delivery"
                 className="w-full py-2 uppercase"
               >
-                Pague na entrega
+                Pagamento com Cartão
               </TabsTrigger>
             </div>
           </TabsList>

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/payment/success",
     "prepare": "prisma generate"
   },
   "prisma": {
@@ -28,6 +29,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
+    "@stripe/stripe-js": "^4.2.0",
     "apexcharts": "^3.52.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -43,6 +45,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
     "sonner": "^1.5.0",
+    "stripe": "^16.7.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
@@ -57,6 +60,7 @@
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "prisma": "^5.15.1",
+    "stripe-cli": "^0.1.0",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"
